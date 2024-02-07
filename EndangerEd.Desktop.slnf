@@ -1,0 +1,11 @@
+﻿{
+  "solution": {
+    "path": "EndangerEd.sln",
+    "projects": [
+      "EndangerEd.Desktop\\EndangerEd.Desktop.csproj",
+      "EndangerEd.Game\\EndangerEd.Game.csproj",
+      "EndangerEd.Game.Tests\\EndangerEd.Game.Tests.csproj",
+      "EndangerEd.Resources\\EndangerEd.Resources.csproj"
+    ]
+  }
+}
