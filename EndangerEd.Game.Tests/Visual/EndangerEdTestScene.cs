@@ -1,10 +1,38 @@
+using EndangerEd.Game.Screens.ScreenStacks;
+using EndangerEd.Game.Stores;
+using osu.Framework.Allocation;
 using osu.Framework.Testing;
 
 namespace EndangerEd.Game.Tests.Visual
 {
     public abstract partial class EndangerEdTestScene : TestScene
     {
+        public new DependencyContainer Dependencies { get; set; }
+
+        public EndangerEdMainScreenStack MainScreenStack;
+
+        public SessionStore SessionStore;
+
+        public GameSessionStore GameSessionStore;
+
         protected override ITestSceneTestRunner CreateRunner() => new EndangerEdTestSceneTestRunner();
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            IReadOnlyDependencyContainer baseDependencies = base.CreateChildDependencies(parent);
+            Dependencies = new DependencyContainer(baseDependencies);
+            return Dependencies;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            Dependencies.CacheAs(this);
+            Dependencies.CacheAs(MainScreenStack = new EndangerEdMainScreenStack());
+            Dependencies.CacheAs(SessionStore = new SessionStore());
+            Dependencies.CacheAs(GameSessionStore = new GameSessionStore());
+            Add(MainScreenStack = new EndangerEdMainScreenStack());
+        }
 
         private partial class EndangerEdTestSceneTestRunner : EndangerEdGameBase, ITestSceneTestRunner
         {
