@@ -6,6 +6,8 @@ using osu.Framework.IO.Stores;
 using osuTK;
 using EndangerEd.Resources;
 using osu.Framework.Audio;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics.Performance;
 
 namespace EndangerEd.Game
 {
@@ -22,6 +24,10 @@ namespace EndangerEd.Game
         private AudioManager audioManager;
 
         private EndangerEdTextureStore textureStore;
+
+        private Bindable<bool> fpsDisplayVisible;
+
+        protected EndangerEdConfigManager LocalConfig { get; private set; }
 
         protected EndangerEdGameBase()
         {
@@ -78,7 +84,17 @@ namespace EndangerEd.Game
 
             dependencies.Cache(textureStore = new EndangerEdTextureStore(Host.Renderer, Host.CreateTextureLoaderStore(textureResourceStore)));
             dependencies.Cache(audioManager = new AudioManager(Host.AudioThread, trackResourceStore, new NamespacedResourceStore<byte[]>(Resources, "Samples")));
+            dependencies.CacheAs(LocalConfig = new EndangerEdConfigManager(Host.Storage));
             dependencies.CacheAs(this);
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            fpsDisplayVisible = LocalConfig.GetBindable<bool>(EndangerEdSetting.ShowFPSCounter);
+            fpsDisplayVisible.ValueChanged += visible => { FrameStatistics.Value = visible.NewValue ? FrameStatisticsMode.Minimal : FrameStatisticsMode.None; };
+            fpsDisplayVisible.TriggerChange();
         }
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));

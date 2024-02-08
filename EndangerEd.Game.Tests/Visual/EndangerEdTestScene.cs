@@ -1,3 +1,4 @@
+using EndangerEd.Game.Audio;
 using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
@@ -11,7 +12,11 @@ namespace EndangerEd.Game.Tests.Visual
 
         public EndangerEdMainScreenStack MainScreenStack;
 
+        public SettingsScreenStack SettingsScreenStack;
+
         public SessionStore SessionStore;
+        
+        public AudioPlayer AudioPlayer;
 
         public GameSessionStore GameSessionStore;
 
@@ -31,7 +36,10 @@ namespace EndangerEd.Game.Tests.Visual
             Dependencies.CacheAs(MainScreenStack = new EndangerEdMainScreenStack());
             Dependencies.CacheAs(SessionStore = new SessionStore());
             Dependencies.CacheAs(GameSessionStore = new GameSessionStore());
+            Dependencies.CacheAs(SettingsScreenStack = new SettingsScreenStack());
+            Dependencies.CacheAs(AudioPlayer = new AudioPlayer("snowmix.mp3"));
             Add(MainScreenStack = new EndangerEdMainScreenStack());
+            Add(SettingsScreenStack = new SettingsScreenStack());
         }
 
         private partial class EndangerEdTestSceneTestRunner : EndangerEdGameBase, ITestSceneTestRunner

@@ -37,6 +37,9 @@ public partial class MainMenuScreen : EndangerEdScreen
     [Resolved]
     private SessionStore sessionStore { get; set; }
 
+    [Resolved]
+    private SettingsScreenStack settingsScreenStack { get; set; }
+
     private void onLoginChanged(ValueChangedEvent<bool> isLoggedIn)
     {
         if (isLoggedIn.NewValue)
@@ -128,9 +131,18 @@ public partial class MainMenuScreen : EndangerEdScreen
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Y = 50f,
+                                Y = 25f,
                                 Width = 150,
                                 Height = 50
+                            },
+                            new EndangerEdButton("Settings")
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Y = 100f,
+                                Width = 130,
+                                Height = 50,
+                                Action = () => settingsScreenStack.ToggleVisibility()
                             }
                         }
                     },

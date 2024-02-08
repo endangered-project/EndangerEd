@@ -27,6 +27,8 @@ namespace EndangerEd.Game
 
         private AudioPlayer audioPlayer;
 
+        private SettingsScreenStack settingsScreenStack;
+
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
             dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
@@ -66,7 +68,8 @@ namespace EndangerEd.Game
             });
 
             dependencies.CacheAs(screenStack);
-            loadComponentSingleFile(audioPlayer = new AudioPlayer("snowmix.mp3", false), overlayContent.Add, true);
+            loadComponentSingleFile(audioPlayer = new AudioPlayer("snowmix.mp3"), overlayContent.Add, true);
+            loadComponentSingleFile(settingsScreenStack = new SettingsScreenStack(), Add, true);
 
             screenStack.MainScreenStack.Push(new MainMenuScreen());
         }
