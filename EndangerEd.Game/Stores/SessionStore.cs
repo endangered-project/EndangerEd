@@ -1,22 +1,20 @@
-﻿using EndangerEd.Game.Screens;
-using EndangerEd.Game.Screens.ScreenStacks;
-using osu.Framework.Allocation;
+﻿using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Logging;
 
 namespace EndangerEd.Game.Stores;
 
-public class SessionStore
+public partial class SessionStore : CompositeDrawable
 {
     public Bindable<bool> IsLoggedIn { get; } = new Bindable<bool>(false);
 
     public Bindable<bool> IsGameStarted { get; } = new Bindable<bool>(false);
 
-    [Resolved]
-    private GameSessionStore gameSessionStore { get; set; }
+    private string accessToken { get; set; } = string.Empty;
 
     [Resolved]
-    private EndangerEdMainScreenStack screenStack { get; set; }
+    private GameSessionStore gameSessionStore { get; set; }
 
     public SessionStore()
     {
@@ -30,19 +28,10 @@ public class SessionStore
         });
     }
 
-    /// <summary>
-    /// Login the user.
-    /// </summary>
-    public void Login()
+    public string AccessToken
     {
-        if (IsLoggedIn.Value)
-        {
-            Logger.Log("🏬 User is already logged in.");
-        }
-        else
-        {
-            screenStack.Push(new LoginScreen());
-        }
+        get => accessToken;
+        set => accessToken = value;
     }
 
     /// <summary>

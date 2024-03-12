@@ -35,6 +35,10 @@ namespace EndangerEd.Game
         [BackgroundDependencyLoader]
         private void load()
         {
+            dependencies.CacheAs(screenStack = new EndangerEdMainScreenStack
+            {
+                RelativeSizeAxes = Axes.Both
+            });
             dependencies.CacheAs(sessionStore = new SessionStore());
             dependencies.CacheAs(gameSessionStore = new GameSessionStore());
             dependencies.CacheAs(this);
@@ -51,10 +55,7 @@ namespace EndangerEd.Game
                     RelativeSizeAxes = Axes.Both,
                     Children = new Drawable[]
                     {
-                        screenStack = new EndangerEdMainScreenStack
-                        {
-                            RelativeSizeAxes = Axes.Both
-                        }
+                        screenStack
                     }
                 },
                 new Container
@@ -67,7 +68,6 @@ namespace EndangerEd.Game
                 }
             });
 
-            dependencies.CacheAs(screenStack);
             loadComponentSingleFile(audioPlayer = new AudioPlayer("snowmix.mp3"), overlayContent.Add, true);
             loadComponentSingleFile(settingsScreenStack = new SettingsScreenStack(), Add, true);
 

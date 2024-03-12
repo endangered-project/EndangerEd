@@ -170,7 +170,7 @@ public partial class MainMenuScreen : EndangerEdScreen
                                             if (sessionStore.IsLoggedIn.Value)
                                                 sessionStore.Logout();
                                             else
-                                                sessionStore.Login();
+                                                screenStack.MainScreenStack.Push(new LoginScreen());
                                         }
                                     }
                                 },
