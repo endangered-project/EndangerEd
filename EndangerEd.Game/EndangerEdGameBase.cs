@@ -1,3 +1,4 @@
+using EndangerEd.Game.API;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -7,6 +8,7 @@ using osuTK;
 using EndangerEd.Resources;
 using osu.Framework.Audio;
 using osu.Framework.Bindables;
+using osu.Framework.Development;
 using osu.Framework.Graphics.Performance;
 
 namespace EndangerEd.Game
@@ -85,6 +87,7 @@ namespace EndangerEd.Game
             dependencies.Cache(textureStore = new EndangerEdTextureStore(Host.Renderer, Host.CreateTextureLoaderStore(textureResourceStore)));
             dependencies.Cache(audioManager = new AudioManager(Host.AudioThread, trackResourceStore, new NamespacedResourceStore<byte[]>(Resources, "Samples")));
             dependencies.CacheAs(LocalConfig = new EndangerEdConfigManager(Host.Storage));
+            dependencies.CacheAs(DebugUtils.IsDebugBuild ? new APIRequestManager(new DevelopmentAPIEndpointConfig()) : new APIRequestManager(new ProductionAPIEndpointConfig()));
             dependencies.CacheAs(this);
         }
 

@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using EndangerEd.Game.API;
 using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
@@ -16,8 +20,12 @@ public partial class LoginScreen : EndangerEdScreen
     [Resolved]
     private EndangerEdConfigManager configManager { get; set; }
 
+    [Resolved]
+    private APIRequestManager apiRequestManager { get; set; }
+
     private EndangerEdTextBox usernameTextBox;
     private EndangerEdTextBox passwordTextBox;
+    private TextFlowContainer errorText;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -55,6 +63,11 @@ public partial class LoginScreen : EndangerEdScreen
                                 Size = new Vector2(220, 50),
                                 PlaceholderText = "Password"
                             },
+                            errorText = new TextFlowContainer
+                            {
+                                Size = new Vector2(220, 50),
+                                Colour = Colour4.Red
+                            },
                             new EndangerEdButton("Login")
                             {
                                 Size = new Vector2(220, 50),
@@ -77,11 +90,34 @@ public partial class LoginScreen : EndangerEdScreen
 
     private void login()
     {
-        // TODO: Do HTTP request to login and store session.
-        configManager.SetValue(EndangerEdSetting.AccessToken, "token");
-        configManager.SetValue(EndangerEdSetting.RefreshToken, "refresh_token");
-        sessionStore.AccessToken = "token";
-        sessionStore.IsLoggedIn.Value = true;
-        this.Exit();
+        Thread thread = new Thread(() =>
+        {
+            try
+            {
+                apiRequestManager.PostJson("login", new Dictionary<string, object>
+                {
+                    { "username", usernameTextBox.Text },
+                    { "password", passwordTextBox.Text }
+                });
+                Scheduler.Add(() =>
+                {
+                    configManager.SetValue(EndangerEdSetting.AccessToken, "token");
+                    configManager.SetValue(EndangerEdSetting.RefreshToken, "refresh_token");
+                    sessionStore.AccessToken = "token";
+                    sessionStore.IsLoggedIn.Value = true;
+                    this.Exit();
+                });
+            }
+            catch (HttpRequestException e)
+            {
+                Scheduler.Add(() =>
+                {
+                    // Only show first 100 characters of the error message.
+                    string errorMessage = e.Message.Length > 100 ? e.Message.Substring(0, 100) : e.Message;
+                    errorText.Text = errorMessage;
+                });
+            }
+        });
+        thread.Start();
     }
 }
