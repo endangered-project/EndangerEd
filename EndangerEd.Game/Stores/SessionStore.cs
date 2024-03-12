@@ -1,4 +1,6 @@
-﻿using osu.Framework.Allocation;
+﻿using EndangerEd.Game.Screens;
+using EndangerEd.Game.Screens.ScreenStacks;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Logging;
 
@@ -12,6 +14,9 @@ public class SessionStore
 
     [Resolved]
     private GameSessionStore gameSessionStore { get; set; }
+
+    [Resolved]
+    private EndangerEdMainScreenStack screenStack { get; set; }
 
     public SessionStore()
     {
@@ -30,7 +35,14 @@ public class SessionStore
     /// </summary>
     public void Login()
     {
-        IsLoggedIn.Value = true;
+        if (IsLoggedIn.Value)
+        {
+            Logger.Log("🏬 User is already logged in.");
+        }
+        else
+        {
+            screenStack.Push(new LoginScreen());
+        }
     }
 
     /// <summary>

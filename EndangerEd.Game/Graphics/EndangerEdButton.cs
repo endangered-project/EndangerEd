@@ -13,7 +13,7 @@ namespace EndangerEd.Game.Graphics;
 public partial class EndangerEdButton : Button
 {
     private string text;
-    public Colour4 ButtonColour = Colour4.DarkGreen;
+    public Colour4 ButtonColour = Colour4.Green;
     private Box buttonBox;
     private SpriteText buttonText;
 

@@ -2,5 +2,8 @@
 
 public enum EndangerEdSetting
 {
-    ShowFPSCounter
+    ShowFPSCounter,
+
+    AccessToken,
+    RefreshToken
 }
