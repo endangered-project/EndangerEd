@@ -4,6 +4,6 @@ public class DevelopmentAPIEndpointConfig : APIEndpointConfig
 {
     public DevelopmentAPIEndpointConfig()
     {
-        BaseUrl = "https://endangered.helloyeew.dev/api/";
+        BaseUrl = "http://localhost:8001/api/";
     }
 }

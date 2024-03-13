@@ -24,7 +24,7 @@ public partial class LoginScreen : EndangerEdScreen
     private APIRequestManager apiRequestManager { get; set; }
 
     private EndangerEdTextBox usernameTextBox;
-    private EndangerEdTextBox passwordTextBox;
+    private EndangerEdPasswordBox passwordTextBox;
     private TextFlowContainer errorText;
 
     [BackgroundDependencyLoader]
@@ -58,7 +58,7 @@ public partial class LoginScreen : EndangerEdScreen
                                 Size = new Vector2(220, 50),
                                 PlaceholderText = "Username"
                             },
-                            passwordTextBox = new EndangerEdTextBox
+                            passwordTextBox = new EndangerEdPasswordBox
                             {
                                 Size = new Vector2(220, 50),
                                 PlaceholderText = "Password"
@@ -94,16 +94,24 @@ public partial class LoginScreen : EndangerEdScreen
         {
             try
             {
-                apiRequestManager.PostJson("login", new Dictionary<string, object>
+                var result = apiRequestManager.PostJson("token/", new Dictionary<string, object>
                 {
                     { "username", usernameTextBox.Text },
                     { "password", passwordTextBox.Text }
                 });
+                var accessToken = result.TryGetValue("access", out var token) ? token : null;
+                var refreshToken = result.TryGetValue("refresh", out var refresh) ? refresh : null;
+
+                if (accessToken == null || refreshToken == null)
+                {
+                    throw new HttpRequestException("Invalid response from server");
+                }
+
                 Scheduler.Add(() =>
                 {
-                    configManager.SetValue(EndangerEdSetting.AccessToken, "token");
-                    configManager.SetValue(EndangerEdSetting.RefreshToken, "refresh_token");
-                    sessionStore.AccessToken = "token";
+                    configManager.SetValue(EndangerEdSetting.AccessToken, accessToken.ToString());
+                    configManager.SetValue(EndangerEdSetting.RefreshToken, refreshToken.ToString());
+                    sessionStore.AccessToken = accessToken.ToString();
                     sessionStore.IsLoggedIn.Value = true;
                     this.Exit();
                 });
@@ -112,8 +120,8 @@ public partial class LoginScreen : EndangerEdScreen
             {
                 Scheduler.Add(() =>
                 {
-                    // Only show first 100 characters of the error message.
-                    string errorMessage = e.Message.Length > 100 ? e.Message.Substring(0, 100) : e.Message;
+                    // Only show first 50 characters of the error message.
+                    string errorMessage = e.Message.Length > 100 ? e.Message.Substring(0, 50) + "..." : e.Message;
                     errorText.Text = errorMessage;
                 });
             }
