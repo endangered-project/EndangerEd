@@ -9,6 +9,7 @@ public class Question
     public string Answer { get; set; }
     public string[] Choices { get; set; }
     public ContentType ContentType { get; set; }
+    public string QuestionMode { get; set; }
 }
 
 public enum ContentType

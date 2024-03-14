@@ -13,7 +13,8 @@ public partial class TestSceneFourChoiceGameScreen : EndangerEdTestScene
             QuestionText = "What is the question?",
             Choices = ["Choice 1", "Choice 2", "Choice 3", "Choice 4"],
             Answer = "Choice 2",
-            ContentType = ContentType.Text
+            ContentType = ContentType.Text,
+            QuestionMode = "FourChoice"
         });
         base.LoadComplete();
         AddStep("add game screen", () =>
@@ -21,7 +22,8 @@ public partial class TestSceneFourChoiceGameScreen : EndangerEdTestScene
             MainScreenStack.SwapScreenStack();
             MainScreenStack.GameScreenStack.MainScreenStack.Push(gameScreen);
         });
+        AddStep("start countdown", () => GameSessionStore.StopwatchClock.Start());
+        AddStep("set life to 1", () => GameSessionStore.Life.Value = 1);
         AddStep("clear game screen", gameScreen.Exit);
-
     }
 }

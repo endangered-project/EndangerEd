@@ -1,8 +1,8 @@
-﻿using EndangerEd.Game.Screens.ScreenStacks;
+﻿using EndangerEd.Game.API;
+using EndangerEd.Game.Screens.ScreenStacks;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Logging;
 using osu.Framework.Timing;
 
 namespace EndangerEd.Game.Stores;
@@ -11,6 +11,9 @@ public partial class GameSessionStore : CompositeDrawable
 {
     [Resolved]
     private EndangerEdMainScreenStack screenStack { get; set; }
+
+    [Resolved]
+    private APIRequestManager apiRequestManager { get; set; }
 
     public const int MAX_LIFE = 3;
 
@@ -36,15 +39,6 @@ public partial class GameSessionStore : CompositeDrawable
         Life.Value = MAX_LIFE;
         Score.Value = 0;
         StopwatchClock.Reset();
-    }
-
-    public void EndGame()
-    {
-    }
-
-    public void StartGame()
-    {
-        Logger.Log("🏬 Game started!");
     }
 
     public bool IsOverTime()

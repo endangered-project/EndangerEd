@@ -8,4 +8,5 @@ namespace EndangerEd.Game.Screens.Games;
 public partial class MicroGameScreen(Question question) : EndangerEdScreen
 {
     public Question CurrentQuestion { get; set; } = question;
+    public bool IsOverTime { get; set; }
 }

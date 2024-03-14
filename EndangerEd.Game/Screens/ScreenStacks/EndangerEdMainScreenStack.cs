@@ -1,4 +1,6 @@
-﻿using EndangerEd.Game.Stores;
+﻿using EndangerEd.Game.Objects;
+using EndangerEd.Game.Screens.Games;
+using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
@@ -52,6 +54,20 @@ public partial class EndangerEdMainScreenStack : ScreenStack
         {
             GameScreenStack.Show();
             MainScreenStack.Hide();
+        }
+    }
+
+    public void PushQuestionScreen(Question question)
+    {
+        switch (question.QuestionMode)
+        {
+            case "FourChoice":
+                MainScreenStack.Push(new FourChoiceGameScreen(question));
+                break;
+
+            default:
+                MainScreenStack.Push(new FourChoiceGameScreen(question));
+                break;
         }
     }
 }
