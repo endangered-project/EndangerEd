@@ -17,7 +17,7 @@ public partial class GameSessionStore : CompositeDrawable
     /// <summary>
     /// Time per microgame in milliseconds.
     /// </summary>
-    public const int TIME_PER_GAME = 10000;
+    public const int TIME_PER_GAME = 60000;
 
     public BindableInt Life = new BindableInt(MAX_LIFE);
 
