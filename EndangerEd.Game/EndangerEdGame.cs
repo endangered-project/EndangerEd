@@ -29,6 +29,8 @@ namespace EndangerEd.Game
 
         private SettingsScreenStack settingsScreenStack;
 
+        private EndangerEdGameSessionScreenStack gameScreenStack;
+
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
             dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
@@ -39,6 +41,7 @@ namespace EndangerEd.Game
             {
                 RelativeSizeAxes = Axes.Both
             });
+            dependencies.CacheAs(gameScreenStack = screenStack.GameScreenStack);
             dependencies.CacheAs(sessionStore = new SessionStore());
             dependencies.CacheAs(gameSessionStore = new GameSessionStore());
             dependencies.CacheAs(this);

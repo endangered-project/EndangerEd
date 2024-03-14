@@ -38,8 +38,8 @@ namespace EndangerEd.Game.Tests.Visual
             Dependencies.CacheAs(GameSessionStore = new GameSessionStore());
             Dependencies.CacheAs(SettingsScreenStack = new SettingsScreenStack());
             Dependencies.CacheAs(AudioPlayer = new AudioPlayer("snowmix.mp3"));
-            Add(MainScreenStack = new EndangerEdMainScreenStack());
-            Add(SettingsScreenStack = new SettingsScreenStack());
+            Add(MainScreenStack);
+            Add(SettingsScreenStack);
         }
 
         private partial class EndangerEdTestSceneTestRunner : EndangerEdGameBase, ITestSceneTestRunner

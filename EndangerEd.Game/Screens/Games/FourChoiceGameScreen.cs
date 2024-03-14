@@ -96,11 +96,12 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
 
         if (gameSessionStore.Life.Value == 0)
         {
-            Scheduler.Add(() =>
+            Scheduler.AddDelayed(() =>
             {
                 this.Exit();
-                mainScreenStack.Push(new GameOverScreen());
-            });
+                mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
+                // TODO: Load result screen
+            }, 1000);
         }
         else
         {
