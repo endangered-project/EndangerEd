@@ -26,7 +26,7 @@ public partial class GameSessionStore : CompositeDrawable
 
     public BindableInt Score = new BindableInt();
 
-    public BindableInt GameCount = new BindableInt();
+    public int GameId = 0;
 
     // We need to use StopwatchClock instead of Stopwatch because it's also depend on the frame time on framework too.
     public StopwatchClock StopwatchClock = new StopwatchClock();
@@ -39,6 +39,7 @@ public partial class GameSessionStore : CompositeDrawable
         Life.Value = MAX_LIFE;
         Score.Value = 0;
         StopwatchClock.Reset();
+        screenStack.ResetGameScreenStack();
     }
 
     public bool IsOverTime()

@@ -174,7 +174,6 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 try
                 {
                     var result = apiRequestManager.PostJson("game/question", new Dictionary<string, object>());
-                    // convert questionJson to a dictionary
                     var jsonSerializer = JsonSerializer.Create();
                     var questionDict = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(result["question"].ToString())));
                     var nextQuestion = new Question

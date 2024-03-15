@@ -4,6 +4,7 @@ using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
+using osuTK;
 
 namespace EndangerEd.Game.Screens.ScreenStacks;
 
@@ -69,5 +70,18 @@ public partial class EndangerEdMainScreenStack : ScreenStack
                 GameScreenStack.MainScreenStack.Push(new FourChoiceGameScreen(question));
                 break;
         }
+    }
+
+    public void ResetGameScreenStack()
+    {
+        GameScreenStack.MainScreenStack = new ScreenStack
+        {
+            Anchor = Anchor.BottomLeft,
+            Origin = Anchor.BottomLeft,
+            RelativeSizeAxes = Axes.Both,
+            Size = new Vector2(0.875f, 0.875f),
+            Margin = new MarginPadding(10),
+            Name = "Main screen"
+        };
     }
 }
