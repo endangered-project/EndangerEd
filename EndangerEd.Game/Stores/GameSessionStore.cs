@@ -39,7 +39,6 @@ public partial class GameSessionStore : CompositeDrawable
         Life.Value = MAX_LIFE;
         Score.Value = 0;
         StopwatchClock.Reset();
-        screenStack.ResetGameScreenStack();
     }
 
     public bool IsOverTime()

@@ -14,6 +14,12 @@ public partial class EndangerEdGameSessionScreenStack : ScreenStack
     [Resolved]
     private SessionStore sessionStore { get; set; }
 
+    [Resolved]
+    private GameSessionStore gameSessionStore { get; set; }
+
+    [Resolved]
+    private EndangerEdMainScreenStack mainScreenStack { get; set; }
+
     public ScreenStack MainScreenStack { get; set; }
 
     [BackgroundDependencyLoader]
@@ -29,7 +35,12 @@ public partial class EndangerEdGameSessionScreenStack : ScreenStack
                 Margin = new MarginPadding(10),
                 Width = 80,
                 Height = 50,
-                Action = () => sessionStore.IsGameStarted.Value = false
+                Action = () =>
+                {
+                    sessionStore.IsGameStarted.Value = false;
+                    gameSessionStore.StopwatchClock.Stop();
+                    mainScreenStack.SwapScreenStack();
+                }
             },
             new EndangerEdButton("Skip")
             {

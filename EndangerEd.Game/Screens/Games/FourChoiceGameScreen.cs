@@ -144,6 +144,20 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
             gameSessionStore.Life.Value--;
         }
 
+        try
+        {
+            var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
+            {
+                { "answer", choice }
+            });
+            result.TryGetValue("score", out var scoreValue);
+            gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
+        }
+        catch (HttpRequestException e)
+        {
+            Logger.Log($"Request to game/answer failed with error: {e.Message}");
+        }
+
         if (gameSessionStore.Life.Value == 0)
         {
             Scheduler.AddDelayed(() =>
@@ -157,20 +171,6 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
         {
             Thread thread = new Thread(() =>
             {
-                try
-                {
-                    var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
-                    {
-                        { "answer", choice }
-                    });
-                    result.TryGetValue("score", out var scoreValue);
-                    gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
-                }
-                catch (HttpRequestException e)
-                {
-                    Logger.Log($"Request to game/answer failed with error: {e.Message}");
-                }
-
                 try
                 {
                     var result = apiRequestManager.PostJson("game/question", new Dictionary<string, object>());

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -105,6 +104,7 @@ public partial class LoadingScreen : EndangerEdScreen
                 var result = apiRequestManager.PostJson("game/start", new Dictionary<string, object>());
                 gameSessionStore.GameId = int.Parse(result["game_id"].ToString());
                 sessionStore.IsGameStarted.Value = true;
+                Scheduler.Add(gameSessionStore.Reset);
 
                 try
                 {
