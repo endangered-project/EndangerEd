@@ -23,6 +23,7 @@ public partial class TestSceneFourChoiceGameScreen : EndangerEdTestScene
             MainScreenStack.GameScreenStack.MainScreenStack.Push(gameScreen);
         });
         AddStep("start countdown", () => GameSessionStore.StopwatchClock.Start());
+        AddStep("stop countdown", () => GameSessionStore.StopwatchClock.Stop());
         AddStep("set life to 1", () => GameSessionStore.Life.Value = 1);
         AddStep("clear game screen", gameScreen.Exit);
     }

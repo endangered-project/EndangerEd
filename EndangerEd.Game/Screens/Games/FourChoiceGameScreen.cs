@@ -38,8 +38,49 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 Origin = Anchor.TopCentre,
                 Text = CurrentQuestion.QuestionText,
                 Font = EndangerEdFont.GetFont(size: 40)
-            },
-            new FillFlowContainer()
+            }
+        };
+
+        if (question.ContentType == ContentType.Image)
+        {
+            AddInternal(new GridContainer()
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Size = new osuTK.Vector2(400, 400),
+                Content = new[]
+                {
+                    [
+                        new OnlineImageButton(CurrentQuestion.Choices[0])
+                        {
+                            Size = new osuTK.Vector2(200, 200),
+                            Action = () => onChoiceSelected(CurrentQuestion.Choices[0])
+                        },
+                        new OnlineImageButton(CurrentQuestion.Choices[1])
+                        {
+                            Size = new osuTK.Vector2(200, 200),
+                            Action = () => onChoiceSelected(CurrentQuestion.Choices[1])
+                        }
+                    ],
+                    new Drawable[]
+                    {
+                        new OnlineImageButton(CurrentQuestion.Choices[2])
+                        {
+                            Size = new osuTK.Vector2(200, 200),
+                            Action = () => onChoiceSelected(CurrentQuestion.Choices[2])
+                        },
+                        new OnlineImageButton(CurrentQuestion.Choices[3])
+                        {
+                            Size = new osuTK.Vector2(200, 200),
+                            Action = () => onChoiceSelected(CurrentQuestion.Choices[3])
+                        }
+                    }
+                }
+            });
+        }
+        else
+        {
+            AddInternal(new FillFlowContainer()
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
@@ -69,8 +110,8 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                         Action = () => onChoiceSelected(CurrentQuestion.Choices[3])
                     }
                 }
-            }
-        };
+            });
+        }
     }
 
     protected override void Update()
