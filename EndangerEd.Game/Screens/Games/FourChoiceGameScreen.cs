@@ -109,7 +109,7 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
             {
                 try
                 {
-                    var result = apiRequestManager.PostJson("game/answer/", new Dictionary<string, object>
+                    var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
                     {
                         { "answer", choice }
                     });
@@ -125,7 +125,7 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
 
                 try
                 {
-                    var result = apiRequestManager.PostJson("game/question/", new Dictionary<string, object>());
+                    var result = apiRequestManager.PostJson("game/question", new Dictionary<string, object>());
                     var nextQuestion = new Question
                     {
                         QuestionText = result["rendered_question"].ToString(),

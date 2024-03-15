@@ -94,7 +94,7 @@ public partial class LoginScreen : EndangerEdScreen
         {
             try
             {
-                var result = apiRequestManager.PostJson("token/", new Dictionary<string, object>
+                var result = apiRequestManager.PostJson("token", new Dictionary<string, object>
                 {
                     { "username", usernameTextBox.Text },
                     { "password", passwordTextBox.Text }
@@ -111,7 +111,6 @@ public partial class LoginScreen : EndangerEdScreen
                 {
                     configManager.SetValue(EndangerEdSetting.AccessToken, accessToken.ToString());
                     configManager.SetValue(EndangerEdSetting.RefreshToken, refreshToken.ToString());
-                    sessionStore.AccessToken = accessToken.ToString();
                     sessionStore.IsLoggedIn.Value = true;
                     this.Exit();
                 });

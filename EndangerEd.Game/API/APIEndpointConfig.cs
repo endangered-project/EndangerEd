@@ -2,5 +2,7 @@
 
 public class APIEndpointConfig
 {
-    public string BaseUrl { get; set; } = string.Empty;
+    public string APIBaseUrl { get; set; } = string.Empty;
+    public string KnowledgeBaseUrl { get; set; } = string.Empty;
+    public string GameUrl { get; set; } = string.Empty;
 }

@@ -29,7 +29,22 @@ public class APIRequestManager
     /// <returns>A string of the full endpoint URL.</returns>
     public string GetEndpoint(string endpoint)
     {
-        return _config.BaseUrl + endpoint;
+        return _config.APIBaseUrl + endpoint;
+    }
+
+    /// <summary>
+    /// Add header to the request.
+    /// </summary>
+    /// <param name="key">Dictionary key.</param>
+    /// <param name="value">Dictionary value.</param>
+    public void AddHeader(string key, string value)
+    {
+        if (_client.DefaultRequestHeaders.Contains(key))
+        {
+            _client.DefaultRequestHeaders.Remove(key);
+        }
+
+        _client.DefaultRequestHeaders.Add(key, value);
     }
 
     /// <summary>

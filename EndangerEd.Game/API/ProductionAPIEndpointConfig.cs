@@ -4,6 +4,6 @@ public class ProductionAPIEndpointConfig : APIEndpointConfig
 {
     public ProductionAPIEndpointConfig()
     {
-        BaseUrl = "https://endangered.helloyeew.dev/api/";
+        APIBaseUrl = "https://endangered.helloyeew.dev/api/";
     }
 }

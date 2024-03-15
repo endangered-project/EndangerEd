@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using EndangerEd.Game.API;
 using EndangerEd.Game.Audio;
 using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Screens.ScreenStacks;
@@ -11,6 +14,8 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Logging;
+using osu.Framework.Platform;
 using osu.Framework.Screens;
 using osuTK;
 using osuTK.Graphics;
@@ -39,6 +44,18 @@ public partial class MainMenuScreen : EndangerEdScreen
 
     [Resolved]
     private SettingsScreenStack settingsScreenStack { get; set; }
+
+    [Resolved]
+    private GameHost host { get; set; }
+
+    [Resolved]
+    private APIEndpointConfig endpointConfig { get; set; }
+
+    [Resolved]
+    private APIRequestManager apiRequestManager { get; set; }
+
+    [Resolved]
+    private EndangerEdConfigManager configManager { get; set; }
 
     private void onLoginChanged(ValueChangedEvent<bool> isLoggedIn)
     {
@@ -133,7 +150,8 @@ public partial class MainMenuScreen : EndangerEdScreen
                                 Origin = Anchor.Centre,
                                 Y = 25f,
                                 Width = 150,
-                                Height = 50
+                                Height = 50,
+                                Action = () => host.OpenUrlExternally(endpointConfig.GameUrl + "leaderboard")
                             },
                             new EndangerEdButton("Settings")
                             {
@@ -247,7 +265,8 @@ public partial class MainMenuScreen : EndangerEdScreen
                                         Y = 250f,
                                         Width = 100,
                                         Height = 50,
-                                        AlwaysPresent = true
+                                        AlwaysPresent = true,
+                                        Action = () => host.OpenUrlExternally(endpointConfig.GameUrl + "signup")
                                     }
                                 }
                             }
@@ -263,6 +282,53 @@ public partial class MainMenuScreen : EndangerEdScreen
     {
         base.LoadComplete();
         knowledgeBaseContainer.ScaleTo(new Vector2(1.2f), 500, Easing.OutSine).Then().ScaleTo(new Vector2(1f), 500, Easing.OutSine).Loop();
+        apiRequestManager.AddHeader("Authorization", "Bearer " + configManager.Get<string>(EndangerEdSetting.AccessToken));
+        Thread thread = new Thread(() =>
+        {
+            try
+            {
+                var result = apiRequestManager.PostJson("token/refresh", new Dictionary<string, object>
+                {
+                    { "refresh", configManager.Get<string>(EndangerEdSetting.RefreshToken) }
+                });
+                var newAccessToken = result.TryGetValue("access", out var token) ? token : null;
+
+                if (newAccessToken == null)
+                {
+                    Scheduler.Add(() =>
+                    {
+                        Logger.Log("Failed to refresh token, revert login status", LoggingTarget.Network);
+                        sessionStore.IsLoggedIn.Value = false;
+                        configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
+                        configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+                    });
+                }
+                else
+                {
+                    Scheduler.Add(() =>
+                    {
+                        sessionStore.IsLoggedIn.Value = true;
+                        configManager.SetValue(EndangerEdSetting.AccessToken, newAccessToken.ToString());
+                        apiRequestManager.AddHeader("Authorization", "Bearer " + newAccessToken);
+                    });
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                Logger.Log($"Request to token/refresh failed with error: {e.Message}", LoggingTarget.Network);
+                sessionStore.IsLoggedIn.Value = false;
+                configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
+                configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+            }
+            catch (System.Exception e)
+            {
+                Logger.Log($"Failed to refresh token with error: {e.Message}");
+                sessionStore.IsLoggedIn.Value = false;
+                configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
+                configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+            }
+        });
+        thread.Start();
     }
 
     public override void OnEntering(ScreenTransitionEvent e)

@@ -29,6 +29,8 @@ namespace EndangerEd.Game
 
         private Bindable<bool> fpsDisplayVisible;
 
+        private APIEndpointConfig endpointConfig;
+
         protected EndangerEdConfigManager LocalConfig { get; private set; }
 
         protected EndangerEdGameBase()
@@ -88,6 +90,7 @@ namespace EndangerEd.Game
             dependencies.Cache(audioManager = new AudioManager(Host.AudioThread, trackResourceStore, new NamespacedResourceStore<byte[]>(Resources, "Samples")));
             dependencies.CacheAs(LocalConfig = new EndangerEdConfigManager(Host.Storage));
             dependencies.CacheAs(DebugUtils.IsDebugBuild ? new APIRequestManager(new DevelopmentAPIEndpointConfig()) : new APIRequestManager(new ProductionAPIEndpointConfig()));
+            dependencies.CacheAs(endpointConfig = DebugUtils.IsDebugBuild ? new DevelopmentAPIEndpointConfig() : new ProductionAPIEndpointConfig());
             dependencies.CacheAs(this);
         }
 

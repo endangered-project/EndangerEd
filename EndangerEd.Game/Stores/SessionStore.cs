@@ -11,8 +11,6 @@ public partial class SessionStore : CompositeDrawable
 
     public Bindable<bool> IsGameStarted { get; } = new Bindable<bool>(false);
 
-    private string accessToken { get; set; } = string.Empty;
-
     [Resolved]
     private GameSessionStore gameSessionStore { get; set; }
 
@@ -26,12 +24,6 @@ public partial class SessionStore : CompositeDrawable
         {
             Logger.Log($"🏬 Game started state changed to {isGameStartedChangedEvent.NewValue}.");
         });
-    }
-
-    public string AccessToken
-    {
-        get => accessToken;
-        set => accessToken = value;
     }
 
     /// <summary>
