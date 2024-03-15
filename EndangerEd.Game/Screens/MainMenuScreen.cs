@@ -186,7 +186,11 @@ public partial class MainMenuScreen : EndangerEdScreen
                                         Action = () =>
                                         {
                                             if (sessionStore.IsLoggedIn.Value)
-                                                sessionStore.Logout();
+                                            {
+                                                sessionStore.IsLoggedIn.Value = false;
+                                                configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
+                                                configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+                                            }
                                             else
                                                 screenStack.MainScreenStack.Push(new LoginScreen());
                                         }

@@ -61,12 +61,12 @@ public partial class EndangerEdMainScreenStack : ScreenStack
     {
         switch (question.QuestionMode)
         {
-            case "FourChoice":
-                MainScreenStack.Push(new FourChoiceGameScreen(question));
+            case QuestionMode.FourChoice:
+                GameScreenStack.MainScreenStack.Push(new FourChoiceGameScreen(question));
                 break;
 
             default:
-                MainScreenStack.Push(new FourChoiceGameScreen(question));
+                GameScreenStack.MainScreenStack.Push(new FourChoiceGameScreen(question));
                 break;
         }
     }

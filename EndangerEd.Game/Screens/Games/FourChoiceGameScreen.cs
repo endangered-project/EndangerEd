@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using EndangerEd.Game.API;
@@ -6,6 +7,7 @@ using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Objects;
 using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
+using Newtonsoft.Json;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -80,6 +82,13 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
         }
     }
 
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+        gameSessionStore.StopwatchClock.Reset();
+        gameSessionStore.StopwatchClock.Start();
+    }
+
     private void onChoiceSelected(string choice)
     {
         gameSessionStore.StopwatchClock.Stop();
@@ -113,10 +122,8 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                     {
                         { "answer", choice }
                     });
-
-                    // TODO: Make API return score
-                    var score = result.TryGetValue("score", out var scoreValue) ? (int)scoreValue : 0;
-                    gameSessionStore.Score.Value += score;
+                    result.TryGetValue("score", out var scoreValue);
+                    gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
                 }
                 catch (HttpRequestException e)
                 {
@@ -126,21 +133,22 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 try
                 {
                     var result = apiRequestManager.PostJson("game/question", new Dictionary<string, object>());
+                    // convert questionJson to a dictionary
+                    var jsonSerializer = JsonSerializer.Create();
+                    var questionDict = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(result["question"].ToString())));
                     var nextQuestion = new Question
                     {
-                        QuestionText = result["rendered_question"].ToString(),
-                        Choices = (string[])result["choices"],
+                        QuestionText = questionDict["rendered_question"].ToString(),
+                        Choices = jsonSerializer.Deserialize<string[]>(new JsonTextReader(new StringReader(result["choice"].ToString()))),
                         Answer = result["answer"].ToString(),
-                        ContentType = result["content_type"].ToString() == "image" ? ContentType.Image : ContentType.Text,
-                        QuestionMode = result["question_mode"].ToString()
+                        ContentType = questionDict["type"].ToString() == "image" ? ContentType.Image : ContentType.Text,
+                        QuestionMode = APIUtility.ConvertToQuestionMode(questionDict["game_mode"].ToString())
                     };
 
                     Scheduler.AddDelayed(() =>
                     {
                         mainScreenStack.PushQuestionScreen(nextQuestion);
                     }, 1000);
-
-                    Scheduler.Add(this.Exit);
                 }
                 catch (HttpRequestException e)
                 {

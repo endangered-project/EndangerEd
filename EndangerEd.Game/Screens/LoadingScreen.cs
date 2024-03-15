@@ -1,4 +1,8 @@
-﻿using EndangerEd.Game.Graphics;
+﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using EndangerEd.Game.API;
+using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
@@ -26,6 +30,9 @@ public partial class LoadingScreen : EndangerEdScreen
 
     [Resolved]
     private EndangerEdMainScreenStack screenStack { get; set; }
+
+    [Resolved]
+    private APIRequestManager apiRequestManager { get; set; }
 
     [BackgroundDependencyLoader]
     private void load()
@@ -83,8 +90,25 @@ public partial class LoadingScreen : EndangerEdScreen
     {
         base.LoadComplete();
 
+        Thread thread = new Thread(() =>
+        {
+            try
+            {
+                apiRequestManager.PostJson("game/start", new Dictionary<string, object>());
+                Scheduler.Add(FinishLoading);
+            }
+            catch (HttpRequestException e)
+            {
+                Scheduler.Add(() =>
+                {
+                    loadingBar.Colour = Colour4.Red;
+                    loadingText.Text = "Failed to load : " + e.Message;
+                });
+            }
+        });
+        thread.Start();
+
         exitButton.FadeInFromZero(1000, Easing.OutQuint);
-        Scheduler.AddDelayed(FinishLoading, 2000);
     }
 
     /// <summary>
