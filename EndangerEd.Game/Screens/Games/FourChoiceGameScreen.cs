@@ -22,6 +22,9 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
     private EndangerEdMainScreenStack mainScreenStack { get; set; }
 
     [Resolved]
+    private SessionStore sessionStore { get; set; }
+
+    [Resolved]
     private GameSessionStore gameSessionStore { get; set; }
 
     [Resolved]
@@ -38,6 +41,37 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 Origin = Anchor.TopCentre,
                 Text = CurrentQuestion.QuestionText,
                 Font = EndangerEdFont.GetFont(size: 40)
+            },
+            new EndangerEdButton("End")
+            {
+                Anchor = Anchor.BottomRight,
+                Origin = Anchor.BottomRight,
+                Margin = new MarginPadding(10),
+                Width = 80,
+                Height = 50,
+                Action = () =>
+                {
+                    sessionStore.IsGameStarted.Value = false;
+                    gameSessionStore.StopwatchClock.Stop();
+                    mainScreenStack.SwapScreenStack();
+                }
+            },
+            new EndangerEdButton("Skip")
+            {
+                Anchor = Anchor.BottomRight,
+                Origin = Anchor.BottomRight,
+                Margin = new MarginPadding
+                {
+                    Bottom = 70,
+                    Right = 10
+                },
+                Width = 80,
+                Height = 50,
+                Action = () =>
+                {
+                    gameSessionStore.StopwatchClock.Stop();
+                    onChoiceSelected("");
+                }
             }
         };
 
