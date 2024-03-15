@@ -96,7 +96,7 @@ public partial class MainMenuScreen : EndangerEdScreen
                         Font = EndangerEdFont.GetFont(typeface: EndangerEdFont.Typeface.Comfortaa, size: 100, weight: EndangerEdFont.FontWeight.Bold),
                         Y = -200f
                     },
-                    knowledgeBaseContainer = new Container
+                    knowledgeBaseContainer = new BasicButton
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -104,6 +104,7 @@ public partial class MainMenuScreen : EndangerEdScreen
                         X = 230f,
                         Size = new Vector2(150f),
                         Rotation = 315f,
+                        Action = () => host.OpenUrlExternally(endpointConfig.KnowledgeBaseUrl),
                         Children = new Drawable[]
                         {
                             new SpriteIcon()
