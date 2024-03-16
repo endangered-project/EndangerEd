@@ -198,7 +198,6 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
             {
                 this.Exit();
                 mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
-                // TODO: Load result screen
             }, 1000);
         }
         else
