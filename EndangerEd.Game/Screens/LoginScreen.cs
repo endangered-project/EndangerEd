@@ -50,7 +50,7 @@ public partial class LoginScreen : EndangerEdScreen
                         {
                             new EndangerEdSpriteText
                             {
-                                Text = "Login",
+                                Text = "LOGIN",
                                 Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 48f, EndangerEdFont.FontWeight.Bold)
                             },
                             usernameTextBox = new EndangerEdTextBox
