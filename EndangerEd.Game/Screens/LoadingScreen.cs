@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -9,6 +10,7 @@ using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using Newtonsoft.Json;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
@@ -41,6 +43,8 @@ public partial class LoadingScreen : EndangerEdScreen
     [Resolved]
     private APIRequestManager apiRequestManager { get; set; }
 
+    private BindableBool allowExit = new BindableBool(true);
+
     [BackgroundDependencyLoader]
     private void load()
     {
@@ -72,12 +76,11 @@ public partial class LoadingScreen : EndangerEdScreen
                 Height = 40,
                 Margin = new MarginPadding
                 {
-                    Bottom = 130,
+                    Bottom = 50,
                     Right = 20
                 },
                 Action = this.Exit,
-                Alpha = 0,
-                Scale = new Vector2(2f)
+                Alpha = 0
             },
             loadingText = new EndangerEdSpriteText()
             {
@@ -137,13 +140,23 @@ public partial class LoadingScreen : EndangerEdScreen
                 Scheduler.Add(() =>
                 {
                     loadingBar.Colour = Colour4.Red;
+                    loadingBar.ResizeTo(new Vector2(1, loading_bar_height), 1000, Easing.OutQuint);
                     loadingText.Text = "Failed to load : " + e.Message;
+                    exitButton.FadeInFromZero(1000, Easing.OutQuint);
+                });
+            }
+            catch (Exception e)
+            {
+                Scheduler.Add(() =>
+                {
+                    loadingBar.Colour = Colour4.Red;
+                    loadingBar.ResizeTo(new Vector2(1, loading_bar_height), 1000, Easing.OutQuint);
+                    loadingText.Text = "Failed to load : " + e.Message;
+                    exitButton.FadeInFromZero(1000, Easing.OutQuint);
                 });
             }
         });
         thread.Start();
-
-        exitButton.FadeInFromZero(1000, Easing.OutQuint);
     }
 
     /// <summary>

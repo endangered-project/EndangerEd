@@ -320,17 +320,23 @@ public partial class MainMenuScreen : EndangerEdScreen
             }
             catch (HttpRequestException e)
             {
-                Logger.Log($"Request to token/refresh failed with error: {e.Message}", LoggingTarget.Network);
-                sessionStore.IsLoggedIn.Value = false;
-                configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
-                configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+                Scheduler.Add(() =>
+                {
+                    Logger.Log($"Request to token/refresh failed with error: {e.Message}", LoggingTarget.Network);
+                    sessionStore.IsLoggedIn.Value = false;
+                    configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
+                    configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+                });
             }
             catch (System.Exception e)
             {
-                Logger.Log($"Failed to refresh token with error: {e.Message}");
-                sessionStore.IsLoggedIn.Value = false;
-                configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
-                configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+                Scheduler.Add(() =>
+                {
+                    Logger.Log($"Failed to refresh token with error: {e.Message}", LoggingTarget.Network);
+                    sessionStore.IsLoggedIn.Value = false;
+                    configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
+                    configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+                });
             }
         });
         thread.Start();
