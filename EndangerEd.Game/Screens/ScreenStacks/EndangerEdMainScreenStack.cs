@@ -44,17 +44,17 @@ public partial class EndangerEdMainScreenStack : ScreenStack
         };
     }
 
-    public void SwapScreenStack()
+    public void SwapScreenStack(double delayBetweenSwap = 0)
     {
         if (GameScreenStack.Alpha != 0f)
         {
             GameScreenStack.Hide();
-            MainScreenStack.Show();
+            Scheduler.AddDelayed(() => MainScreenStack.Show(), delayBetweenSwap);
         }
         else
         {
             GameScreenStack.Show();
-            MainScreenStack.Hide();
+            Scheduler.AddDelayed(() => MainScreenStack.Hide(), delayBetweenSwap);
         }
     }
 

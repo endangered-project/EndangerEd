@@ -1,7 +1,10 @@
-﻿using EndangerEd.Game.API;
+﻿using System;
+using System.Threading;
+using EndangerEd.Game.API;
 using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Screens.ScreenStacks;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -22,6 +25,9 @@ public partial class ResultScreen : EndangerEdScreen
     [Resolved]
     private APIEndpointConfig endpointConfig { get; set; }
 
+    [Resolved]
+    private APIRequestManager apiRequestManager { get; set; }
+
     private SpriteIcon loadingIcon;
     private Container loadingContainer;
     private FillFlowContainer leaderboardNameContainer;
@@ -30,6 +36,30 @@ public partial class ResultScreen : EndangerEdScreen
     private SpriteText sessionIdText;
     private EndangerEdButton backToMenuButton;
     private EndangerEdButton playAgainButton;
+
+    private SpriteText scoreText;
+    private SpriteText rankText;
+
+    private SpriteText playerName1;
+    private SpriteText playerName2;
+    private SpriteText playerName3;
+    private SpriteText playerName4;
+    private SpriteText playerName5;
+    private SpriteText playerScore1;
+    private SpriteText playerScore2;
+    private SpriteText playerScore3;
+    private SpriteText playerScore4;
+    private SpriteText playerScore5;
+
+    private SpriteText errorMessage;
+
+    private BindableBool loadingComplete = new BindableBool();
+    private int resultId;
+
+    public ResultScreen(int resultId)
+    {
+        this.resultId = resultId;
+    }
 
     [BackgroundDependencyLoader]
     private void load()
@@ -56,27 +86,30 @@ public partial class ResultScreen : EndangerEdScreen
                         Text = "LEADERBOARD",
                         Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, size: 50, weight: EndangerEdFont.FontWeight.Bold)
                     },
-                    new SpriteText
+                    playerName1 = new SpriteText
                     {
                         Text = "1. Player 1",
                         Font = new FontUsage(size: 30),
+                        Colour = Colour4.Gold
                     },
-                    new SpriteText
+                    playerName2 = new SpriteText
                     {
                         Text = "2. Player 2",
                         Font = new FontUsage(size: 30),
+                        Colour = Colour4.Silver
                     },
-                    new SpriteText
+                    playerName3 = new SpriteText
                     {
                         Text = "3. Player 3",
                         Font = new FontUsage(size: 30),
+                        Colour = Colour4.Brown
                     },
-                    new SpriteText
+                    playerName4 = new SpriteText
                     {
                         Text = "4. Player 4",
                         Font = new FontUsage(size: 30),
                     },
-                    new SpriteText
+                    playerName5 = new SpriteText
                     {
                         Text = "5. Player 5",
                         Font = new FontUsage(size: 30),
@@ -103,27 +136,30 @@ public partial class ResultScreen : EndangerEdScreen
                 Alpha = 0,
                 Children = new Drawable[]
                 {
-                    new SpriteText
+                    playerScore1 = new SpriteText
                     {
                         Text = "100",
                         Font = new FontUsage(size: 30),
+                        Colour = Colour4.Gold
                     },
-                    new SpriteText
+                    playerScore2 = new SpriteText
                     {
                         Text = "90",
                         Font = new FontUsage(size: 30),
+                        Colour = Colour4.Silver
                     },
-                    new SpriteText
+                    playerScore3 = new SpriteText
                     {
                         Text = "80",
                         Font = new FontUsage(size: 30),
+                        Colour = Colour4.Brown
                     },
-                    new SpriteText
+                    playerScore4 = new SpriteText
                     {
                         Text = "70",
                         Font = new FontUsage(size: 30),
                     },
-                    new SpriteText
+                    playerScore5 = new SpriteText
                     {
                         Text = "60",
                         Font = new FontUsage(size: 30),
@@ -150,12 +186,12 @@ public partial class ResultScreen : EndangerEdScreen
                         Text = "RESULT",
                         Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, size: 50, weight: EndangerEdFont.FontWeight.Bold)
                     },
-                    new SpriteText
+                    scoreText = new SpriteText
                     {
                         Text = "Score : 100",
                         Font = new FontUsage(size: 30)
                     },
-                    new SpriteText
+                    rankText = new SpriteText
                     {
                         Text = "Rank : 1",
                         Font = new FontUsage(size: 30)
@@ -174,8 +210,7 @@ public partial class ResultScreen : EndangerEdScreen
                     new EndangerEdButton("Full Result")
                     {
                         Size = new Vector2(110, 50),
-                        // TODO: Change URL
-                        Action = () => host.OpenUrlExternally(endpointConfig.GameUrl + "leaderboard")
+                        Action = () => host.OpenUrlExternally(endpointConfig.GameUrl + "history/" + resultId)
                     }
                 }
             },
@@ -208,8 +243,7 @@ public partial class ResultScreen : EndangerEdScreen
                 Action = () =>
                 {
                     mainScreenStack.MainScreenStack.Push(new MainMenuScreen());
-                },
-                Alpha = 0
+                }
             },
             // Play again
             playAgainButton = new EndangerEdButton("Play again")
@@ -260,9 +294,32 @@ public partial class ResultScreen : EndangerEdScreen
                         Colour = Colour4.DarkGray,
                         Alpha = 0.5f
                     }
-                }
+                },
+            },
+            // error message
+            new SpriteText
+            {
+                Anchor = Anchor.BottomCentre,
+                Origin = Anchor.BottomCentre,
+                Text = "Failed to load result",
+                Font = EndangerEdFont.GetFont(size: 20),
+                Colour = Colour4.Red,
+                Alpha = 0
             }
         };
+
+        loadingComplete.BindValueChanged(complete =>
+        {
+            if (complete.NewValue)
+            {
+                loadingContainer.FadeOut(500, Easing.OutQuint);
+                resultContainer.FadeInFromZero(1500, Easing.OutQuint);
+                leaderboardScoreContainer.FadeInFromZero(2000, Easing.OutQuint);
+                leaderboardNameContainer.FadeInFromZero(2000, Easing.OutQuint);
+                sessionIdText.FadeInFromZero(2500, Easing.OutQuint);
+                playAgainButton.FadeInFromZero(3000, Easing.OutQuint);
+            }
+        });
     }
 
     protected override void LoadComplete()
@@ -271,12 +328,136 @@ public partial class ResultScreen : EndangerEdScreen
         loadingIcon.RotateTo(0).Then()
                    .RotateTo(360, 1000, Easing.InOutSine)
                    .Loop();
-        // TODO: Fetch result from API before showing the result
-        resultContainer.FadeInFromZero(1000, Easing.OutQuint);
-        leaderboardScoreContainer.FadeInFromZero(1500, Easing.OutQuint);
-        leaderboardNameContainer.FadeInFromZero(1500, Easing.OutQuint);
-        sessionIdText.FadeInFromZero(2000, Easing.OutQuint);
-        playAgainButton.FadeInFromZero(2500, Easing.OutQuint);
-        backToMenuButton.FadeInFromZero(3000, Easing.OutQuint);
+        sessionIdText.Text = "Session ID : " + resultId;
+
+        Thread thread = new Thread(() =>
+        {
+            try
+            {
+                var result = apiRequestManager.Get("history/" + resultId);
+                var score = result["score"];
+                var rankBefore = result["rank_before"];
+                var rankAfter = result["rank_after"];
+
+                var leaderboard = apiRequestManager.Get("leaderboard");
+
+                Scheduler.Add(() =>
+                {
+                    scoreText.Text = "Score : " + score;
+                    rankText.Text = "Rank : " + rankAfter;
+
+                    if (leaderboard.TryGetValue("username1", out var player1))
+                    {
+                        playerName1.Text = "1. " + player1;
+                    }
+                    else
+                    {
+                        playerName1.Text = "";
+                        playerName1.Alpha = 0;
+                    }
+
+                    if (leaderboard.TryGetValue("username2", out var player2))
+                    {
+                        playerName2.Text = "2. " + player2;
+                    }
+                    else
+                    {
+                        playerName2.Text = "";
+                        playerName2.Alpha = 0;
+                    }
+
+                    if (leaderboard.TryGetValue("username3", out var player3))
+                    {
+                        playerName3.Text = "3. " + player3;
+                    }
+                    else
+                    {
+                        playerName3.Text = "";
+                        playerName3.Alpha = 0;
+                    }
+
+                    if (leaderboard.TryGetValue("username4", out var player4))
+                    {
+                        playerName4.Text = "4. " + player4;
+                    }
+                    else
+                    {
+                        playerName4.Text = "";
+                        playerName4.Alpha = 0;
+                    }
+
+                    if (leaderboard.TryGetValue("username5", out var player5))
+                    {
+                        playerName5.Text = "5. " + player5;
+                    }
+                    else
+                    {
+                        playerName5.Text = "";
+                        playerName5.Alpha = 0;
+                    }
+
+                    if (leaderboard.TryGetValue("score1", out var score1))
+                    {
+                        playerScore1.Text = score1.ToString();
+                    }
+                    else
+                    {
+                        playerScore1.Text = "";
+                        playerScore1.Alpha = 0;
+                    }
+
+                    if (leaderboard.TryGetValue("score2", out var score2))
+                    {
+                        playerScore2.Text = score2.ToString();
+                    }
+                    else
+                    {
+                        playerScore2.Text = "";
+                        playerScore2.Alpha = 0;
+                    }
+
+                    if (leaderboard.TryGetValue("score3", out var score3))
+                    {
+                        playerScore3.Text = score3.ToString();
+                    }
+                    else
+                    {
+                        playerScore3.Text = "";
+                        playerScore3.Alpha = 0;
+                    }
+
+                    if (leaderboard.TryGetValue("score4", out var score4))
+                    {
+                        playerScore4.Text = score4.ToString();
+                    }
+                    else
+                    {
+                        playerScore4.Text = "";
+                        playerScore4.Alpha = 0;
+                    }
+
+                    if (leaderboard.TryGetValue("score5", out var score5))
+                    {
+                        playerScore5.Text = score5.ToString();
+                    }
+                    else
+                    {
+                        playerScore5.Text = "";
+                        playerScore5.Alpha = 0;
+                    }
+
+                    loadingComplete.Value = true;
+                });
+            }
+            catch (Exception e)
+            {
+                Scheduler.Add(() =>
+                {
+                    errorMessage.Text = e.Message;
+                    errorMessage.FadeIn(500, Easing.OutQuint);
+                });
+            }
+        });
+        thread.Start();
     }
 }

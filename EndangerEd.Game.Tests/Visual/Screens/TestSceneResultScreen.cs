@@ -8,6 +8,6 @@ public partial class TestSceneResultScreen : EndangerEdTestScene
     [BackgroundDependencyLoader]
     private void load()
     {
-        MainScreenStack.MainScreenStack.Push(new ResultScreen());
+        MainScreenStack.MainScreenStack.Push(new ResultScreen(30));
     }
 }

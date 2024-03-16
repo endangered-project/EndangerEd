@@ -79,6 +79,35 @@ public class APIRequestManager
         }
     }
 
+    public async Task<Dictionary<string, object>> GetAsync(string endpoint)
+    {
+        Logger.Log($"Sending GET request to {GetEndpoint(endpoint)}");
+        var responseTask = _client.GetAsync(GetEndpoint(endpoint));
+        var request = responseTask.GetAwaiter().GetResult();
+        var response = await request.Content.ReadAsStringAsync();
+        Logger.Log($"Response from {GetEndpoint(endpoint)}: {response}");
+
+        if (request.IsSuccessStatusCode)
+        {
+            return JsonSerializer.Deserialize<Dictionary<string, object>>(response);
+        }
+
+        throw new HttpRequestException($"Request to {GetEndpoint(endpoint)} failed with status code {request.StatusCode} and response: {response}");
+    }
+
+    public Dictionary<string, object> Get(string endpoint)
+    {
+        try
+        {
+            return GetAsync(endpoint).GetAwaiter().GetResult();
+        }
+        catch (HttpRequestException e)
+        {
+            Logger.Log($"Request to {GetEndpoint(endpoint)} failed with error: {e.Message}");
+            throw new HttpRequestException($"Request to {GetEndpoint(endpoint)} failed with status code {e.Message}");
+        }
+    }
+
     public void Dispose()
     {
         _client.Dispose();
