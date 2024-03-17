@@ -99,7 +99,7 @@ namespace EndangerEd.Game
             base.LoadComplete();
 
             fpsDisplayVisible = LocalConfig.GetBindable<bool>(EndangerEdSetting.ShowFPSCounter);
-            fpsDisplayVisible.ValueChanged += visible => { FrameStatistics.Value = visible.NewValue ? FrameStatisticsMode.Minimal : FrameStatisticsMode.None; };
+            fpsDisplayVisible.ValueChanged += visible => { FrameStatistics.Value = visible.NewValue ? FrameStatisticsMode.Full : FrameStatisticsMode.None; };
             fpsDisplayVisible.TriggerChange();
         }
 

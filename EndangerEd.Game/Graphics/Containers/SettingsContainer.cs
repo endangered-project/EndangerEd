@@ -174,7 +174,7 @@ public partial class SettingsContainer : FocusedOverlayContainer
                                 },
                                 new SpriteText()
                                 {
-                                    Text = "Show FPS"
+                                    Text = "Show Frame Statistics Overlay"
                                 },
                                 new BasicCheckbox
                                 {
