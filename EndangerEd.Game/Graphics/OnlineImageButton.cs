@@ -59,7 +59,7 @@ public partial class OnlineImageButton : Button
                     }
                 },
             },
-            new ClickHoverSounds()
+            new ClickHoverSounds(Enabled)
         };
 
         fallbackTexture = textureStore.Get("fallback-choice.jpg");

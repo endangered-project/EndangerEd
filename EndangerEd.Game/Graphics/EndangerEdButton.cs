@@ -49,7 +49,7 @@ public partial class EndangerEdButton : Button
                     }
                 },
             },
-            new ClickHoverSounds(),
+            new ClickHoverSounds(Enabled),
             new Container()
             {
                 Anchor = Anchor.Centre,
