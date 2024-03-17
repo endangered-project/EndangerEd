@@ -5,6 +5,6 @@ public partial class TestSceneEndangerEdMainScreenStack : EndangerEdTestScene
     protected override void LoadComplete()
     {
         base.LoadComplete();
-        AddStep("swap mode", MainScreenStack.SwapScreenStack);
+        AddStep("swap mode", () => MainScreenStack.SwapScreenStack());
     }
 }
