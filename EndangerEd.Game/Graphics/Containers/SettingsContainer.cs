@@ -35,6 +35,9 @@ public partial class SettingsContainer : FocusedOverlayContainer
     protected override bool BlockNonPositionalInput => false;
     protected override bool BlockScrollInput => false;
 
+    [Resolved]
+    private GameHost host { get; set; }
+
     [BackgroundDependencyLoader]
     private void load(EndangerEdConfigManager endangerEdConfigManager, FrameworkConfigManager frameworkConfigManager, Storage storage, GameHost host, AudioManager audioManager, TextureStore textureStore)
     {
@@ -272,15 +275,14 @@ public partial class SettingsContainer : FocusedOverlayContainer
                                 },
                                 new SpriteText()
                                 {
-                                    Text = "Maintenance".ToUpper(),
+                                    Text = "Debug".ToUpper(),
                                     Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 32f, EndangerEdFont.FontWeight.Bold),
                                 },
-                                new BasicButton()
+                                new EndangerEdButton("Open log folder")
                                 {
                                     Action = () => storage.PresentExternally(),
-                                    Text = "Open log folder",
                                     Width = 300,
-                                    Height = 30
+                                    Height = 40
                                 }
                             }
                         }
