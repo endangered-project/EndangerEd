@@ -30,6 +30,8 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
     [Resolved]
     private APIRequestManager apiRequestManager { get; set; }
 
+    private bool answered = false;
+
     [BackgroundDependencyLoader]
     private void load()
     {
@@ -166,7 +168,11 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
 
     private void onChoiceSelected(string choice)
     {
+        if (answered)
+            return;
+
         gameSessionStore.StopwatchClock.Stop();
+        answered = true;
 
         if (choice == CurrentQuestion.Answer)
         {
