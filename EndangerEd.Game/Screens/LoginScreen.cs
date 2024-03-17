@@ -26,6 +26,7 @@ public partial class LoginScreen : EndangerEdScreen
     private EndangerEdTextBox usernameTextBox;
     private EndangerEdPasswordBox passwordTextBox;
     private TextFlowContainer errorText;
+    private EndangerEdButton loginButton;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -51,27 +52,37 @@ public partial class LoginScreen : EndangerEdScreen
                             new EndangerEdSpriteText
                             {
                                 Text = "LOGIN",
-                                Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 48f, EndangerEdFont.FontWeight.Bold)
+                                Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 48f, EndangerEdFont.FontWeight.Bold),
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre
                             },
                             usernameTextBox = new EndangerEdTextBox
                             {
                                 Size = new Vector2(220, 50),
-                                PlaceholderText = "Username"
+                                PlaceholderText = "Username",
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre
                             },
                             passwordTextBox = new EndangerEdPasswordBox
                             {
                                 Size = new Vector2(220, 50),
-                                PlaceholderText = "Password"
+                                PlaceholderText = "Password",
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre
                             },
                             errorText = new TextFlowContainer
                             {
                                 Size = new Vector2(220, 50),
-                                Colour = Colour4.Red
+                                Colour = Colour4.Red,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre
                             },
-                            new EndangerEdButton("Login")
+                            loginButton = new EndangerEdButton("Login")
                             {
                                 Size = new Vector2(220, 50),
-                                Action = login
+                                Action = login,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre
                             }
                         }
                     }
@@ -92,6 +103,8 @@ public partial class LoginScreen : EndangerEdScreen
     {
         Thread thread = new Thread(() =>
         {
+            Scheduler.Add(() => loginButton.Enabled.Value = false);
+
             try
             {
                 var result = apiRequestManager.PostJson("token", new Dictionary<string, object>
@@ -122,6 +135,7 @@ public partial class LoginScreen : EndangerEdScreen
                     // Only show first 50 characters of the error message.
                     string errorMessage = e.Message.Length > 100 ? e.Message.Substring(0, 50) + "..." : e.Message;
                     errorText.Text = errorMessage;
+                    loginButton.Enabled.Value = true;
                 });
             }
         });

@@ -297,13 +297,18 @@ public partial class ResultScreen : EndangerEdScreen
                 },
             },
             // error message
-            new SpriteText
+            errorMessage = new SpriteText
             {
-                Anchor = Anchor.BottomCentre,
-                Origin = Anchor.BottomCentre,
+                Anchor = Anchor.BottomLeft,
+                Origin = Anchor.BottomLeft,
                 Text = "Failed to load result",
                 Font = EndangerEdFont.GetFont(size: 20),
                 Colour = Colour4.Red,
+                Margin = new MarginPadding()
+                {
+                    Bottom = 10,
+                    Left = 10
+                },
                 Alpha = 0
             }
         };
@@ -453,8 +458,9 @@ public partial class ResultScreen : EndangerEdScreen
             {
                 Scheduler.Add(() =>
                 {
-                    errorMessage.Text = e.Message;
+                    errorMessage.Text = e.Message.Length > 100 ? e.Message.Substring(0, 100) + "..." : e.Message;
                     errorMessage.FadeIn(500, Easing.OutQuint);
+                    loadingContainer.FadeOut(500, Easing.OutQuint);
                 });
             }
         });
