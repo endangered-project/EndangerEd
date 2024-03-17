@@ -56,12 +56,21 @@ public partial class LoginScreen : EndangerEdScreen
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre
                             },
-                            usernameTextBox = new EndangerEdTextBox
+                            new Container()
                             {
                                 Size = new Vector2(220, 50),
-                                PlaceholderText = "Username",
                                 Anchor = Anchor.Centre,
-                                Origin = Anchor.Centre
+                                Origin = Anchor.Centre,
+                                Children = new Drawable[]
+                                {
+                                    usernameTextBox = new EndangerEdTextBox
+                                    {
+                                        Size = new Vector2(220, 50),
+                                        PlaceholderText = "Username",
+                                        Anchor = Anchor.Centre,
+                                        Origin = Anchor.Centre
+                                    }
+                                }
                             },
                             passwordTextBox = new EndangerEdPasswordBox
                             {

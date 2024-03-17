@@ -1,3 +1,4 @@
+using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -24,8 +25,8 @@ public partial class Timer : CompositeDrawable
         {
             new SpriteText
             {
-                Text = "Time",
-                Font = new FontUsage(size: 30),
+                Text = "TIME",
+                Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 30f, EndangerEdFont.FontWeight.Bold),
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight,
                 Margin = new MarginPadding(10),

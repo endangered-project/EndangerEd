@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -22,8 +23,8 @@ public partial class LifeInGame : CompositeDrawable
         {
             new SpriteText
             {
-                Text = "Life",
-                Font = new FontUsage(size: 30),
+                Text = "LIFE",
+                Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 30f, EndangerEdFont.FontWeight.Bold),
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
                 Margin = new MarginPadding(10),
