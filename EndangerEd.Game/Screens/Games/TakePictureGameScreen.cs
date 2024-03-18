@@ -49,7 +49,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
     private Container fishContainer3;
     private Container fishContainer4;
 
-    private Box camera;
+    private Container camera;
 
     private bool allowMovingFish = true;
 
@@ -73,67 +73,22 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Position = new Vector2(0, 50),
                 Font = EndangerEdFont.GetFont(size: 30)
             },
-            endButton = new EndangerEdButton("End")
-            {
-                Anchor = Anchor.BottomRight,
-                Origin = Anchor.BottomRight,
-                Margin = new MarginPadding(10),
-                Width = 80,
-                Height = 50,
-                Action = () =>
-                {
-                    sessionStore.IsGameStarted.Value = false;
-                    gameSessionStore.StopwatchClock.Stop();
-                    answered.Value = true;
-                    allowMovingFish = false;
-                    stopBoxContainer();
-
-                    Thread thread = new Thread(() =>
-                    {
-                        Scheduler.Add(() => sessionStore.IsLoading.Value = true);
-
-                        try
-                        {
-                            apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
-                            Scheduler.AddDelayed(() =>
-                            {
-                                mainScreenStack.SwapScreenStack(100);
-                                mainScreenStack.MainScreenStack.Push(new ResultScreen(gameSessionStore.GameId));
-                            }, 3000);
-                        }
-                        catch (HttpRequestException e)
-                        {
-                            Logger.Log($"Request to game/answer failed with error: {e.Message}");
-                        }
-
-                        Scheduler.Add(() => sessionStore.IsLoading.Value = false);
-                    });
-                    thread.Start();
-                }
-            },
-            skipButton = new EndangerEdButton("Skip")
-            {
-                Anchor = Anchor.BottomRight,
-                Origin = Anchor.BottomRight,
-                Margin = new MarginPadding
-                {
-                    Bottom = 70,
-                    Right = 10
-                },
-                Width = 80,
-                Height = 50,
-                Action = () =>
-                {
-                    gameSessionStore.StopwatchClock.Stop();
-                    onChoiceSelected("");
-                }
-            },
-            camera = new Box
+            camera = new Container()
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(150, 150),
-                Colour = Colour4.Blue
+                Children = new Drawable[]
+                {
+                    new Box
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(150, 150),
+                        Colour = Colour4.Blue,
+                        Alpha = 0.5f
+                    }
+                }
             }
         };
 
@@ -218,7 +173,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(100, 100),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, 0.3f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -241,12 +196,12 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
         {
             AddInternal(fishContainer1 = new Container()
             {
-                Anchor = Anchor.TopLeft,
-                Origin = Anchor.TopLeft,
+                Anchor = Anchor.BottomCentre,
+                Origin = Anchor.BottomCentre,
                 Size = new Vector2(100, 100),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Position = new Vector2(RNG.Next(-40, 40) * 0.01f, 0.3f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -266,11 +221,11 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             });
             AddInternal(fishContainer2 = new Container()
             {
-                Anchor = Anchor.TopLeft,
-                Origin = Anchor.TopLeft,
+                Anchor = Anchor.BottomCentre,
+                Origin = Anchor.BottomCentre,
                 Size = new Vector2(100, 100),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Position = new Vector2(RNG.Next(-40, 40) * 0.01f, 0.3f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -290,11 +245,11 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             });
             AddInternal(fishContainer3 = new Container()
             {
-                Anchor = Anchor.TopLeft,
-                Origin = Anchor.TopLeft,
+                Anchor = Anchor.BottomCentre,
+                Origin = Anchor.BottomCentre,
                 Size = new Vector2(100, 100),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Position = new Vector2(RNG.Next(-40, 40) * 0.01f, 0.3f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -314,11 +269,11 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             });
             AddInternal(fishContainer4 = new Container()
             {
-                Anchor = Anchor.TopLeft,
-                Origin = Anchor.TopLeft,
+                Anchor = Anchor.BottomCentre,
+                Origin = Anchor.BottomCentre,
                 Size = new Vector2(100, 100),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Position = new Vector2(RNG.Next(-40, 40) * 0.01f, 0.3f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -338,6 +293,75 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             });
         }
 
+        AddInternal(new Box()
+        {
+            Anchor = Anchor.BottomCentre,
+            Origin = Anchor.BottomCentre,
+            RelativeSizeAxes = Axes.X,
+            Height = 300,
+            Colour = Colour4.Cyan,
+            Alpha = 0.75f
+        });
+
+        AddRangeInternal(new Drawable[]
+        {
+            endButton = new EndangerEdButton("End")
+            {
+                Anchor = Anchor.BottomRight,
+                Origin = Anchor.BottomRight,
+                Margin = new MarginPadding(10),
+                Width = 80,
+                Height = 50,
+                Action = () =>
+                {
+                    sessionStore.IsGameStarted.Value = false;
+                    gameSessionStore.StopwatchClock.Stop();
+                    answered.Value = true;
+                    allowMovingFish = false;
+                    stopFishContainer();
+
+                    Thread thread = new Thread(() =>
+                    {
+                        Scheduler.Add(() => sessionStore.IsLoading.Value = true);
+
+                        try
+                        {
+                            apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
+                            Scheduler.AddDelayed(() =>
+                            {
+                                mainScreenStack.SwapScreenStack(100);
+                                mainScreenStack.MainScreenStack.Push(new ResultScreen(gameSessionStore.GameId));
+                            }, 3000);
+                        }
+                        catch (HttpRequestException e)
+                        {
+                            Logger.Log($"Request to game/answer failed with error: {e.Message}");
+                        }
+
+                        Scheduler.Add(() => sessionStore.IsLoading.Value = false);
+                    });
+                    thread.Start();
+                }
+            },
+            skipButton = new EndangerEdButton("Skip")
+            {
+                Anchor = Anchor.BottomRight,
+                Origin = Anchor.BottomRight,
+                Margin = new MarginPadding
+                {
+                    Bottom = 70,
+                    Right = 10
+                },
+                Width = 80,
+                Height = 50,
+                Action = () =>
+                {
+                    gameSessionStore.StopwatchClock.Stop();
+                    onChoiceSelected("");
+                }
+            }
+        });
+
         answered.BindValueChanged(answered =>
         {
             if (answered.NewValue)
@@ -350,10 +374,46 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
 
     protected override void Update()
     {
-        
+        if (gameSessionStore.IsOverTime() && !IsOverTime)
+        {
+            IsOverTime = true;
+            onChoiceSelected("");
+        }
+
+        if (camera.Contains(fishContainer1.ScreenSpaceDrawQuad.Centre))
+        {
+            camera.FlashColour(Colour4.White, 500);
+            allowMovingFish = false;
+            stopFishContainer();
+            onChoiceSelected(question.Choices[0]);
+        }
+
+        if (camera.Contains(fishContainer2.ScreenSpaceDrawQuad.Centre))
+        {
+            camera.FlashColour(Colour4.White, 500);
+            allowMovingFish = false;
+            stopFishContainer();
+            onChoiceSelected(question.Choices[1]);
+        }
+
+        if (camera.Contains(fishContainer3.ScreenSpaceDrawQuad.Centre))
+        {
+            camera.FlashColour(Colour4.White, 500);
+            allowMovingFish = false;
+            stopFishContainer();
+            onChoiceSelected(question.Choices[2]);
+        }
+
+        if (camera.Contains(fishContainer4.ScreenSpaceDrawQuad.Centre))
+        {
+            camera.FlashColour(Colour4.White, 500);
+            allowMovingFish = false;
+            stopFishContainer();
+            onChoiceSelected(question.Choices[3]);
+        }
     }
 
-    private void stopBoxContainer()
+    private void stopFishContainer()
     {
         fishContainer1.ClearTransforms();
         fishContainer2.ClearTransforms();
@@ -363,9 +423,9 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
 
     protected override bool OnMouseMove(MouseMoveEvent e)
     {
-        // Move the bucket to the mouse position.
+        // Move the camera to the mouse position.
         if (allowMovingFish)
-            camera.Position = new Vector2(e.ScreenSpaceMousePosition.X - DrawSize.X, camera.Position.Y);
+            camera.Position = new Vector2(e.MousePosition.X - DrawSize.X / 2, e.MousePosition.Y - DrawSize.Y / 2);
         return base.OnMouseMove(e);
     }
 
@@ -378,27 +438,41 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             gameSessionStore.StopwatchClock.Start();
         });
 
-        // Add schedule to move the boxContainer to the bottom of the screen at the random time.
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingFish)
-                fishContainer1.MoveTo(new Vector2(fishContainer1.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(0, 5000));
+            float randomX = RNG.Next(-40, 40) * 0.01f;
+            float jumpHeight = RNG.Next(-90, -50) * 0.01f;
+            float jumpWidth = RNG.Next(0, 30) * 0.01f;
+            int duration = RNG.Next(1500, 4500);
+            fishContainer1.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
+        }, RNG.Next(1000, 6000));
+
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingFish)
-                fishContainer2.MoveTo(new Vector2(fishContainer2.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(1500, 6500));
+            float randomX = RNG.Next(-40, 40) * 0.01f;
+            float jumpHeight = RNG.Next(-90, -50) * 0.01f;
+            float jumpWidth = RNG.Next(0, 30) * 0.01f;
+            int duration = RNG.Next(1500, 4500);
+            fishContainer2.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
+        }, RNG.Next(3500, 8500));
+
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingFish)
-                fishContainer3.MoveTo(new Vector2(fishContainer3.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(3000, 8000));
+            float randomX = RNG.Next(-40, 40) * 0.01f;
+            float jumpHeight = RNG.Next(-90, -50) * 0.01f;
+            float jumpWidth = RNG.Next(0, 30) * 0.01f;
+            int duration = RNG.Next(1500, 4500);
+            fishContainer3.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
+        }, RNG.Next(6000, 11000));
+
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingFish)
-                fishContainer4.MoveTo(new Vector2(fishContainer4.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(4500, 9500));
+            float randomX = RNG.Next(-40, 40) * 0.01f;
+            float jumpHeight = RNG.Next(-90, -50) * 0.01f;
+            float jumpWidth = RNG.Next(0, 30) * 0.01f;
+            int duration = RNG.Next(1500, 4500);
+            fishContainer4.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
+        }, RNG.Next(8500, 13500));
     }
 
     private void onChoiceSelected(string choice)

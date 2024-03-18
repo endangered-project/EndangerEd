@@ -73,61 +73,6 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Position = new Vector2(0, 50),
                 Font = EndangerEdFont.GetFont(size: 30)
             },
-            endButton = new EndangerEdButton("End")
-            {
-                Anchor = Anchor.BottomRight,
-                Origin = Anchor.BottomRight,
-                Margin = new MarginPadding(10),
-                Width = 80,
-                Height = 50,
-                Action = () =>
-                {
-                    sessionStore.IsGameStarted.Value = false;
-                    gameSessionStore.StopwatchClock.Stop();
-                    answered.Value = true;
-                    allowMovingBucket = false;
-                    stopBoxContainer();
-
-                    Thread thread = new Thread(() =>
-                    {
-                        Scheduler.Add(() => sessionStore.IsLoading.Value = true);
-
-                        try
-                        {
-                            apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
-                            Scheduler.AddDelayed(() =>
-                            {
-                                mainScreenStack.SwapScreenStack(100);
-                                mainScreenStack.MainScreenStack.Push(new ResultScreen(gameSessionStore.GameId));
-                            }, 3000);
-                        }
-                        catch (HttpRequestException e)
-                        {
-                            Logger.Log($"Request to game/answer failed with error: {e.Message}");
-                        }
-
-                        Scheduler.Add(() => sessionStore.IsLoading.Value = false);
-                    });
-                    thread.Start();
-                }
-            },
-            skipButton = new EndangerEdButton("Skip")
-            {
-                Anchor = Anchor.BottomRight,
-                Origin = Anchor.BottomRight,
-                Margin = new MarginPadding
-                {
-                    Bottom = 70,
-                    Right = 10
-                },
-                Width = 80,
-                Height = 50,
-                Action = () =>
-                {
-                    gameSessionStore.StopwatchClock.Stop();
-                    onChoiceSelected("");
-                }
-            },
             bucket = new Box
             {
                 Anchor = Anchor.BottomCentre,
@@ -344,6 +289,65 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             {
                 endButton.Enabled.Value = false;
                 skipButton.Enabled.Value = false;
+            }
+        });
+
+        AddRangeInternal(new Drawable[]
+        {
+            endButton = new EndangerEdButton("End")
+            {
+                Anchor = Anchor.BottomRight,
+                Origin = Anchor.BottomRight,
+                Margin = new MarginPadding(10),
+                Width = 80,
+                Height = 50,
+                Action = () =>
+                {
+                    sessionStore.IsGameStarted.Value = false;
+                    gameSessionStore.StopwatchClock.Stop();
+                    answered.Value = true;
+                    allowMovingBucket = false;
+                    stopBoxContainer();
+
+                    Thread thread = new Thread(() =>
+                    {
+                        Scheduler.Add(() => sessionStore.IsLoading.Value = true);
+
+                        try
+                        {
+                            apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
+                            Scheduler.AddDelayed(() =>
+                            {
+                                mainScreenStack.SwapScreenStack(100);
+                                mainScreenStack.MainScreenStack.Push(new ResultScreen(gameSessionStore.GameId));
+                            }, 3000);
+                        }
+                        catch (HttpRequestException e)
+                        {
+                            Logger.Log($"Request to game/answer failed with error: {e.Message}");
+                        }
+
+                        Scheduler.Add(() => sessionStore.IsLoading.Value = false);
+                    });
+                    thread.Start();
+                }
+            },
+            skipButton = new EndangerEdButton("Skip")
+            {
+                Anchor = Anchor.BottomRight,
+                Origin = Anchor.BottomRight,
+                Margin = new MarginPadding
+                {
+                    Bottom = 70,
+                    Right = 10
+                },
+                Width = 80,
+                Height = 50,
+                Action = () =>
+                {
+                    gameSessionStore.StopwatchClock.Stop();
+                    onChoiceSelected("");
+                }
             }
         });
     }
