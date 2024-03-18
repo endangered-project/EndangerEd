@@ -471,6 +471,16 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 {
                     this.FlashColour(Colour4.Green, 500);
 
+                    Box loadingBox = new Box()
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft,
+                        RelativeSizeAxes = Axes.X,
+                        Height = 15,
+                        Colour = Colour4.White,
+                        Alpha = 0.75f
+                    };
+
                     Container resultContainer = new Container()
                     {
                         Anchor = Anchor.Centre,
@@ -478,6 +488,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                         Size = new Vector2(300, 300),
                         Masking = true,
                         CornerRadius = 20,
+                        Scale = new Vector2(0),
                         Children = new Drawable[]
                         {
                             new Box()
@@ -515,12 +526,14 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                                         Colour = Colour4.LightGreen
                                     }
                                 }
-                            }
+                            },
+                            loadingBox
                         }
                     };
 
                     AddInternal(resultContainer);
-                    resultContainer.FlashColour(Colour4.LightGreen, 500);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic);
+                    loadingBox.ResizeWidthTo(0, 3000);
                 });
             }
             else
@@ -529,6 +542,16 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 {
                     this.FlashColour(Colour4.Red, 500);
                     gameSessionStore.Life.Value--;
+
+                    Box loadingBox = new Box()
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft,
+                        RelativeSizeAxes = Axes.X,
+                        Height = 15,
+                        Colour = Colour4.White,
+                        Alpha = 0.75f
+                    };
 
                     FillFlowContainer resultDetail = new FillFlowContainer()
                     {
@@ -595,6 +618,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                         Size = new Vector2(300, 300),
                         Masking = true,
                         CornerRadius = 20,
+                        Scale = new Vector2(0),
                         Children = new Drawable[]
                         {
                             new Box()
@@ -605,12 +629,14 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                                 Colour = Colour4.Black,
                                 Alpha = 0.75f
                             },
-                            resultDetail
+                            resultDetail,
+                            loadingBox
                         }
                     };
 
                     AddInternal(resultContainer);
-                    resultContainer.FlashColour(Colour4.Red, 500);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic);
+                    loadingBox.ResizeWidthTo(0, 3000);
                 });
             }
 
