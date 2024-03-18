@@ -44,14 +44,14 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
     private EndangerEdButton endButton;
     private EndangerEdButton skipButton;
 
-    private Container boxContainer1;
-    private Container boxContainer2;
-    private Container boxContainer3;
-    private Container boxContainer4;
+    private Container fishContainer1;
+    private Container fishContainer2;
+    private Container fishContainer3;
+    private Container fishContainer4;
 
-    private Box bucket;
+    private Box camera;
 
-    private bool allowMovingBucket = true;
+    private bool allowMovingFish = true;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -69,7 +69,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.TopCentre,
-                Text = "Move the bucket to catch the answer!",
+                Text = "Take a picture of the correct fish!",
                 Position = new Vector2(0, 50),
                 Font = EndangerEdFont.GetFont(size: 30)
             },
@@ -85,7 +85,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     sessionStore.IsGameStarted.Value = false;
                     gameSessionStore.StopwatchClock.Stop();
                     answered.Value = true;
-                    allowMovingBucket = false;
+                    allowMovingFish = false;
                     stopBoxContainer();
 
                     Thread thread = new Thread(() =>
@@ -128,10 +128,10 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     onChoiceSelected("");
                 }
             },
-            bucket = new Box
+            camera = new Box
             {
-                Anchor = Anchor.BottomCentre,
-                Origin = Anchor.BottomCentre,
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
                 Size = new Vector2(150, 150),
                 Colour = Colour4.Blue
             }
@@ -139,7 +139,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
 
         if (question.ContentType == ContentType.Image)
         {
-            AddInternal(boxContainer1 = new Container()
+            AddInternal(fishContainer1 = new Container()
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
@@ -164,7 +164,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     }
                 }
             });
-            AddInternal(boxContainer2 = new Container()
+            AddInternal(fishContainer2 = new Container()
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
@@ -188,7 +188,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     }
                 }
             });
-            AddInternal(boxContainer3 = new Container()
+            AddInternal(fishContainer3 = new Container()
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
@@ -212,7 +212,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     }
                 }
             });
-            AddInternal(boxContainer4 = new Container()
+            AddInternal(fishContainer4 = new Container()
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
@@ -239,7 +239,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
         }
         else
         {
-            AddInternal(boxContainer1 = new Container()
+            AddInternal(fishContainer1 = new Container()
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
@@ -264,7 +264,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     }
                 }
             });
-            AddInternal(boxContainer2 = new Container()
+            AddInternal(fishContainer2 = new Container()
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
@@ -288,7 +288,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     }
                 }
             });
-            AddInternal(boxContainer3 = new Container()
+            AddInternal(fishContainer3 = new Container()
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
@@ -312,7 +312,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     }
                 }
             });
-            AddInternal(boxContainer4 = new Container()
+            AddInternal(fishContainer4 = new Container()
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
@@ -350,62 +350,22 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
 
     protected override void Update()
     {
-        if (gameSessionStore.IsOverTime() && !IsOverTime)
-        {
-            IsOverTime = true;
-            onChoiceSelected("");
-        }
-
-        if (bucket.Contains(boxContainer1.ScreenSpaceDrawQuad.Centre))
-        {
-            allowMovingBucket = false;
-            stopBoxContainer();
-            onChoiceSelected(question.Choices[0]);
-        }
-
-        if (bucket.Contains(boxContainer2.ScreenSpaceDrawQuad.Centre))
-        {
-            allowMovingBucket = false;
-            stopBoxContainer();
-            onChoiceSelected(question.Choices[1]);
-        }
-
-        if (bucket.Contains(boxContainer3.ScreenSpaceDrawQuad.Centre))
-        {
-            allowMovingBucket = false;
-            stopBoxContainer();
-            onChoiceSelected(question.Choices[2]);
-        }
-
-        if (bucket.Contains(boxContainer4.ScreenSpaceDrawQuad.Centre))
-        {
-            allowMovingBucket = false;
-            stopBoxContainer();
-            onChoiceSelected(question.Choices[3]);
-        }
-
-        // If all bucket is not in the screen, then the game is over.
-        if (boxContainer1.Position.Y > 1.2f && boxContainer2.Position.Y > 1.2f && boxContainer3.Position.Y > 1.2f && boxContainer4.Position.Y > 1.2f)
-        {
-            allowMovingBucket = false;
-            stopBoxContainer();
-            onChoiceSelected("");
-        }
+        
     }
 
     private void stopBoxContainer()
     {
-        boxContainer1.ClearTransforms();
-        boxContainer2.ClearTransforms();
-        boxContainer3.ClearTransforms();
-        boxContainer4.ClearTransforms();
+        fishContainer1.ClearTransforms();
+        fishContainer2.ClearTransforms();
+        fishContainer3.ClearTransforms();
+        fishContainer4.ClearTransforms();
     }
 
     protected override bool OnMouseMove(MouseMoveEvent e)
     {
         // Move the bucket to the mouse position.
-        if (allowMovingBucket)
-            bucket.Position = new Vector2(e.ScreenSpaceMousePosition.X - DrawSize.X, bucket.Position.Y);
+        if (allowMovingFish)
+            camera.Position = new Vector2(e.ScreenSpaceMousePosition.X - DrawSize.X, camera.Position.Y);
         return base.OnMouseMove(e);
     }
 
@@ -421,23 +381,23 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
         // Add schedule to move the boxContainer to the bottom of the screen at the random time.
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingBucket)
-                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 5000, Easing.InOutSine);
+            if (allowMovingFish)
+                fishContainer1.MoveTo(new Vector2(fishContainer1.Position.X, 1.3f), 5000, Easing.InOutSine);
         }, RNG.Next(0, 5000));
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingBucket)
-                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 5000, Easing.InOutSine);
+            if (allowMovingFish)
+                fishContainer2.MoveTo(new Vector2(fishContainer2.Position.X, 1.3f), 5000, Easing.InOutSine);
         }, RNG.Next(1500, 6500));
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingBucket)
-                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 5000, Easing.InOutSine);
+            if (allowMovingFish)
+                fishContainer3.MoveTo(new Vector2(fishContainer3.Position.X, 1.3f), 5000, Easing.InOutSine);
         }, RNG.Next(3000, 8000));
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingBucket)
-                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 5000, Easing.InOutSine);
+            if (allowMovingFish)
+                fishContainer4.MoveTo(new Vector2(fishContainer4.Position.X, 1.3f), 5000, Easing.InOutSine);
         }, RNG.Next(4500, 9500));
     }
 
@@ -532,7 +492,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     };
 
                     AddInternal(resultContainer);
-                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic).Then().Delay(3000).ScaleTo(0, 1000, Easing.OutElastic);
                     loadingBox.ResizeWidthTo(0, 3000);
                 });
             }
@@ -635,7 +595,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     };
 
                     AddInternal(resultContainer);
-                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic).Then().Delay(3000).ScaleTo(0, 1000, Easing.OutElastic);
                     loadingBox.ResizeWidthTo(0, 3000);
                 });
             }

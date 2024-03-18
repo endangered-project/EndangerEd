@@ -536,7 +536,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                     };
 
                     AddInternal(resultContainer);
-                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic).Then().Delay(3000).ScaleTo(0, 1000, Easing.OutElastic);
                     loadingBox.ResizeWidthTo(0, 3000);
                 });
             }
@@ -639,7 +639,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                     };
 
                     AddInternal(resultContainer);
-                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic).Then().Delay(3000).ScaleTo(0, 1000, Easing.OutElastic);
                     loadingBox.ResizeWidthTo(0, 3000);
                 });
             }
