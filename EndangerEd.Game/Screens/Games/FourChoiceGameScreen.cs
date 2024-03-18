@@ -192,8 +192,11 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
     protected override void LoadComplete()
     {
         base.LoadComplete();
-        gameSessionStore.StopwatchClock.Reset();
-        gameSessionStore.StopwatchClock.Start();
+        Scheduler.Add(() =>
+        {
+            gameSessionStore.StopwatchClock.Reset();
+            gameSessionStore.StopwatchClock.Start();
+        });
     }
 
     private void onChoiceSelected(string choice)

@@ -131,6 +131,14 @@ public partial class EndangerEdMainScreenStack : ScreenStack
                 GameScreenStack.MainScreenStack.Push(new FourChoiceGameScreen(question));
                 break;
 
+            case QuestionMode.Cannon:
+                GameScreenStack.MainScreenStack.Push(new CannonGameScreen(question));
+                break;
+
+            case QuestionMode.Bucket:
+                GameScreenStack.MainScreenStack.Push(new BucketGameScreen(question));
+                break;
+
             default:
                 GameScreenStack.MainScreenStack.Push(new FourChoiceGameScreen(question));
                 break;

@@ -20,5 +20,7 @@ public enum ContentType
 
 public enum QuestionMode
 {
-    FourChoice
+    FourChoice,
+    Cannon,
+    Bucket
 }

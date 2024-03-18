@@ -9,6 +9,8 @@ public class APIUtility
         return questionMode switch
         {
             "FourChoice" => QuestionMode.FourChoice,
+            "Cannon" => QuestionMode.Cannon,
+            "Bucket" => QuestionMode.Bucket,
             _ => QuestionMode.FourChoice
         };
     }
