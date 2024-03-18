@@ -12,14 +12,21 @@ using Newtonsoft.Json;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
+using osu.Framework.Utils;
 using osuTK;
 
 namespace EndangerEd.Game.Screens.Games;
 
+/// <summary>
+/// Game about receive a falling answer to answer a question.
+/// </summary>
+/// <param name="question"></param>
 public partial class BucketGameScreen(Question question) : MicroGameScreen(question)
 {
     [Resolved]
@@ -34,11 +41,18 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
     [Resolved]
     private APIRequestManager apiRequestManager { get; set; }
 
-    private BindableBool answered = new BindableBool();
+    private readonly BindableBool answered = new BindableBool();
     private EndangerEdButton endButton;
     private EndangerEdButton skipButton;
 
-    private Box cannonBox;
+    private Container boxContainer1;
+    private Container boxContainer2;
+    private Container boxContainer3;
+    private Container boxContainer4;
+
+    private Box bucket;
+
+    private bool allowMovingBucket = true;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -64,9 +78,13 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                     sessionStore.IsGameStarted.Value = false;
                     gameSessionStore.StopwatchClock.Stop();
                     answered.Value = true;
+                    allowMovingBucket = false;
+                    stopBoxContainer();
 
                     Thread thread = new Thread(() =>
                     {
+                        Scheduler.Add(() => sessionStore.IsLoading.Value = true);
+
                         try
                         {
                             apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
@@ -80,6 +98,8 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                         {
                             Logger.Log($"Request to game/answer failed with error: {e.Message}");
                         }
+
+                        Scheduler.Add(() => sessionStore.IsLoading.Value = false);
                     });
                     thread.Start();
                 }
@@ -101,12 +121,12 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                     onChoiceSelected("");
                 }
             },
-            cannonBox = new Box
+            bucket = new Box
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Size = new Vector2(80,200),
-                Colour = Colour4.Red
+                Size = new Vector2(150, 150),
+                Colour = Colour4.Blue
             }
         };
 
@@ -116,7 +136,103 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         }
         else
         {
-
+            AddInternal(boxContainer1 = new Container()
+            {
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.TopLeft,
+                Size = new Vector2(100, 100),
+                RelativePositionAxes = Axes.Both,
+                // Limit the position of PNG to make the box still in the screen.
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Children = new Drawable[]
+                {
+                    new Box()
+                    {
+                        Anchor = Anchor.TopCentre,
+                        Origin = Anchor.TopCentre,
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Colour4.Red
+                    },
+                    new SpriteText()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Text = question.Choices[0]
+                    }
+                }
+            });
+            AddInternal(boxContainer2 = new Container()
+            {
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.TopLeft,
+                Size = new Vector2(100, 100),
+                RelativePositionAxes = Axes.Both,
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Children = new Drawable[]
+                {
+                    new Box()
+                    {
+                        Anchor = Anchor.TopCentre,
+                        Origin = Anchor.TopCentre,
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Colour4.Red
+                    },
+                    new SpriteText()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Text = question.Choices[1]
+                    }
+                }
+            });
+            AddInternal(boxContainer3 = new Container()
+            {
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.TopLeft,
+                Size = new Vector2(100, 100),
+                RelativePositionAxes = Axes.Both,
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Children = new Drawable[]
+                {
+                    new Box()
+                    {
+                        Anchor = Anchor.TopCentre,
+                        Origin = Anchor.TopCentre,
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Colour4.Red
+                    },
+                    new SpriteText()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Text = question.Choices[2]
+                    }
+                }
+            });
+            AddInternal(boxContainer4 = new Container()
+            {
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.TopLeft,
+                Size = new Vector2(100, 100),
+                RelativePositionAxes = Axes.Both,
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Children = new Drawable[]
+                {
+                    new Box()
+                    {
+                        Anchor = Anchor.TopCentre,
+                        Origin = Anchor.TopCentre,
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Colour4.Red
+                    },
+                    new SpriteText()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Text = question.Choices[3]
+                    }
+                }
+            });
         }
 
         answered.BindValueChanged(answered =>
@@ -136,15 +252,49 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             IsOverTime = true;
             onChoiceSelected("");
         }
+
+        if (bucket.Contains(boxContainer1.ScreenSpaceDrawQuad.TopLeft))
+        {
+            allowMovingBucket = false;
+            stopBoxContainer();
+            onChoiceSelected(question.Choices[0]);
+        }
+
+        if (bucket.Contains(boxContainer2.ScreenSpaceDrawQuad.TopLeft))
+        {
+            allowMovingBucket = false;
+            stopBoxContainer();
+            onChoiceSelected(question.Choices[1]);
+        }
+
+        if (bucket.Contains(boxContainer3.ScreenSpaceDrawQuad.TopLeft))
+        {
+            allowMovingBucket = false;
+            stopBoxContainer();
+            onChoiceSelected(question.Choices[2]);
+        }
+
+        if (bucket.Contains(boxContainer4.ScreenSpaceDrawQuad.TopLeft))
+        {
+            allowMovingBucket = false;
+            stopBoxContainer();
+            onChoiceSelected(question.Choices[3]);
+        }
+    }
+
+    private void stopBoxContainer()
+    {
+        boxContainer1.ClearTransforms();
+        boxContainer2.ClearTransforms();
+        boxContainer3.ClearTransforms();
+        boxContainer4.ClearTransforms();
     }
 
     protected override bool OnMouseMove(MouseMoveEvent e)
     {
-        // Rotate the cannon using the mouse position
-        // Compute the angle between the cannon and the mouse position
-        var angle = Math.Atan2(e.ScreenSpaceMousePosition.Y, e.ScreenSpaceMousePosition.X);
-        Logger.LogPrint($"Angle: {angle}");
-        cannonBox.Rotation = (float)angle;
+        // Move the bucket to the mouse position.
+        if (allowMovingBucket)
+            bucket.Position = new Vector2(e.ScreenSpaceMousePosition.X - DrawSize.X, bucket.Position.Y);
         return base.OnMouseMove(e);
     }
 
@@ -156,6 +306,28 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             gameSessionStore.StopwatchClock.Reset();
             gameSessionStore.StopwatchClock.Start();
         });
+
+        // Add schedule to move the boxContainer to the bottom of the screen at the random time.
+        Scheduler.AddDelayed(() =>
+        {
+            if (allowMovingBucket)
+                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 5000, Easing.InOutSine);
+        }, RNG.Next(1000, 5000));
+        Scheduler.AddDelayed(() =>
+        {
+            if (allowMovingBucket)
+                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 5000, Easing.InOutSine);
+        }, RNG.Next(1000, 5000));
+        Scheduler.AddDelayed(() =>
+        {
+            if (allowMovingBucket)
+                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 5000, Easing.InOutSine);
+        }, RNG.Next(1000, 5000));
+        Scheduler.AddDelayed(() =>
+        {
+            if (allowMovingBucket)
+                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 5000, Easing.InOutSine);
+        }, RNG.Next(1000, 5000));
     }
 
     private void onChoiceSelected(string choice)
@@ -166,41 +338,44 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         gameSessionStore.StopwatchClock.Stop();
         answered.Value = true;
 
-        if (choice == CurrentQuestion.Answer)
+        Thread thread = new Thread(() =>
         {
-            this.FlashColour(Colour4.Green, 500);
-        }
-        else
-        {
-            this.FlashColour(Colour4.Red, 500);
-            gameSessionStore.Life.Value--;
-        }
-
-        try
-        {
-            var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
+            try
             {
-                { "answer", choice }
-            });
-            result.TryGetValue("score", out var scoreValue);
-            gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
-        }
-        catch (HttpRequestException e)
-        {
-            Logger.Log($"Request to game/answer failed with error: {e.Message}");
-        }
-
-        if (gameSessionStore.Life.Value == 0)
-        {
-            Scheduler.AddDelayed(() =>
+                var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
+                {
+                    { "answer", choice }
+                });
+                result.TryGetValue("score", out var scoreValue);
+                gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
+            }
+            catch (HttpRequestException e)
             {
-                this.Exit();
-                mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
-            }, 1000);
-        }
-        else
-        {
-            Thread thread = new Thread(() =>
+                Logger.Log($"Request to game/answer failed with error: {e.Message}");
+            }
+
+            if (choice == CurrentQuestion.Answer)
+            {
+                Scheduler.Add(() => this.FlashColour(Colour4.Green, 500));
+            }
+            else
+            {
+                Scheduler.Add(() =>
+                {
+                    this.FlashColour(Colour4.Red, 500);
+                    gameSessionStore.Life.Value--;
+                });
+            }
+
+            if (gameSessionStore.Life.Value == 0)
+            {
+                Scheduler.AddDelayed(() =>
+                {
+                    this.Exit();
+                    mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
+                }, 1000);
+            }
+            else
             {
                 try
                 {
@@ -225,8 +400,8 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 {
                     Logger.Log($"Request to game/question failed with error: {e.Message}");
                 }
-            });
-            thread.Start();
-        }
+            }
+        });
+        thread.Start();
     }
 }

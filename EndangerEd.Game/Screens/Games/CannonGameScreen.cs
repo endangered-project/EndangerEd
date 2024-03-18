@@ -166,41 +166,44 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         gameSessionStore.StopwatchClock.Stop();
         answered.Value = true;
 
-        if (choice == CurrentQuestion.Answer)
+        Thread thread = new Thread(() =>
         {
-            this.FlashColour(Colour4.Green, 500);
-        }
-        else
-        {
-            this.FlashColour(Colour4.Red, 500);
-            gameSessionStore.Life.Value--;
-        }
-
-        try
-        {
-            var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
+            try
             {
-                { "answer", choice }
-            });
-            result.TryGetValue("score", out var scoreValue);
-            gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
-        }
-        catch (HttpRequestException e)
-        {
-            Logger.Log($"Request to game/answer failed with error: {e.Message}");
-        }
-
-        if (gameSessionStore.Life.Value == 0)
-        {
-            Scheduler.AddDelayed(() =>
+                var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
+                {
+                    { "answer", choice }
+                });
+                result.TryGetValue("score", out var scoreValue);
+                gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
+            }
+            catch (HttpRequestException e)
             {
-                this.Exit();
-                mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
-            }, 1000);
-        }
-        else
-        {
-            Thread thread = new Thread(() =>
+                Logger.Log($"Request to game/answer failed with error: {e.Message}");
+            }
+
+            if (choice == CurrentQuestion.Answer)
+            {
+                Scheduler.Add(() => this.FlashColour(Colour4.Green, 500));
+            }
+            else
+            {
+                Scheduler.Add(() =>
+                {
+                    this.FlashColour(Colour4.Red, 500);
+                    gameSessionStore.Life.Value--;
+                });
+            }
+
+            if (gameSessionStore.Life.Value == 0)
+            {
+                Scheduler.AddDelayed(() =>
+                {
+                    this.Exit();
+                    mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
+                }, 1000);
+            }
+            else
             {
                 try
                 {
@@ -225,8 +228,8 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 {
                     Logger.Log($"Request to game/question failed with error: {e.Message}");
                 }
-            });
-            thread.Start();
-        }
+            }
+        });
+        thread.Start();
     }
 }

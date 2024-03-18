@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Logging;
 using osu.Framework.Screens;
 using osuTK;
 
@@ -105,7 +106,7 @@ public partial class EndangerEdMainScreenStack : ScreenStack
                    .Loop();
         sessionStore.IsLoading.BindValueChanged(isLoading =>
         {
-            loadingContainer.FadeTo(isLoading.NewValue ? 1 : 0, 500, Easing.OutQuint);
+            Scheduler.Add(() => loadingContainer.FadeTo(isLoading.NewValue ? 1 : 0, 500, Easing.OutQuint));
         }, true);
     }
 
