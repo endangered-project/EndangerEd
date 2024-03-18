@@ -9,6 +9,7 @@ using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using Newtonsoft.Json;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Logging;
@@ -30,7 +31,9 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
     [Resolved]
     private APIRequestManager apiRequestManager { get; set; }
 
-    private bool answered = false;
+    private BindableBool answered = new BindableBool();
+    private EndangerEdButton endButton;
+    private EndangerEdButton skipButton;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -44,7 +47,7 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 Text = CurrentQuestion.QuestionText,
                 Font = EndangerEdFont.GetFont(size: 40)
             },
-            new EndangerEdButton("End")
+            endButton = new EndangerEdButton("End")
             {
                 Anchor = Anchor.BottomRight,
                 Origin = Anchor.BottomRight,
@@ -55,10 +58,28 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 {
                     sessionStore.IsGameStarted.Value = false;
                     gameSessionStore.StopwatchClock.Stop();
-                    mainScreenStack.SwapScreenStack();
+                    answered.Value = true;
+
+                    Thread thread = new Thread(() =>
+                    {
+                        try
+                        {
+                            apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
+                            Scheduler.AddDelayed(() =>
+                            {
+                                mainScreenStack.SwapScreenStack(100);
+                                mainScreenStack.MainScreenStack.Push(new ResultScreen(gameSessionStore.GameId));
+                            }, 3000);
+                        }
+                        catch (HttpRequestException e)
+                        {
+                            Logger.Log($"Request to game/answer failed with error: {e.Message}");
+                        }
+                    });
+                    thread.Start();
                 }
             },
-            new EndangerEdButton("Skip")
+            skipButton = new EndangerEdButton("Skip")
             {
                 Anchor = Anchor.BottomRight,
                 Origin = Anchor.BottomRight,
@@ -148,6 +169,15 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 }
             });
         }
+
+        answered.BindValueChanged(answered =>
+        {
+            if (answered.NewValue)
+            {
+                endButton.Enabled.Value = false;
+                skipButton.Enabled.Value = false;
+            }
+        });
     }
 
     protected override void Update()
@@ -168,11 +198,11 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
 
     private void onChoiceSelected(string choice)
     {
-        if (answered)
+        if (answered.Value)
             return;
 
         gameSessionStore.StopwatchClock.Stop();
-        answered = true;
+        answered.Value = true;
 
         if (choice == CurrentQuestion.Answer)
         {
