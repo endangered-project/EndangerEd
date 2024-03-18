@@ -1,8 +1,13 @@
-﻿using EndangerEd.Game.Objects;
+﻿using EndangerEd.Game.Graphics;
+using EndangerEd.Game.Objects;
 using EndangerEd.Game.Screens.Games;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
+using osu.Framework.Development;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
 using osuTK;
 
@@ -16,6 +21,9 @@ public partial class EndangerEdMainScreenStack : ScreenStack
     public EndangerEdGameSessionScreenStack GameScreenStack;
 
     public ScreenStack MainScreenStack;
+
+    private Container loadingContainer;
+    private SpriteIcon loadingIcon;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -40,8 +48,65 @@ public partial class EndangerEdMainScreenStack : ScreenStack
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 RelativeSizeAxes = Axes.Both
+            },
+            loadingContainer = new Container()
+            {
+                Alpha = 0,
+                Anchor = Anchor.BottomLeft,
+                Origin = Anchor.BottomLeft,
+                Size = new Vector2(80, 80),
+                Margin = new MarginPadding()
+                {
+                    Bottom = 10,
+                    Left = 10
+                },
+                Masking = true,
+                CornerRadius = 10,
+                Children = new Drawable[]
+                {
+                    loadingIcon = new SpriteIcon()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Icon = FontAwesome.Solid.CircleNotch,
+                        Size = new Vector2(50),
+                        Colour = Colour4.White,
+                        Alpha = 1f
+                    },
+                    new Box()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Colour4.DarkGray,
+                        Alpha = 0.5f
+                    }
+                },
+            },
+            new EndangerEdSpriteText()
+            {
+                Anchor = Anchor.BottomLeft,
+                Origin = Anchor.BottomLeft,
+                Text = "Debug build".ToUpper(),
+                Colour = Colour4.White,
+                Font = EndangerEdFont.GetFont(typeface: EndangerEdFont.Typeface.JosefinSans, size: 20, weight: EndangerEdFont.FontWeight.Bold),
+                Margin = new MarginPadding { Bottom = 10, Left = 10 },
+                Alpha = DebugUtils.IsDebugBuild ? 0.5f : 0
             }
         };
+    }
+
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+
+        loadingIcon.RotateTo(0).Then()
+                   .RotateTo(360, 1000, Easing.InOutSine)
+                   .Loop();
+        sessionStore.IsLoading.BindValueChanged(isLoading =>
+        {
+            loadingContainer.FadeTo(isLoading.NewValue ? 1 : 0, 500, Easing.OutQuint);
+        }, true);
     }
 
     public void SwapScreenStack(double delayBetweenSwap = 0)

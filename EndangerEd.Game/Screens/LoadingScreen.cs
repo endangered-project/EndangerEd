@@ -79,7 +79,7 @@ public partial class LoadingScreen : EndangerEdScreen
                     Bottom = 50,
                     Right = 20
                 },
-                Action = () => mainScreenStack.MainScreenStack.Push(new MainScreen()),
+                Action = () => mainScreenStack.MainScreenStack.Push(new MainMenuScreen()),
                 Alpha = 0
             },
             loadingText = new EndangerEdSpriteText()

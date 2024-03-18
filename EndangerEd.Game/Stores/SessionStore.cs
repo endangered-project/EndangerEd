@@ -11,6 +11,8 @@ public partial class SessionStore : CompositeDrawable
 
     public Bindable<bool> IsGameStarted { get; } = new Bindable<bool>(false);
 
+    public BindableBool IsLoading { get; } = new BindableBool(false);
+
     [Resolved]
     private GameSessionStore gameSessionStore { get; set; }
 

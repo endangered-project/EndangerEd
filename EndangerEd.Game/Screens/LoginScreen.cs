@@ -124,6 +124,8 @@ public partial class LoginScreen : EndangerEdScreen
                 var accessToken = result.TryGetValue("access", out var token) ? token : null;
                 var refreshToken = result.TryGetValue("refresh", out var refresh) ? refresh : null;
 
+                apiRequestManager.AddHeader("Authorization", "Bearer " + accessToken);
+
                 if (accessToken == null || refreshToken == null)
                 {
                     throw new HttpRequestException("Invalid response from server");

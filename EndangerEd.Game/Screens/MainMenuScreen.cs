@@ -273,7 +273,7 @@ public partial class MainMenuScreen : EndangerEdScreen
                                         AlwaysPresent = true,
                                         Action = () => host.OpenUrlExternally(endpointConfig.GameUrl + "signup")
                                     }
-                                }
+                                },
                             }
                         }
                     }
@@ -292,6 +292,7 @@ public partial class MainMenuScreen : EndangerEdScreen
         {
             try
             {
+                sessionStore.IsLoading.Value = true;
                 var result = apiRequestManager.PostJson("token/refresh", new Dictionary<string, object>
                 {
                     { "refresh", configManager.Get<string>(EndangerEdSetting.RefreshToken) }
@@ -326,6 +327,7 @@ public partial class MainMenuScreen : EndangerEdScreen
                     sessionStore.IsLoggedIn.Value = false;
                     configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
                     configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+                    sessionStore.IsLoading.Value = false;
                 });
             }
             catch (System.Exception e)
@@ -336,6 +338,7 @@ public partial class MainMenuScreen : EndangerEdScreen
                     sessionStore.IsLoggedIn.Value = false;
                     configManager.SetValue(EndangerEdSetting.AccessToken, string.Empty);
                     configManager.SetValue(EndangerEdSetting.RefreshToken, string.Empty);
+                    sessionStore.IsLoading.Value = false;
                 });
             }
         });
