@@ -22,5 +22,6 @@ public enum QuestionMode
 {
     FourChoice,
     Cannon,
-    Bucket
+    Bucket,
+    TakePicture
 }

@@ -11,6 +11,7 @@ public class APIUtility
             "FourChoice" => QuestionMode.FourChoice,
             "Cannon" => QuestionMode.Cannon,
             "Bucket" => QuestionMode.Bucket,
+            "TakePicture" => QuestionMode.TakePicture,
             _ => QuestionMode.FourChoice
         };
     }

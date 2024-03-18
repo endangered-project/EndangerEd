@@ -358,6 +358,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
 
         if (bucket.Contains(boxContainer1.ScreenSpaceDrawQuad.Centre))
         {
+            boxContainer1.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
             stopBoxContainer();
             onChoiceSelected(question.Choices[0]);
@@ -365,6 +366,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
 
         if (bucket.Contains(boxContainer2.ScreenSpaceDrawQuad.Centre))
         {
+            boxContainer2.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
             stopBoxContainer();
             onChoiceSelected(question.Choices[1]);
@@ -372,6 +374,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
 
         if (bucket.Contains(boxContainer3.ScreenSpaceDrawQuad.Centre))
         {
+            boxContainer3.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
             stopBoxContainer();
             onChoiceSelected(question.Choices[2]);
@@ -379,6 +382,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
 
         if (bucket.Contains(boxContainer4.ScreenSpaceDrawQuad.Centre))
         {
+            boxContainer4.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
             stopBoxContainer();
             onChoiceSelected(question.Choices[3]);

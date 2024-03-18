@@ -139,6 +139,10 @@ public partial class EndangerEdMainScreenStack : ScreenStack
                 GameScreenStack.MainScreenStack.Push(new BucketGameScreen(question));
                 break;
 
+            case QuestionMode.TakePicture:
+                GameScreenStack.MainScreenStack.Push(new TakePictureGameScreen(question));
+                break;
+
             default:
                 GameScreenStack.MainScreenStack.Push(new FourChoiceGameScreen(question));
                 break;
