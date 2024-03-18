@@ -3,6 +3,10 @@ using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
+using osuTK;
 
 namespace EndangerEd.Game.Screens.Games;
 
@@ -14,17 +18,70 @@ public partial class GameOverScreen : EndangerEdScreen
     [Resolved]
     private GameSessionStore gameSessionStore { get; set; }
 
+    private Container container;
+    private Box loadingBox;
+
     [BackgroundDependencyLoader]
     private void load()
     {
         InternalChildren = new Drawable[]
         {
-            new EndangerEdSpriteText
+            container = new Container()
             {
-                Text = "Game Over",
-                Font = EndangerEdFont.GetFont(size: 40),
                 Anchor = Anchor.Centre,
-                Origin = Anchor.Centre
+                Origin = Anchor.Centre,
+                Size = new Vector2(300, 300),
+                Masking = true,
+                CornerRadius = 20,
+                Scale = new Vector2(0),
+                Children = new Drawable[]
+                {
+                    new Box()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Colour4.Black,
+                        Alpha = 0.75f
+                    },
+                    new FillFlowContainer()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(500, 500),
+                        Direction = FillDirection.Vertical,
+                        Masking = true,
+                        Spacing = new Vector2(10),
+                        Children = new Drawable[]
+                        {
+                            new SpriteIcon()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Icon = FontAwesome.Solid.TimesCircle,
+                                Size = new Vector2(100),
+                                Colour = Colour4.Red
+                            },
+                            new EndangerEdSpriteText()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Text = "Game Over".ToUpper(),
+                                Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 40, EndangerEdFont.FontWeight.Bold),
+                                Colour = Colour4.Red
+                            }
+                        }
+                    },
+                    loadingBox = new Box()
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft,
+                        RelativeSizeAxes = Axes.X,
+                        Height = 15,
+                        Colour = Colour4.White,
+                        Alpha = 0.75f
+                    }
+                }
             }
         };
     }
@@ -32,6 +89,8 @@ public partial class GameOverScreen : EndangerEdScreen
     protected override void LoadComplete()
     {
         base.LoadComplete();
+        container.ScaleTo(1, 1000, Easing.OutElastic);
+        loadingBox.ResizeWidthTo(0, 3000);
 
         Scheduler.AddDelayed(() =>
         {
