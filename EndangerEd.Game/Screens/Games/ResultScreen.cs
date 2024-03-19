@@ -38,7 +38,8 @@ public partial class ResultScreen : EndangerEdScreen
     private EndangerEdButton playAgainButton;
 
     private SpriteText scoreText;
-    private SpriteText rankText;
+    private SpriteText rankAfter;
+    private SpriteText rankChange;
 
     private SpriteText playerName1;
     private SpriteText playerName2;
@@ -191,10 +192,29 @@ public partial class ResultScreen : EndangerEdScreen
                         Text = "Score : 100",
                         Font = new FontUsage(size: 30)
                     },
-                    rankText = new SpriteText
+                    new FillFlowContainer()
                     {
-                        Text = "Rank : 1",
-                        Font = new FontUsage(size: 30)
+                        Direction = FillDirection.Horizontal,
+                        Spacing = new Vector2(10),
+                        Children = new Drawable[]
+                        {
+                            new SpriteText
+                            {
+                                Text = "Rank :",
+                                Font = new FontUsage(size: 30)
+                            },
+                            rankAfter = new SpriteText
+                            {
+                                Text = "1",
+                                Font = new FontUsage(size: 30)
+                            },
+                            rankChange = new SpriteText
+                            {
+                                Text = "(0)",
+                                Font = new FontUsage(size: 30),
+                                Colour = Colour4.Gray
+                            }
+                        }
                     },
                     new TextFlowContainer()
                     {
@@ -341,15 +361,25 @@ public partial class ResultScreen : EndangerEdScreen
             {
                 var result = apiRequestManager.Get("history/" + resultId);
                 var score = result["score"];
-                var rankBefore = result["rank_before"];
-                var rankAfter = result["rank_after"];
+                var apiRankBefore = result["rank_before"];
+                var apiRankAfter = result["rank_after"];
 
                 var leaderboard = apiRequestManager.Get("leaderboard");
 
                 Scheduler.Add(() =>
                 {
                     scoreText.Text = "Score : " + score;
-                    rankText.Text = "Rank : " + rankAfter;
+                    rankAfter.Text = apiRankAfter.ToString();
+                    rankChange.Text = "(" + (int.Parse(apiRankAfter.ToString()) - int.Parse(apiRankBefore.ToString())) + ")";
+
+                    if (int.Parse(apiRankAfter.ToString()) - int.Parse(apiRankBefore.ToString()) > 0)
+                    {
+                        rankChange.Colour = Colour4.Red;
+                    }
+                    else if (int.Parse(apiRankAfter.ToString()) - int.Parse(apiRankBefore.ToString()) < 0)
+                    {
+                        rankChange.Colour = Colour4.Green;
+                    }
 
                     if (leaderboard.TryGetValue("username1", out var player1))
                     {
