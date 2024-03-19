@@ -271,7 +271,7 @@ public partial class MainMenuScreen : EndangerEdScreen
                                         Width = 100,
                                         Height = 50,
                                         AlwaysPresent = true,
-                                        Action = () => host.OpenUrlExternally(endpointConfig.GameUrl + "signup")
+                                        Action = () => host.OpenUrlExternally(endpointConfig.GameUrl + "register")
                                     }
                                 },
                             }
