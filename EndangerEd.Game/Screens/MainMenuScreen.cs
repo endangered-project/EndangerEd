@@ -290,9 +290,10 @@ public partial class MainMenuScreen : EndangerEdScreen
         apiRequestManager.AddHeader("Authorization", "Bearer " + configManager.Get<string>(EndangerEdSetting.AccessToken));
         Thread thread = new Thread(() =>
         {
+            sessionStore.IsLoading.Value = true;
+
             try
             {
-                sessionStore.IsLoading.Value = true;
                 var result = apiRequestManager.PostJson("token/refresh", new Dictionary<string, object>
                 {
                     { "refresh", configManager.Get<string>(EndangerEdSetting.RefreshToken) }
@@ -341,6 +342,8 @@ public partial class MainMenuScreen : EndangerEdScreen
                     sessionStore.IsLoading.Value = false;
                 });
             }
+
+            sessionStore.IsLoading.Value = false;
         });
         thread.Start();
     }

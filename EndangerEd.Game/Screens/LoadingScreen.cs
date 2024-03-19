@@ -114,13 +114,15 @@ public partial class LoadingScreen : EndangerEdScreen
                     var questionResult = apiRequestManager.PostJson("game/question", new Dictionary<string, object>());
                     var jsonSerializer = JsonSerializer.Create();
                     var questionDict = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(questionResult["question"].ToString())));
+                    var gameModeDetail = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(questionDict["game_mode"].ToString())));
+                    var gameModeName = gameModeDetail["name"].ToString();
                     var nextQuestion = new Question
                     {
                         QuestionText = questionDict["rendered_question"].ToString(),
                         Choices = jsonSerializer.Deserialize<string[]>(new JsonTextReader(new StringReader(questionResult["choice"].ToString()))),
                         Answer = questionResult["answer"].ToString(),
                         ContentType = questionDict["type"].ToString() == "image" ? ContentType.Image : ContentType.Text,
-                        QuestionMode = APIUtility.ConvertToQuestionMode(questionDict["game_mode"].ToString())
+                        QuestionMode = APIUtility.ConvertToQuestionMode(gameModeName)
                     };
 
                     Scheduler.AddDelayed(() =>
@@ -149,6 +151,7 @@ public partial class LoadingScreen : EndangerEdScreen
             {
                 Scheduler.Add(() =>
                 {
+                    Logger.Error(e, "Failed to load game");
                     loadingBar.Colour = Colour4.Red;
                     loadingBar.ResizeTo(new Vector2(1, loading_bar_height), 1000, Easing.OutQuint);
                     loadingText.Text = "Failed to load : " + e.Message;

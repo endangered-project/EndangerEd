@@ -8,10 +8,10 @@ public class APIUtility
     {
         return questionMode switch
         {
-            "FourChoice" => QuestionMode.FourChoice,
+            "Four Choice" => QuestionMode.FourChoice,
             "Cannon" => QuestionMode.Cannon,
             "Bucket" => QuestionMode.Bucket,
-            "TakePicture" => QuestionMode.TakePicture,
+            "Take Picture" => QuestionMode.TakePicture,
             _ => QuestionMode.FourChoice
         };
     }

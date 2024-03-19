@@ -660,16 +660,18 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             {
                 try
                 {
-                    var result = apiRequestManager.PostJson("game/question", new Dictionary<string, object>());
+                    var questionResult = apiRequestManager.PostJson("game/question", new Dictionary<string, object>());
                     var jsonSerializer = JsonSerializer.Create();
-                    var questionDict = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(result["question"].ToString())));
+                    var questionDict = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(questionResult["question"].ToString())));
+                    var gameModeDetail = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(questionDict["game_mode"].ToString())));
+                    var gameModeName = gameModeDetail["name"].ToString();
                     var nextQuestion = new Question
                     {
                         QuestionText = questionDict["rendered_question"].ToString(),
-                        Choices = jsonSerializer.Deserialize<string[]>(new JsonTextReader(new StringReader(result["choice"].ToString()))),
-                        Answer = result["answer"].ToString(),
+                        Choices = jsonSerializer.Deserialize<string[]>(new JsonTextReader(new StringReader(questionResult["choice"].ToString()))),
+                        Answer = questionResult["answer"].ToString(),
                         ContentType = questionDict["type"].ToString() == "image" ? ContentType.Image : ContentType.Text,
-                        QuestionMode = APIUtility.ConvertToQuestionMode(questionDict["game_mode"].ToString())
+                        QuestionMode = APIUtility.ConvertToQuestionMode(gameModeName)
                     };
 
                     Scheduler.AddDelayed(() =>
