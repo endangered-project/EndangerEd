@@ -567,15 +567,15 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
 
                     AddInternal(resultContainer);
                     resultContainer.ScaleTo(1, 1000, Easing.OutElastic).Then().Delay(3000).ScaleTo(0, 1000, Easing.OutElastic);
-                    loadingBox.ResizeWidthTo(0, 3000);
+                    loadingBox.ResizeWidthTo(0, 1500);
                 });
             }
             else
             {
+                gameSessionStore.Life.Value--;
                 Scheduler.Add(() =>
                 {
                     this.FlashColour(Colour4.Red, 500);
-                    gameSessionStore.Life.Value--;
 
                     Box loadingBox = new Box()
                     {

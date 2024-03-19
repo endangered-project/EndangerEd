@@ -12,7 +12,9 @@ using Newtonsoft.Json;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
@@ -184,14 +186,176 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
 
             if (choice == CurrentQuestion.Answer)
             {
-                Scheduler.Add(() => this.FlashColour(Colour4.Green, 500));
+                Scheduler.Add(() =>
+                {
+                    this.FlashColour(Colour4.Green, 500);
+
+                    Box loadingBox = new Box()
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft,
+                        RelativeSizeAxes = Axes.X,
+                        Height = 15,
+                        Colour = Colour4.White,
+                        Alpha = 0.75f
+                    };
+
+                    Container resultContainer = new Container()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(300, 300),
+                        Masking = true,
+                        CornerRadius = 20,
+                        Scale = new Vector2(0),
+                        Children = new Drawable[]
+                        {
+                            new Box()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                RelativeSizeAxes = Axes.Both,
+                                Colour = Colour4.Black,
+                                Alpha = 0.75f
+                            },
+                            new FillFlowContainer()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Size = new Vector2(500, 500),
+                                Direction = FillDirection.Vertical,
+                                Masking = true,
+                                Spacing = new Vector2(10),
+                                Children = new Drawable[]
+                                {
+                                    new SpriteIcon()
+                                    {
+                                        Anchor = Anchor.Centre,
+                                        Origin = Anchor.Centre,
+                                        Icon = FontAwesome.Solid.CheckCircle,
+                                        Size = new Vector2(100),
+                                        Colour = Colour4.LightGreen
+                                    },
+                                    new EndangerEdSpriteText()
+                                    {
+                                        Anchor = Anchor.Centre,
+                                        Origin = Anchor.Centre,
+                                        Text = "Correct!".ToUpper(),
+                                        Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 40, EndangerEdFont.FontWeight.Bold),
+                                        Colour = Colour4.LightGreen
+                                    }
+                                }
+                            },
+                            loadingBox
+                        }
+                    };
+
+                    AddInternal(resultContainer);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic).Then().Delay(3000).ScaleTo(0, 1000, Easing.OutElastic);
+                    loadingBox.ResizeWidthTo(0, 1500);
+                });
             }
             else
             {
+                gameSessionStore.Life.Value--;
                 Scheduler.Add(() =>
                 {
                     this.FlashColour(Colour4.Red, 500);
-                    gameSessionStore.Life.Value--;
+
+                    Box loadingBox = new Box()
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft,
+                        RelativeSizeAxes = Axes.X,
+                        Height = 15,
+                        Colour = Colour4.White,
+                        Alpha = 0.75f
+                    };
+
+                    FillFlowContainer resultDetail = new FillFlowContainer()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(500, 500),
+                        Direction = FillDirection.Vertical,
+                        Masking = true,
+                        Spacing = new Vector2(10),
+                        Children = new Drawable[]
+                        {
+                            new SpriteIcon()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Icon = FontAwesome.Solid.TimesCircle,
+                                Size = new Vector2(100),
+                                Colour = Colour4.Red
+                            },
+                            new EndangerEdSpriteText()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Text = "Incorrect!".ToUpper(),
+                                Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 40, EndangerEdFont.FontWeight.Bold),
+                                Colour = Colour4.Red
+                            },
+                            new EndangerEdSpriteText()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Text = $"The corrent answer is",
+                                Font = EndangerEdFont.GetFont(size: 25),
+                                Colour = Colour4.White
+                            }
+                        }
+                    };
+
+                    if (question.ContentType == ContentType.Image)
+                    {
+                        resultDetail.Add(new OnlineImageSprite(question.Answer)
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Size = new Vector2(100, 100)
+                        });
+                    }
+                    else
+                    {
+                        resultDetail.Add(new EndangerEdSpriteText()
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Text = question.Answer,
+                            Font = EndangerEdFont.GetFont(size: 25),
+                            Colour = Colour4.White
+                        });
+                    }
+
+                    Container resultContainer = new Container()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(300, 300),
+                        Masking = true,
+                        CornerRadius = 20,
+                        Scale = new Vector2(0),
+                        Children = new Drawable[]
+                        {
+                            new Box()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                RelativeSizeAxes = Axes.Both,
+                                Colour = Colour4.Black,
+                                Alpha = 0.75f
+                            },
+                            resultDetail,
+                            loadingBox
+                        }
+                    };
+
+                    AddInternal(resultContainer);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic).Then().Delay(3000).ScaleTo(0, 1000, Easing.OutElastic);
+                    loadingBox.ResizeWidthTo(0, 3000);
                 });
             }
 
@@ -201,7 +365,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 {
                     this.Exit();
                     mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
-                }, 1000);
+                }, 3000);
             }
             else
             {
@@ -224,7 +388,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                     Scheduler.AddDelayed(() =>
                     {
                         mainScreenStack.PushQuestionScreen(nextQuestion);
-                    }, 1000);
+                    }, 3000);
                 }
                 catch (HttpRequestException e)
                 {

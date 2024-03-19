@@ -12,8 +12,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
+using osuTK;
 
 namespace EndangerEd.Game.Screens.Games;
 
@@ -207,41 +210,206 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
         gameSessionStore.StopwatchClock.Stop();
         answered.Value = true;
 
-        if (choice == CurrentQuestion.Answer)
+        Thread thread = new Thread(() =>
         {
-            this.FlashColour(Colour4.Green, 500);
-        }
-        else
-        {
-            this.FlashColour(Colour4.Red, 500);
-            gameSessionStore.Life.Value--;
-        }
-
-        try
-        {
-            var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
+            try
             {
-                { "answer", choice }
-            });
-            result.TryGetValue("score", out var scoreValue);
-            gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
-        }
-        catch (HttpRequestException e)
-        {
-            Logger.Log($"Request to game/answer failed with error: {e.Message}");
-        }
-
-        if (gameSessionStore.Life.Value == 0)
-        {
-            Scheduler.AddDelayed(() =>
+                var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
+                {
+                    { "answer", choice }
+                });
+                result.TryGetValue("score", out var scoreValue);
+                gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
+            }
+            catch (HttpRequestException e)
             {
-                this.Exit();
-                mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
-            }, 1000);
-        }
-        else
-        {
-            Thread thread = new Thread(() =>
+                Logger.Log($"Request to game/answer failed with error: {e.Message}");
+            }
+
+            if (choice == CurrentQuestion.Answer)
+            {
+                Scheduler.Add(() =>
+                {
+                    this.FlashColour(Colour4.Green, 500);
+
+                    Box loadingBox = new Box()
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft,
+                        RelativeSizeAxes = Axes.X,
+                        Height = 15,
+                        Colour = Colour4.White,
+                        Alpha = 0.75f
+                    };
+
+                    Container resultContainer = new Container()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(300, 300),
+                        Masking = true,
+                        CornerRadius = 20,
+                        Scale = new Vector2(0),
+                        Children = new Drawable[]
+                        {
+                            new Box()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                RelativeSizeAxes = Axes.Both,
+                                Colour = Colour4.Black,
+                                Alpha = 0.75f
+                            },
+                            new FillFlowContainer()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Size = new Vector2(500, 500),
+                                Direction = FillDirection.Vertical,
+                                Masking = true,
+                                Spacing = new Vector2(10),
+                                Children = new Drawable[]
+                                {
+                                    new SpriteIcon()
+                                    {
+                                        Anchor = Anchor.Centre,
+                                        Origin = Anchor.Centre,
+                                        Icon = FontAwesome.Solid.CheckCircle,
+                                        Size = new Vector2(100),
+                                        Colour = Colour4.LightGreen
+                                    },
+                                    new EndangerEdSpriteText()
+                                    {
+                                        Anchor = Anchor.Centre,
+                                        Origin = Anchor.Centre,
+                                        Text = "Correct!".ToUpper(),
+                                        Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 40, EndangerEdFont.FontWeight.Bold),
+                                        Colour = Colour4.LightGreen
+                                    }
+                                }
+                            },
+                            loadingBox
+                        }
+                    };
+
+                    AddInternal(resultContainer);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic).Then().Delay(3000).ScaleTo(0, 1000, Easing.OutElastic);
+                    loadingBox.ResizeWidthTo(0, 1500);
+                });
+            }
+            else
+            {
+                gameSessionStore.Life.Value--;
+                Scheduler.Add(() =>
+                {
+                    this.FlashColour(Colour4.Red, 500);
+
+                    Box loadingBox = new Box()
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft,
+                        RelativeSizeAxes = Axes.X,
+                        Height = 15,
+                        Colour = Colour4.White,
+                        Alpha = 0.75f
+                    };
+
+                    FillFlowContainer resultDetail = new FillFlowContainer()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(500, 500),
+                        Direction = FillDirection.Vertical,
+                        Masking = true,
+                        Spacing = new Vector2(10),
+                        Children = new Drawable[]
+                        {
+                            new SpriteIcon()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Icon = FontAwesome.Solid.TimesCircle,
+                                Size = new Vector2(100),
+                                Colour = Colour4.Red
+                            },
+                            new EndangerEdSpriteText()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Text = "Incorrect!".ToUpper(),
+                                Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 40, EndangerEdFont.FontWeight.Bold),
+                                Colour = Colour4.Red
+                            },
+                            new EndangerEdSpriteText()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Text = $"The corrent answer is",
+                                Font = EndangerEdFont.GetFont(size: 25),
+                                Colour = Colour4.White
+                            }
+                        }
+                    };
+
+                    if (question.ContentType == ContentType.Image)
+                    {
+                        resultDetail.Add(new OnlineImageSprite(question.Answer)
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Size = new Vector2(100, 100)
+                        });
+                    }
+                    else
+                    {
+                        resultDetail.Add(new EndangerEdSpriteText()
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Text = question.Answer,
+                            Font = EndangerEdFont.GetFont(size: 25),
+                            Colour = Colour4.White
+                        });
+                    }
+
+                    Container resultContainer = new Container()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(300, 300),
+                        Masking = true,
+                        CornerRadius = 20,
+                        Scale = new Vector2(0),
+                        Children = new Drawable[]
+                        {
+                            new Box()
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                RelativeSizeAxes = Axes.Both,
+                                Colour = Colour4.Black,
+                                Alpha = 0.75f
+                            },
+                            resultDetail,
+                            loadingBox
+                        }
+                    };
+
+                    AddInternal(resultContainer);
+                    resultContainer.ScaleTo(1, 1000, Easing.OutElastic).Then().Delay(3000).ScaleTo(0, 1000, Easing.OutElastic);
+                    loadingBox.ResizeWidthTo(0, 3000);
+                });
+            }
+
+            if (gameSessionStore.Life.Value == 0)
+            {
+                Scheduler.AddDelayed(() =>
+                {
+                    this.Exit();
+                    mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
+                }, 3000);
+            }
+            else
             {
                 try
                 {
@@ -262,14 +430,14 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                     Scheduler.AddDelayed(() =>
                     {
                         mainScreenStack.PushQuestionScreen(nextQuestion);
-                    }, 1000);
+                    }, 3000);
                 }
                 catch (HttpRequestException e)
                 {
                     Logger.Log($"Request to game/question failed with error: {e.Message}");
                 }
-            });
-            thread.Start();
-        }
+            }
+        });
+        thread.Start();
     }
 }
