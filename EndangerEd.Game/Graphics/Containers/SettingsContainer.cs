@@ -177,14 +177,6 @@ public partial class SettingsContainer : FocusedOverlayContainer
                                 },
                                 new SpriteText()
                                 {
-                                    Text = "Show Frame Statistics Overlay"
-                                },
-                                new BasicCheckbox
-                                {
-                                    Current = endangerEdConfigManager.GetBindable<bool>(EndangerEdSetting.ShowFPSCounter)
-                                },
-                                new SpriteText()
-                                {
                                     Text = "FPS Limit"
                                 },
                                 new BasicDropdown<FrameSync>
@@ -277,6 +269,14 @@ public partial class SettingsContainer : FocusedOverlayContainer
                                 {
                                     Text = "Debug".ToUpper(),
                                     Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 32f, EndangerEdFont.FontWeight.Bold),
+                                },
+                                new SpriteText()
+                                {
+                                    Text = "Show Frame Statistics Overlay"
+                                },
+                                new BasicCheckbox
+                                {
+                                    Current = endangerEdConfigManager.GetBindable<bool>(EndangerEdSetting.ShowFPSCounter)
                                 },
                                 new EndangerEdButton("Open log folder")
                                 {
