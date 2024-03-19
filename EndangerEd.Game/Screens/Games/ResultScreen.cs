@@ -40,6 +40,8 @@ public partial class ResultScreen : EndangerEdScreen
     private SpriteText scoreText;
     private SpriteText rankAfter;
     private SpriteText rankChange;
+    private SpriteText rightAnswer;
+    private SpriteText wrongAnswer;
 
     private SpriteText playerName1;
     private SpriteText playerName2;
@@ -196,6 +198,7 @@ public partial class ResultScreen : EndangerEdScreen
                     {
                         Direction = FillDirection.Horizontal,
                         Spacing = new Vector2(10),
+                        Height = 30,
                         Children = new Drawable[]
                         {
                             new SpriteText
@@ -213,6 +216,38 @@ public partial class ResultScreen : EndangerEdScreen
                                 Text = "(0)",
                                 Font = new FontUsage(size: 30),
                                 Colour = Colour4.Gray
+                            }
+                        }
+                    },
+                    new FillFlowContainer()
+                    {
+                        Direction = FillDirection.Horizontal,
+                        Spacing = new Vector2(10),
+                        Children = new Drawable[]
+                        {
+                            new SpriteIcon()
+                            {
+                                Icon = FontAwesome.Solid.CheckCircle,
+                                Size = new Vector2(30),
+                                Colour = Colour4.LightGreen
+                            },
+                            rightAnswer = new SpriteText
+                            {
+                                Text = "",
+                                Font = new FontUsage(size: 30),
+                                Colour = Colour4.LightGreen
+                            },
+                            new SpriteIcon()
+                            {
+                                Icon = FontAwesome.Solid.TimesCircle,
+                                Size = new Vector2(30),
+                                Colour = Colour4.Red
+                            },
+                            wrongAnswer = new SpriteText
+                            {
+                                Text = "",
+                                Font = new FontUsage(size: 30),
+                                Colour = Colour4.Red
                             }
                         }
                     },
@@ -363,6 +398,8 @@ public partial class ResultScreen : EndangerEdScreen
                 var score = result["score"];
                 var apiRankBefore = result["rank_before"];
                 var apiRankAfter = result["rank_after"];
+                var apiRightAnswer = result["right"];
+                var apiWrongAnswer = result["wrong"];
 
                 var leaderboard = apiRequestManager.Get("leaderboard");
 
@@ -371,6 +408,8 @@ public partial class ResultScreen : EndangerEdScreen
                     scoreText.Text = "Score : " + score;
                     rankAfter.Text = apiRankAfter.ToString();
                     rankChange.Text = "(" + (int.Parse(apiRankAfter.ToString()) - int.Parse(apiRankBefore.ToString())) + ")";
+                    rightAnswer.Text = apiRightAnswer.ToString();
+                    wrongAnswer.Text = apiWrongAnswer.ToString();
 
                     if (int.Parse(apiRankAfter.ToString()) - int.Parse(apiRankBefore.ToString()) > 0)
                     {
