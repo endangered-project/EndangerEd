@@ -50,6 +50,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
     private Container fishContainer4;
 
     private Container camera;
+    private Box cameraBox;
 
     private bool allowMovingFish = true;
 
@@ -80,7 +81,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Size = new Vector2(150, 150),
                 Children = new Drawable[]
                 {
-                    new Box
+                    cameraBox = new Box
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -379,38 +380,6 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             IsOverTime = true;
             onChoiceSelected("");
         }
-
-        if (camera.Contains(fishContainer1.ScreenSpaceDrawQuad.Centre))
-        {
-            camera.FlashColour(Colour4.White, 500);
-            allowMovingFish = false;
-            stopFishContainer();
-            onChoiceSelected(question.Choices[0]);
-        }
-
-        if (camera.Contains(fishContainer2.ScreenSpaceDrawQuad.Centre))
-        {
-            camera.FlashColour(Colour4.White, 500);
-            allowMovingFish = false;
-            stopFishContainer();
-            onChoiceSelected(question.Choices[1]);
-        }
-
-        if (camera.Contains(fishContainer3.ScreenSpaceDrawQuad.Centre))
-        {
-            camera.FlashColour(Colour4.White, 500);
-            allowMovingFish = false;
-            stopFishContainer();
-            onChoiceSelected(question.Choices[2]);
-        }
-
-        if (camera.Contains(fishContainer4.ScreenSpaceDrawQuad.Centre))
-        {
-            camera.FlashColour(Colour4.White, 500);
-            allowMovingFish = false;
-            stopFishContainer();
-            onChoiceSelected(question.Choices[3]);
-        }
     }
 
     private void stopFishContainer()
@@ -427,6 +396,41 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
         if (allowMovingFish)
             camera.Position = new Vector2(e.MousePosition.X - DrawSize.X / 2, e.MousePosition.Y - DrawSize.Y / 2);
         return base.OnMouseMove(e);
+    }
+
+    protected override bool OnMouseDown(MouseDownEvent e)
+    {
+        cameraBox.FlashColour(Colour4.White, 500);
+
+        if (camera.Contains(fishContainer1.ScreenSpaceDrawQuad.Centre))
+        {
+            allowMovingFish = false;
+            stopFishContainer();
+            onChoiceSelected(question.Choices[0]);
+        }
+
+        if (camera.Contains(fishContainer2.ScreenSpaceDrawQuad.Centre))
+        {
+            allowMovingFish = false;
+            stopFishContainer();
+            onChoiceSelected(question.Choices[1]);
+        }
+
+        if (camera.Contains(fishContainer3.ScreenSpaceDrawQuad.Centre))
+        {
+            allowMovingFish = false;
+            stopFishContainer();
+            onChoiceSelected(question.Choices[2]);
+        }
+
+        if (camera.Contains(fishContainer4.ScreenSpaceDrawQuad.Centre))
+        {
+            allowMovingFish = false;
+            stopFishContainer();
+            onChoiceSelected(question.Choices[3]);
+        }
+
+        return base.OnMouseDown(e);
     }
 
     protected override void LoadComplete()
