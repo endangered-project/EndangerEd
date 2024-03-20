@@ -294,6 +294,12 @@ public partial class MainMenuScreen : EndangerEdScreen
 
             try
             {
+                if (configManager.Get<string>(EndangerEdSetting.RefreshToken) == string.Empty)
+                {
+                    sessionStore.IsLoading.Value = false;
+                    return;
+                }
+
                 var result = apiRequestManager.PostJson("token/refresh", new Dictionary<string, object>
                 {
                     { "refresh", configManager.Get<string>(EndangerEdSetting.RefreshToken) }

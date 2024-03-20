@@ -78,7 +78,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(200, 200),
                 Children = new Drawable[]
                 {
                     cameraBox = new Box
@@ -99,7 +99,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
-                Size = new Vector2(100, 100),
+                Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
                 Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
@@ -124,7 +124,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
-                Size = new Vector2(100, 100),
+                Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
                 Children = new Drawable[]
@@ -148,7 +148,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
-                Size = new Vector2(100, 100),
+                Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
                 Children = new Drawable[]
@@ -172,7 +172,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
-                Size = new Vector2(100, 100),
+                Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 Position = new Vector2(RNG.Next(10, 90) * 0.01f, 0.3f),
                 Children = new Drawable[]
@@ -199,7 +199,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Size = new Vector2(100, 100),
+                Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
                 Position = new Vector2(RNG.Next(-40, 40) * 0.01f, 0.3f),
@@ -224,7 +224,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Size = new Vector2(100, 100),
+                Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 Position = new Vector2(RNG.Next(-40, 40) * 0.01f, 0.3f),
                 Children = new Drawable[]
@@ -248,7 +248,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Size = new Vector2(100, 100),
+                Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 Position = new Vector2(RNG.Next(-40, 40) * 0.01f, 0.3f),
                 Children = new Drawable[]
@@ -272,7 +272,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Size = new Vector2(100, 100),
+                Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 Position = new Vector2(RNG.Next(-40, 40) * 0.01f, 0.3f),
                 Children = new Drawable[]
@@ -634,7 +634,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Size = new Vector2(100, 100)
+                            Size = new Vector2(150, 150)
                         });
                     }
                     else
