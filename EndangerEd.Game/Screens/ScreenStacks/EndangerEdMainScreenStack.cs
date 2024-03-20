@@ -143,6 +143,10 @@ public partial class EndangerEdMainScreenStack : ScreenStack
                 GameScreenStack.MainScreenStack.Push(new TakePictureGameScreen(question));
                 break;
 
+            case QuestionMode.Conveyor:
+                GameScreenStack.MainScreenStack.Push(new ConveyorGameScreen(question));
+                break;
+
             default:
                 GameScreenStack.MainScreenStack.Push(new FourChoiceGameScreen(question));
                 break;
