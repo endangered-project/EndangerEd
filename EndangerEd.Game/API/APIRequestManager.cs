@@ -53,14 +53,8 @@ public class APIRequestManager
     /// </summary>
     public async Task<Dictionary<string, object>> PostJsonAsync(string endpoint, Dictionary<string, object> data)
     {
-        if (DebugUtils.IsDebugBuild)
-        {
-            Logger.Log($"Sending POST request to {GetEndpoint(endpoint)} with data: {JsonSerializer.Serialize(data)}", LoggingTarget.Network);
-        }
-        else
-        {
-            Logger.Log($"Sending POST request to {GetEndpoint(endpoint)}", LoggingTarget.Network);
-        }
+        Logger.Log(DebugUtils.IsDebugBuild ? $"Sending POST request to {GetEndpoint(endpoint)} with data: {JsonSerializer.Serialize(data)}" : $"Sending POST request to {GetEndpoint(endpoint)}",
+            LoggingTarget.Network);
 
         var responseTask = _client.PostAsync(GetEndpoint(endpoint), new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json"));
         var request = responseTask.GetAwaiter().GetResult();
