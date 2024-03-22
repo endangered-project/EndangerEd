@@ -102,7 +102,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Position = new Vector2(RNG.Next(-40, 40) * 0.01f, -0.3f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -126,7 +126,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Position = new Vector2(RNG.Next(-40, 40) * 0.01f, -0.3f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -150,7 +150,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.3f),
+                Position = new Vector2(RNG.Next(-40, 40) * 0.01f, -0.3f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -174,7 +174,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, 0.3f),
+                Position = new Vector2(RNG.Next(-40, 40) * 0.01f, 0.3f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -447,7 +447,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             float randomX = RNG.Next(-40, 40) * 0.01f;
             float jumpHeight = RNG.Next(-90, -50) * 0.01f;
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
-            int duration = RNG.Next(1500, 4500);
+            int duration = RNG.Next(1000, 2500);
             fishContainer1.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
         }, RNG.Next(1000, 6000));
 
@@ -456,7 +456,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             float randomX = RNG.Next(-40, 40) * 0.01f;
             float jumpHeight = RNG.Next(-90, -50) * 0.01f;
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
-            int duration = RNG.Next(1500, 4500);
+            int duration = RNG.Next(1000, 2500);
             fishContainer2.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
         }, RNG.Next(3500, 8500));
 
@@ -465,7 +465,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             float randomX = RNG.Next(-40, 40) * 0.01f;
             float jumpHeight = RNG.Next(-90, -50) * 0.01f;
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
-            int duration = RNG.Next(1500, 4500);
+            int duration = RNG.Next(1000, 2500);
             fishContainer3.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
         }, RNG.Next(6000, 11000));
 
@@ -474,7 +474,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             float randomX = RNG.Next(-40, 40) * 0.01f;
             float jumpHeight = RNG.Next(-90, -50) * 0.01f;
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
-            int duration = RNG.Next(1500, 4500);
+            int duration = RNG.Next(1000, 2500);
             fishContainer4.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
         }, RNG.Next(8500, 13500));
     }
