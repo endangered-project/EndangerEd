@@ -87,6 +87,7 @@ public partial class LoadingScreen : EndangerEdScreen
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.BottomLeft,
                 Text = "Loading...",
+                Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.MPlus1P, 30),
                 Margin = new MarginPadding
                 {
                     Bottom = 30,
@@ -102,6 +103,8 @@ public partial class LoadingScreen : EndangerEdScreen
 
         Thread thread = new Thread(() =>
         {
+            Scheduler.Add(() => sessionStore.IsLoading.Value = true);
+
             try
             {
                 var result = apiRequestManager.PostJson("game/start", new Dictionary<string, object>());
@@ -158,6 +161,8 @@ public partial class LoadingScreen : EndangerEdScreen
                     exitButton.FadeInFromZero(1000, Easing.OutQuint);
                 });
             }
+
+            Scheduler.Add(() => sessionStore.IsLoading.Value = false);
         });
         thread.Start();
     }
