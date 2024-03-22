@@ -630,7 +630,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Size = new Vector2(500, 500),
+                        Size = new Vector2(500, 900),
                         Direction = FillDirection.Vertical,
                         Masking = true,
                         Spacing = new Vector2(10),
