@@ -107,7 +107,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
 
         if (question.ContentType == ContentType.Image)
         {
-            AddInternal(boxContainer1 = new Container()
+            AddInternal(boxContainer1 = new BasicButton()
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
@@ -130,9 +130,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both
                     }
+                },
+                Action = () =>
+                {
+                    if (box1Removed) return;
+
+                    boxContainer1.ClearTransforms();
+                    boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 500, Easing.InOutSine);
+                    box1Removed = true;
                 }
             });
-            AddInternal(boxContainer2 = new Container()
+            AddInternal(boxContainer2 = new BasicButton()
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
@@ -154,9 +162,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both
                     }
+                },
+                Action = () =>
+                {
+                    if (box2Removed) return;
+
+                    boxContainer2.ClearTransforms();
+                    boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 500, Easing.InOutSine);
+                    box2Removed = true;
                 }
             });
-            AddInternal(boxContainer3 = new Container()
+            AddInternal(boxContainer3 = new BasicButton()
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
@@ -178,9 +194,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both
                     }
+                },
+                Action = () =>
+                {
+                    if (box3Removed) return;
+
+                    boxContainer3.ClearTransforms();
+                    boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 500, Easing.InOutSine);
+                    box3Removed = true;
                 }
             });
-            AddInternal(boxContainer4 = new Container()
+            AddInternal(boxContainer4 = new BasicButton()
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
@@ -202,6 +226,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both
                     }
+                },
+                Action = () =>
+                {
+                    if (box4Removed) return;
+
+                    boxContainer4.ClearTransforms();
+                    boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 500, Easing.InOutSine);
+                    box4Removed = true;
                 }
             });
         }
