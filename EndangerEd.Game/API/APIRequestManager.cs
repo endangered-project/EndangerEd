@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using osu.Framework.Development;
 using osu.Framework.Logging;
 
 namespace EndangerEd.Game.API;
@@ -52,11 +53,23 @@ public class APIRequestManager
     /// </summary>
     public async Task<Dictionary<string, object>> PostJsonAsync(string endpoint, Dictionary<string, object> data)
     {
-        Logger.Log($"Sending POST request to {GetEndpoint(endpoint)} with data: {JsonSerializer.Serialize(data)}");
+        if (DebugUtils.IsDebugBuild)
+        {
+            Logger.Log($"Sending POST request to {GetEndpoint(endpoint)} with data: {JsonSerializer.Serialize(data)}", LoggingTarget.Network);
+        }
+        else
+        {
+            Logger.Log($"Sending POST request to {GetEndpoint(endpoint)}", LoggingTarget.Network);
+        }
+
         var responseTask = _client.PostAsync(GetEndpoint(endpoint), new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json"));
         var request = responseTask.GetAwaiter().GetResult();
         var response = await request.Content.ReadAsStringAsync();
-        Logger.Log($"Response from {GetEndpoint(endpoint)}: {response}");
+
+        if (DebugUtils.IsDebugBuild)
+        {
+            Logger.Log($"Response from {GetEndpoint(endpoint)}: {response}", LoggingTarget.Network);
+        }
 
         if (request.IsSuccessStatusCode)
         {
@@ -74,7 +87,7 @@ public class APIRequestManager
         }
         catch (HttpRequestException e)
         {
-            Logger.Log($"Request to {GetEndpoint(endpoint)} failed with error: {e.Message}");
+            Logger.Log($"Request to {GetEndpoint(endpoint)} failed with error: {e.Message}", LoggingTarget.Network);
             throw new HttpRequestException($"Request to {GetEndpoint(endpoint)} failed with status code {e.Message}");
         }
     }
@@ -85,7 +98,11 @@ public class APIRequestManager
         var responseTask = _client.GetAsync(GetEndpoint(endpoint));
         var request = responseTask.GetAwaiter().GetResult();
         var response = await request.Content.ReadAsStringAsync();
-        Logger.Log($"Response from {GetEndpoint(endpoint)}: {response}");
+
+        if (DebugUtils.IsDebugBuild)
+        {
+            Logger.Log($"Response from {GetEndpoint(endpoint)}: {response}", LoggingTarget.Network);
+        }
 
         if (request.IsSuccessStatusCode)
         {
