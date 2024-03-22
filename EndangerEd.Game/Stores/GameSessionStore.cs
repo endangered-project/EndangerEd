@@ -55,4 +55,13 @@ public partial class GameSessionStore : CompositeDrawable
     {
         return (int)((TIME_PER_GAME - StopwatchClock.ElapsedMilliseconds) / 1000);
     }
+
+    /// <summary>
+    /// Whether the game is the default game running off the game session.
+    /// </summary>
+    /// <returns>True if the game is the default game.</returns>
+    public bool IsDefaultGame()
+    {
+        return GameId == DEFAULT_GAME_ID;
+    }
 }

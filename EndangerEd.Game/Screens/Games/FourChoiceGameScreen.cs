@@ -65,19 +65,33 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
 
                     Thread thread = new Thread(() =>
                     {
+                        Scheduler.Add(() => sessionStore.IsLoading.Value = true);
+
                         try
                         {
-                            apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
-                            Scheduler.AddDelayed(() =>
+                            if (gameSessionStore.IsDefaultGame())
                             {
-                                mainScreenStack.SwapScreenStack(100);
-                                mainScreenStack.MainScreenStack.Push(new ResultScreen(gameSessionStore.GameId));
-                            }, 3000);
+                                apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
+                                Scheduler.AddDelayed(() =>
+                                {
+                                    mainScreenStack.SwapScreenStack(100);
+                                    mainScreenStack.MainScreenStack.Push(new ResultScreen(gameSessionStore.GameId));
+                                }, 3000);
+                            }
+                            else
+                            {
+                                Scheduler.AddDelayed(() =>
+                                {
+                                    mainScreenStack.SwapScreenStack(100);
+                                }, 3000);
+                            }
                         }
                         catch (HttpRequestException e)
                         {
                             Logger.Log($"Request to game/answer failed with error: {e.Message}");
                         }
+
+                        Scheduler.Add(() => sessionStore.IsLoading.Value = false);
                     });
                     thread.Start();
                 }
@@ -214,12 +228,19 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
         {
             try
             {
-                var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
+                if (gameSessionStore.IsDefaultGame())
                 {
-                    { "answer", choice }
-                });
-                result.TryGetValue("score", out var scoreValue);
-                gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
+                    gameSessionStore.Score.Value += 50;
+                }
+                else
+                {
+                    var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
+                    {
+                        { "answer", choice }
+                    });
+                    result.TryGetValue("score", out var scoreValue);
+                    gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
+                }
             }
             catch (HttpRequestException e)
             {
@@ -401,40 +422,52 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 });
             }
 
-            if (gameSessionStore.Life.Value == 0)
+            if (gameSessionStore.IsDefaultGame())
             {
                 Scheduler.AddDelayed(() =>
                 {
                     this.Exit();
-                    mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
+                    mainScreenStack.SwapScreenStack(100);
                 }, 3000);
             }
             else
             {
-                try
+                if (gameSessionStore.Life.Value == 0)
                 {
-                    var questionResult = apiRequestManager.PostJson("game/question", new Dictionary<string, object>());
-                    var jsonSerializer = JsonSerializer.Create();
-                    var questionDict = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(questionResult["question"].ToString())));
-                    var gameModeDetail = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(questionDict["game_mode"].ToString())));
-                    var gameModeName = gameModeDetail["name"].ToString();
-                    var nextQuestion = new Question
-                    {
-                        QuestionText = questionDict["rendered_question"].ToString(),
-                        Choices = jsonSerializer.Deserialize<string[]>(new JsonTextReader(new StringReader(questionResult["choice"].ToString()))),
-                        Answer = questionResult["answer"].ToString(),
-                        ContentType = questionDict["type"].ToString() == "image" ? ContentType.Image : ContentType.Text,
-                        QuestionMode = APIUtility.ConvertToQuestionMode(gameModeName)
-                    };
-
                     Scheduler.AddDelayed(() =>
                     {
-                        mainScreenStack.PushQuestionScreen(nextQuestion);
+                        this.Exit();
+                        mainScreenStack.GameScreenStack.MainScreenStack.Push(new GameOverScreen());
                     }, 3000);
                 }
-                catch (HttpRequestException e)
+                else
                 {
-                    Logger.Log($"Request to game/question failed with error: {e.Message}");
+                    try
+                    {
+                        var questionResult = apiRequestManager.PostJson("game/question", new Dictionary<string, object>());
+                        var jsonSerializer = JsonSerializer.Create();
+                        var questionDict = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(questionResult["question"].ToString())));
+                        var gameModeDetail = jsonSerializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(questionDict["game_mode"].ToString())));
+                        var gameModeName = gameModeDetail["name"].ToString();
+                        var nextQuestion = new Question
+                        {
+                            QuestionText = questionDict["rendered_question"].ToString(),
+                            Choices = jsonSerializer.Deserialize<string[]>(new JsonTextReader(new StringReader(questionResult["choice"].ToString()))),
+                            Answer = questionResult["answer"].ToString(),
+                            ContentType = questionDict["type"].ToString() == "image" ? ContentType.Image : ContentType.Text,
+                            QuestionMode = APIUtility.ConvertToQuestionMode(gameModeName)
+                        };
+
+                        Scheduler.AddDelayed(() =>
+                        {
+                            this.Exit();
+                            mainScreenStack.PushQuestionScreen(nextQuestion);
+                        }, 3000);
+                    }
+                    catch (HttpRequestException e)
+                    {
+                        Logger.Log($"Request to game/question failed with error: {e.Message}");
+                    }
                 }
             }
         });
