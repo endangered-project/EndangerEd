@@ -18,6 +18,11 @@ public partial class GameSessionStore : CompositeDrawable
     public const int MAX_LIFE = 3;
 
     /// <summary>
+    /// Default game ID when no running game.
+    /// </summary>
+    public const int DEFAULT_GAME_ID = 0;
+
+    /// <summary>
     /// Time per microgame in milliseconds.
     /// </summary>
     public const int TIME_PER_GAME = 60000;
@@ -26,7 +31,7 @@ public partial class GameSessionStore : CompositeDrawable
 
     public BindableInt Score = new BindableInt();
 
-    public int GameId = 0;
+    public int GameId = DEFAULT_GAME_ID;
 
     // We need to use StopwatchClock instead of Stopwatch because it's also depend on the frame time on framework too.
     public StopwatchClock StopwatchClock = new StopwatchClock();
