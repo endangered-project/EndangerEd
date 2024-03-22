@@ -565,7 +565,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Size = new Vector2(500, 900),
+                        Size = new Vector2(500, 500),
                         Direction = FillDirection.Vertical,
                         Masking = true,
                         Spacing = new Vector2(10),

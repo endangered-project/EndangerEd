@@ -495,22 +495,22 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), 7500, Easing.InOutSine);
+                boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), 10000, Easing.InOutSine);
         }, 2000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), 7500, Easing.InOutSine);
+                boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), 10000, Easing.InOutSine);
         }, 4000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), 7500, Easing.InOutSine);
+                boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), 10000, Easing.InOutSine);
         }, 6000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), 7500, Easing.InOutSine);
+                boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), 10000, Easing.InOutSine);
         }, 8000);
     }
 
@@ -630,7 +630,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Size = new Vector2(500, 900),
+                        Size = new Vector2(500, 500),
                         Direction = FillDirection.Vertical,
                         Masking = true,
                         Spacing = new Vector2(10),
@@ -688,7 +688,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Size = new Vector2(300, 300),
+                        Size = new Vector2(300, 400),
                         Masking = true,
                         CornerRadius = 20,
                         Scale = new Vector2(0),

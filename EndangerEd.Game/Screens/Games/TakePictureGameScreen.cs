@@ -595,7 +595,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Size = new Vector2(500, 900),
+                        Size = new Vector2(500, 500),
                         Direction = FillDirection.Vertical,
                         Masking = true,
                         Spacing = new Vector2(10),
@@ -653,7 +653,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Size = new Vector2(300, 300),
+                        Size = new Vector2(300, 400),
                         Masking = true,
                         CornerRadius = 20,
                         Scale = new Vector2(0),
