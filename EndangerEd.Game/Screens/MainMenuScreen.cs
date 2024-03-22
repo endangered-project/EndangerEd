@@ -26,6 +26,7 @@ public partial class MainMenuScreen : EndangerEdScreen
 {
     private Button startButton;
     private Button leaderboardButton;
+    private EndangerEdButton exitButton;
     private Container profilePictureContainer;
     private Container guestProfilePicture;
     private Sprite loggedInProfilePicture;
@@ -94,13 +95,13 @@ public partial class MainMenuScreen : EndangerEdScreen
                         Origin = Anchor.Centre,
                         Text = "EndangerEd",
                         Font = EndangerEdFont.GetFont(typeface: EndangerEdFont.Typeface.Comfortaa, size: 100, weight: EndangerEdFont.FontWeight.Bold),
-                        Y = -200f
+                        Y = -250f
                     },
                     knowledgeBaseContainer = new BasicButton
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Y = -130f,
+                        Y = -180f,
                         X = 230f,
                         Size = new Vector2(150f),
                         Rotation = 315f,
@@ -126,17 +127,18 @@ public partial class MainMenuScreen : EndangerEdScreen
                             }
                         }
                     },
-                    new Container
+                    new FillFlowContainer()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
+                        Direction = FillDirection.Vertical,
+                        Spacing = new Vector2(20),
                         Children = new Drawable[]
                         {
                             startButton = new EndangerEdButton("Start!")
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Y = -50f,
                                 Width = 100,
                                 Height = 50,
                                 Action = () =>
@@ -145,11 +147,17 @@ public partial class MainMenuScreen : EndangerEdScreen
                                 },
                                 Enabled = { BindTarget = sessionStore.IsLoggedIn }
                             },
+                            new EndangerEdButton("Tutorial")
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Width = 100,
+                                Height = 50
+                            },
                             leaderboardButton = new EndangerEdButton("Leaderboard")
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Y = 25f,
                                 Width = 150,
                                 Height = 50,
                                 Action = () => host.OpenUrlExternally(endpointConfig.GameUrl + "leaderboard")
@@ -158,10 +166,17 @@ public partial class MainMenuScreen : EndangerEdScreen
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Y = 100f,
                                 Width = 130,
                                 Height = 50,
                                 Action = () => settingsScreenStack.ToggleVisibility()
+                            },
+                            exitButton = new EndangerEdButton("Exit")
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Width = 100,
+                                Height = 50,
+                                Action = () => host.Exit()
                             }
                         }
                     },
@@ -169,7 +184,7 @@ public partial class MainMenuScreen : EndangerEdScreen
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Y = 200f,
+                        Y = 225f,
                         Child = new FillFlowContainer
                         {
                             Direction = FillDirection.Horizontal,
@@ -281,6 +296,7 @@ public partial class MainMenuScreen : EndangerEdScreen
             }
         };
         sessionStore.IsLoggedIn.BindValueChanged(onLoginChanged, true);
+        exitButton.SetColour(Color4.Red);
     }
 
     protected override void LoadComplete()

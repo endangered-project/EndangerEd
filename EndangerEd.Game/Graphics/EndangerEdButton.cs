@@ -132,9 +132,12 @@ public partial class EndangerEdButton : Button
         this.text = text;
     }
 
-    public void SetColour(Colour4 colour)
+    public void SetColour(Colour4 colour, float duration = 0)
     {
         ButtonColour = colour;
-        buttonBox.Colour = colour;
+        if (duration > 0)
+            buttonBox.FadeColour(colour, duration);
+        else
+            buttonBox.Colour = colour;
     }
 }
