@@ -131,7 +131,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             }
         };
 
-        if (question.ContentType == ContentType.Image)
+        if (CurrentQuestion.ContentType == ContentType.Image)
         {
             AddInternal(new FillFlowContainer()
             {
@@ -156,7 +156,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                                 RelativeSizeAxes = Axes.Both,
                                 Colour = Colour4.Red
                             },
-                            new OnlineImageSprite(question.Choices[0])
+                            new OnlineImageSprite(CurrentQuestion.Choices[0])
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
@@ -178,7 +178,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                                 RelativeSizeAxes = Axes.Both,
                                 Colour = Colour4.Red
                             },
-                            new OnlineImageSprite(question.Choices[1])
+                            new OnlineImageSprite(CurrentQuestion.Choices[1])
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
@@ -200,7 +200,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                                 RelativeSizeAxes = Axes.Both,
                                 Colour = Colour4.Red
                             },
-                            new OnlineImageSprite(question.Choices[2])
+                            new OnlineImageSprite(CurrentQuestion.Choices[2])
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
@@ -222,7 +222,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                                 RelativeSizeAxes = Axes.Both,
                                 Colour = Colour4.Red
                             },
-                            new OnlineImageSprite(question.Choices[3])
+                            new OnlineImageSprite(CurrentQuestion.Choices[3])
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
@@ -262,7 +262,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Text = question.Choices[0]
+                                Text = CurrentQuestion.Choices[0]
                             }
                         }
                     },
@@ -284,7 +284,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Text = question.Choices[1]
+                                Text = CurrentQuestion.Choices[1]
                             }
                         }
                     },
@@ -306,7 +306,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Text = question.Choices[2]
+                                Text = CurrentQuestion.Choices[2]
                             }
                         }
                     },
@@ -328,7 +328,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Text = question.Choices[3]
+                                Text = CurrentQuestion.Choices[3]
                             }
                         }
                     }
@@ -362,28 +362,28 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 boxContainer1.FlashColour(Colour4.White, 500);
                 stopAllBullet();
                 allowFire = false;
-                onChoiceSelected(question.Choices[0]);
+                onChoiceSelected(CurrentQuestion.Choices[0]);
             }
             else if (boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
             {
                 boxContainer2.FlashColour(Colour4.White, 500);
                 stopAllBullet();
                 allowFire = false;
-                onChoiceSelected(question.Choices[1]);
+                onChoiceSelected(CurrentQuestion.Choices[1]);
             }
             else if (boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
             {
                 boxContainer3.FlashColour(Colour4.White, 500);
                 stopAllBullet();
                 allowFire = false;
-                onChoiceSelected(question.Choices[2]);
+                onChoiceSelected(CurrentQuestion.Choices[2]);
             }
             else if (boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
             {
                 boxContainer4.FlashColour(Colour4.White, 500);
                 stopAllBullet();
                 allowFire = false;
-                onChoiceSelected(question.Choices[3]);
+                onChoiceSelected(CurrentQuestion.Choices[3]);
             }
         }
     }
@@ -597,9 +597,9 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                         }
                     };
 
-                    if (question.ContentType == ContentType.Image)
+                    if (CurrentQuestion.ContentType == ContentType.Image)
                     {
-                        resultDetail.Add(new OnlineImageSprite(question.Answer)
+                        resultDetail.Add(new OnlineImageSprite(CurrentQuestion.Answer)
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
@@ -612,7 +612,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Text = question.Answer,
+                            Text = CurrentQuestion.Answer,
                             Font = EndangerEdFont.GetFont(size: 25),
                             Colour = Colour4.White
                         });

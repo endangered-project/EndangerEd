@@ -105,7 +105,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             }
         };
 
-        if (question.ContentType == ContentType.Image)
+        if (CurrentQuestion.ContentType == ContentType.Image)
         {
             AddInternal(boxContainer1 = new BasicButton()
             {
@@ -124,7 +124,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         RelativeSizeAxes = Axes.Both,
                         Colour = Colour4.Red
                     },
-                    new OnlineImageSprite(question.Choices[0])
+                    new OnlineImageSprite(CurrentQuestion.Choices[0])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -156,7 +156,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         RelativeSizeAxes = Axes.Both,
                         Colour = Colour4.Red
                     },
-                    new OnlineImageSprite(question.Choices[1])
+                    new OnlineImageSprite(CurrentQuestion.Choices[1])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -188,7 +188,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         RelativeSizeAxes = Axes.Both,
                         Colour = Colour4.Red
                     },
-                    new OnlineImageSprite(question.Choices[2])
+                    new OnlineImageSprite(CurrentQuestion.Choices[2])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -220,7 +220,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         RelativeSizeAxes = Axes.Both,
                         Colour = Colour4.Red
                     },
-                    new OnlineImageSprite(question.Choices[3])
+                    new OnlineImageSprite(CurrentQuestion.Choices[3])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -259,7 +259,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Text = question.Choices[0]
+                        Text = CurrentQuestion.Choices[0]
                     }
                 },
                 Action = () =>
@@ -291,7 +291,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Text = question.Choices[1]
+                        Text = CurrentQuestion.Choices[1]
                     }
                 },
                 Action = () =>
@@ -323,7 +323,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Text = question.Choices[2]
+                        Text = CurrentQuestion.Choices[2]
                     }
                 },
                 Action = () =>
@@ -355,7 +355,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Text = question.Choices[3]
+                        Text = CurrentQuestion.Choices[3]
                     }
                 },
                 Action = () =>
@@ -445,25 +445,25 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         if (boxContainer1.Position.X > lineXPosition)
         {
             stopBoxContainer();
-            onChoiceSelected(question.Choices[0]);
+            onChoiceSelected(CurrentQuestion.Choices[0]);
         }
 
         if (boxContainer2.Position.X > lineXPosition)
         {
             stopBoxContainer();
-            onChoiceSelected(question.Choices[1]);
+            onChoiceSelected(CurrentQuestion.Choices[1]);
         }
 
         if (boxContainer3.Position.X > lineXPosition)
         {
             stopBoxContainer();
-            onChoiceSelected(question.Choices[2]);
+            onChoiceSelected(CurrentQuestion.Choices[2]);
         }
 
         if (boxContainer4.Position.X > lineXPosition)
         {
             stopBoxContainer();
-            onChoiceSelected(question.Choices[3]);
+            onChoiceSelected(CurrentQuestion.Choices[3]);
         }
 
         // If all boxes are removed, stop the boxContainer.
@@ -663,9 +663,9 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         }
                     };
 
-                    if (question.ContentType == ContentType.Image)
+                    if (CurrentQuestion.ContentType == ContentType.Image)
                     {
-                        resultDetail.Add(new OnlineImageSprite(question.Answer)
+                        resultDetail.Add(new OnlineImageSprite(CurrentQuestion.Answer)
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
@@ -678,7 +678,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Text = question.Answer,
+                            Text = CurrentQuestion.Answer,
                             Font = EndangerEdFont.GetFont(size: 25),
                             Colour = Colour4.White
                         });

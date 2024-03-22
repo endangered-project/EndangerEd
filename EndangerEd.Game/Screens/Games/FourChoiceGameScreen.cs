@@ -101,7 +101,7 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
             }
         };
 
-        if (question.ContentType == ContentType.Image)
+        if (CurrentQuestion.ContentType == ContentType.Image)
         {
             AddInternal(new GridContainer()
             {
@@ -351,9 +351,9 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                         }
                     };
 
-                    if (question.ContentType == ContentType.Image)
+                    if (CurrentQuestion.ContentType == ContentType.Image)
                     {
-                        resultDetail.Add(new OnlineImageSprite(question.Answer)
+                        resultDetail.Add(new OnlineImageSprite(CurrentQuestion.Answer)
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
@@ -366,7 +366,7 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Text = question.Answer,
+                            Text = CurrentQuestion.Answer,
                             Font = EndangerEdFont.GetFont(size: 25),
                             Colour = Colour4.White
                         });

@@ -82,7 +82,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             }
         };
 
-        if (question.ContentType == ContentType.Image)
+        if (CurrentQuestion.ContentType == ContentType.Image)
         {
             AddInternal(boxContainer1 = new Container()
             {
@@ -101,7 +101,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                         RelativeSizeAxes = Axes.Both,
                         Colour = Colour4.Red
                     },
-                    new OnlineImageSprite(question.Choices[0])
+                    new OnlineImageSprite(CurrentQuestion.Choices[0])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -125,7 +125,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                         RelativeSizeAxes = Axes.Both,
                         Colour = Colour4.Red
                     },
-                    new OnlineImageSprite(question.Choices[1])
+                    new OnlineImageSprite(CurrentQuestion.Choices[1])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -149,7 +149,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                         RelativeSizeAxes = Axes.Both,
                         Colour = Colour4.Red
                     },
-                    new OnlineImageSprite(question.Choices[2])
+                    new OnlineImageSprite(CurrentQuestion.Choices[2])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -173,7 +173,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                         RelativeSizeAxes = Axes.Both,
                         Colour = Colour4.Red
                     },
-                    new OnlineImageSprite(question.Choices[3])
+                    new OnlineImageSprite(CurrentQuestion.Choices[3])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -205,7 +205,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Text = question.Choices[0]
+                        Text = CurrentQuestion.Choices[0]
                     }
                 }
             });
@@ -229,7 +229,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Text = question.Choices[1]
+                        Text = CurrentQuestion.Choices[1]
                     }
                 }
             });
@@ -253,7 +253,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Text = question.Choices[2]
+                        Text = CurrentQuestion.Choices[2]
                     }
                 }
             });
@@ -277,7 +277,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Text = question.Choices[3]
+                        Text = CurrentQuestion.Choices[3]
                     }
                 }
             });
@@ -365,7 +365,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             boxContainer1.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
             stopBoxContainer();
-            onChoiceSelected(question.Choices[0]);
+            onChoiceSelected(CurrentQuestion.Choices[0]);
         }
 
         if (bucket.Contains(boxContainer2.ScreenSpaceDrawQuad.Centre))
@@ -373,7 +373,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             boxContainer2.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
             stopBoxContainer();
-            onChoiceSelected(question.Choices[1]);
+            onChoiceSelected(CurrentQuestion.Choices[1]);
         }
 
         if (bucket.Contains(boxContainer3.ScreenSpaceDrawQuad.Centre))
@@ -381,7 +381,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             boxContainer3.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
             stopBoxContainer();
-            onChoiceSelected(question.Choices[2]);
+            onChoiceSelected(CurrentQuestion.Choices[2]);
         }
 
         if (bucket.Contains(boxContainer4.ScreenSpaceDrawQuad.Centre))
@@ -389,7 +389,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             boxContainer4.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
             stopBoxContainer();
-            onChoiceSelected(question.Choices[3]);
+            onChoiceSelected(CurrentQuestion.Choices[3]);
         }
 
         // If all bucket is not in the screen, then the game is over.
@@ -598,9 +598,9 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                         }
                     };
 
-                    if (question.ContentType == ContentType.Image)
+                    if (CurrentQuestion.ContentType == ContentType.Image)
                     {
-                        resultDetail.Add(new OnlineImageSprite(question.Answer)
+                        resultDetail.Add(new OnlineImageSprite(CurrentQuestion.Answer)
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
@@ -613,7 +613,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Text = question.Answer,
+                            Text = CurrentQuestion.Answer,
                             Font = EndangerEdFont.GetFont(size: 25),
                             Colour = Colour4.White
                         });
