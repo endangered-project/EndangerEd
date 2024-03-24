@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using EndangerEd.Game.API;
+using EndangerEd.Game.Audio;
 using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Objects;
 using EndangerEd.Game.Screens.ScreenStacks;
@@ -35,6 +36,9 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
 
     [Resolved]
     private APIRequestManager apiRequestManager { get; set; }
+
+    [Resolved]
+    private AudioPlayer audioPlayer { get; set; }
 
     private BindableBool answered = new BindableBool();
     private bool allowFire = true;
@@ -455,6 +459,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
     protected override void LoadComplete()
     {
         base.LoadComplete();
+        audioPlayer.ChangeTrack("ingame.mp3");
         Scheduler.Add(() =>
         {
             gameSessionStore.StopwatchClock.Reset();

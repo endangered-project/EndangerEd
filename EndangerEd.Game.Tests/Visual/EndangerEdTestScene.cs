@@ -15,7 +15,7 @@ namespace EndangerEd.Game.Tests.Visual
         public SettingsScreenStack SettingsScreenStack;
 
         public SessionStore SessionStore;
-        
+
         public AudioPlayer AudioPlayer;
 
         public GameSessionStore GameSessionStore;
@@ -40,6 +40,7 @@ namespace EndangerEd.Game.Tests.Visual
             Dependencies.CacheAs(AudioPlayer = new AudioPlayer("snowmix.mp3"));
             Add(MainScreenStack);
             Add(SettingsScreenStack);
+            Add(AudioPlayer);
         }
 
         private partial class EndangerEdTestSceneTestRunner : EndangerEdGameBase, ITestSceneTestRunner

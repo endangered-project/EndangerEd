@@ -304,6 +304,7 @@ public partial class MainMenuScreen : EndangerEdScreen
         base.LoadComplete();
         knowledgeBaseContainer.ScaleTo(new Vector2(1.2f), 500, Easing.OutSine).Then().ScaleTo(new Vector2(1f), 500, Easing.OutSine).Loop();
         apiRequestManager.AddHeader("Authorization", "Bearer " + configManager.Get<string>(EndangerEdSetting.AccessToken));
+        audioPlayer.ChangeTrack("menu.mp3");
         Thread thread = new Thread(() =>
         {
             sessionStore.IsLoading.Value = true;
@@ -380,6 +381,7 @@ public partial class MainMenuScreen : EndangerEdScreen
     public override void OnSuspending(ScreenTransitionEvent e)
     {
         base.OnSuspending(e);
+        audioPlayer.Pause();
         this.MoveToY(3000f, 1000, Easing.OutQuint)
             .FadeTo(0f, 1000, Easing.OutQuint);
     }
@@ -387,6 +389,7 @@ public partial class MainMenuScreen : EndangerEdScreen
     public override void OnResuming(ScreenTransitionEvent e)
     {
         base.OnResuming(e);
+        audioPlayer.Play();
         this.MoveToY(0f, 1000, Easing.OutQuint)
             .FadeInFromZero(1000, Easing.OutQuint);
     }

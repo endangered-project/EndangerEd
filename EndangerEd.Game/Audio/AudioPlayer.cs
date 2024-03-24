@@ -114,6 +114,12 @@ public partial class AudioPlayer : CompositeDrawable
     {
         try
         {
+            // Don't change track if the track is already playing
+            if (TrackName.Value == trackName)
+            {
+                return;
+            }
+
             Scheduler.Add(() =>
             {
                 Track.Value = trackStore.Get(trackName);

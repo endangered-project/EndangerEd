@@ -68,9 +68,8 @@ namespace EndangerEd.Game
                 }
             });
 
-            loadComponentSingleFile(audioPlayer = new AudioPlayer("snowmix.mp3"), overlayContent.Add, true);
+            loadComponentSingleFile(audioPlayer = new AudioPlayer("menu.mp3", true), overlayContent.Add, true);
             loadComponentSingleFile(settingsScreenStack = new SettingsScreenStack(), Add, true);
-
             screenStack.MainScreenStack.Push(new MainMenuScreen());
         }
 

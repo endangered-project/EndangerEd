@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using EndangerEd.Game.API;
+using EndangerEd.Game.Audio;
 using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Objects;
 using EndangerEd.Game.Screens.ScreenStacks;
@@ -39,6 +40,9 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
 
     [Resolved]
     private APIRequestManager apiRequestManager { get; set; }
+
+    [Resolved]
+    private AudioPlayer audioPlayer { get; set; }
 
     private readonly BindableBool answered = new BindableBool();
     private EndangerEdButton endButton;
@@ -450,6 +454,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
     protected override void LoadComplete()
     {
         base.LoadComplete();
+        audioPlayer.ChangeTrack("ingame.mp3");
         Scheduler.Add(() =>
         {
             gameSessionStore.StopwatchClock.Reset();

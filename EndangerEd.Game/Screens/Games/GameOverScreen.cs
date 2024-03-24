@@ -1,4 +1,5 @@
-﻿using EndangerEd.Game.Graphics;
+﻿using EndangerEd.Game.Audio;
+using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
@@ -17,6 +18,9 @@ public partial class GameOverScreen : EndangerEdScreen
 
     [Resolved]
     private GameSessionStore gameSessionStore { get; set; }
+
+    [Resolved]
+    private AudioPlayer audioPlayer { get; set; }
 
     private Container container;
     private Box loadingBox;
@@ -89,6 +93,7 @@ public partial class GameOverScreen : EndangerEdScreen
     protected override void LoadComplete()
     {
         base.LoadComplete();
+        audioPlayer.ChangeTrack("ingame.mp3");
         container.ScaleTo(1, 1000, Easing.OutElastic);
         loadingBox.ResizeWidthTo(0, 3000);
 

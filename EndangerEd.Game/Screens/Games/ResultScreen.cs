@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using EndangerEd.Game.API;
+using EndangerEd.Game.Audio;
 using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Screens.ScreenStacks;
 using osu.Framework.Allocation;
@@ -27,6 +28,9 @@ public partial class ResultScreen : EndangerEdScreen
 
     [Resolved]
     private APIRequestManager apiRequestManager { get; set; }
+
+    [Resolved]
+    private AudioPlayer audioPlayer { get; set; }
 
     private SpriteIcon loadingIcon;
     private Container loadingContainer;
@@ -389,6 +393,7 @@ public partial class ResultScreen : EndangerEdScreen
                    .RotateTo(360, 1000, Easing.InOutSine)
                    .Loop();
         sessionIdText.Text = "Session ID : " + resultId;
+        audioPlayer.ChangeTrack("result.mp3");
 
         Thread thread = new Thread(() =>
         {
