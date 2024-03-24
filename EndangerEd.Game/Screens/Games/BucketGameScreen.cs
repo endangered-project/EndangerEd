@@ -10,6 +10,8 @@ using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using Newtonsoft.Json;
 using osu.Framework.Allocation;
+using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -57,9 +59,17 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
 
     private bool allowMovingBucket = true;
 
+    private Sample bucketImpactSample;
+    private Sample correctAnswerSample;
+    private Sample incorrectAnswerSample;
+
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(AudioManager audioManager)
     {
+        bucketImpactSample = audioManager.Samples.Get($"Game/Bucket/BucketImpact{RNG.Next(0, 3)}.wav");
+        correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
+        incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
+
         InternalChildren = new Drawable[]
         {
             new EndangerEdSpriteText()
@@ -366,6 +376,17 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         });
     }
 
+    private bool hasPlayedBucketImpactSample;
+
+    private void playBucketImpactSample()
+    {
+        if (!hasPlayedBucketImpactSample)
+        {
+            bucketImpactSample?.Play();
+            hasPlayedBucketImpactSample = true;
+        }
+    }
+
     protected override void Update()
     {
         if (gameSessionStore.IsOverTime() && !IsOverTime)
@@ -378,6 +399,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         {
             boxContainer1.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
+            playBucketImpactSample();
             stopBoxContainer();
             onChoiceSelected(CurrentQuestion.Choices[0]);
         }
@@ -386,6 +408,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         {
             boxContainer2.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
+            playBucketImpactSample();
             stopBoxContainer();
             onChoiceSelected(CurrentQuestion.Choices[1]);
         }
@@ -394,6 +417,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         {
             boxContainer3.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
+            playBucketImpactSample();
             stopBoxContainer();
             onChoiceSelected(CurrentQuestion.Choices[2]);
         }
@@ -402,6 +426,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         {
             boxContainer4.FlashColour(Colour4.White, 500);
             allowMovingBucket = false;
+            playBucketImpactSample();
             stopBoxContainer();
             onChoiceSelected(CurrentQuestion.Choices[3]);
         }
@@ -501,6 +526,8 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 {
                     this.FlashColour(Colour4.Green, 500);
 
+                    correctAnswerSample?.Play();
+
                     Box loadingBox = new Box()
                     {
                         Anchor = Anchor.BottomLeft,
@@ -569,6 +596,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             else
             {
                 gameSessionStore.Life.Value--;
+                incorrectAnswerSample?.Play();
                 Scheduler.Add(() =>
                 {
                     this.FlashColour(Colour4.Red, 500);

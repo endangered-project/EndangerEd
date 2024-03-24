@@ -376,17 +376,17 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         });
     }
 
-    private bool hasPlayHitTargetSample;
+    private bool hasPlayedHitTargetSample;
 
     /// <summary>
     /// Play the hit target sample if it hasn't been played yet.
     /// </summary>
     private void playHitTargetSample()
     {
-        if (!hasPlayHitTargetSample)
+        if (!hasPlayedHitTargetSample)
         {
             hitTargetSample?.Play();
-            hasPlayHitTargetSample = true;
+            hasPlayedHitTargetSample = true;
         }
     }
 
