@@ -10,6 +10,8 @@ using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using Newtonsoft.Json;
 using osu.Framework.Allocation;
+using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -58,9 +60,19 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
 
     private bool allowMovingFish = true;
 
+    private Sample cameraSample;
+    private Sample splashSample;
+    private Sample correctAnswerSample;
+    private Sample incorrectAnswerSample;
+
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(AudioManager audioManager)
     {
+        cameraSample = audioManager.Samples.Get("Game/Camera/Camera.wav");
+        splashSample = audioManager.Samples.Get("Game/Camera/Splash.wav");
+        correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
+        incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
+
         InternalChildren = new Drawable[]
         {
             new EndangerEdSpriteText()
@@ -298,6 +310,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             });
         }
 
+        // Water
         AddInternal(new Box()
         {
             Anchor = Anchor.BottomCentre,
@@ -412,7 +425,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
     {
         // Move the camera to the mouse position.
         if (allowMovingFish)
-            camera.Position = new Vector2(e.MousePosition.X - DrawSize.X / 2, e.MousePosition.Y - DrawSize.Y / 2);
+            camera.Position = new Vector2(e.MousePosition.X - DrawSize.X / 2, e.MousePosition.Y - DrawSize.Y / 2 < 0 ? e.MousePosition.Y - DrawSize.Y / 2 : 0);
         return base.OnMouseMove(e);
     }
 
@@ -448,6 +461,8 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             onChoiceSelected(CurrentQuestion.Choices[3]);
         }
 
+        cameraSample?.Play();
+
         return base.OnMouseDown(e);
     }
 
@@ -468,6 +483,14 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
             int duration = RNG.Next(1000, 2500);
             fishContainer1.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
+            Scheduler.AddDelayed(() =>
+            {
+                splashSample?.Play();
+            }, duration / 2.5);
+            Scheduler.AddDelayed(() =>
+            {
+                splashSample?.Play();
+            }, duration + duration / 2.5);
         }, RNG.Next(1000, 6000));
 
         Scheduler.AddDelayed(() =>
@@ -477,6 +500,14 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
             int duration = RNG.Next(1000, 2500);
             fishContainer2.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
+            Scheduler.AddDelayed(() =>
+            {
+                splashSample?.Play();
+            }, duration / 2.5);
+            Scheduler.AddDelayed(() =>
+            {
+                splashSample?.Play();
+            }, duration + duration / 2.5);
         }, RNG.Next(3500, 8500));
 
         Scheduler.AddDelayed(() =>
@@ -486,6 +517,14 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
             int duration = RNG.Next(1000, 2500);
             fishContainer3.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
+            Scheduler.AddDelayed(() =>
+            {
+                splashSample?.Play();
+            }, duration / 2.5);
+            Scheduler.AddDelayed(() =>
+            {
+                splashSample?.Play();
+            }, duration + duration / 2.5);
         }, RNG.Next(6000, 11000));
 
         Scheduler.AddDelayed(() =>
@@ -495,6 +534,14 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
             int duration = RNG.Next(1000, 2500);
             fishContainer4.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
+            Scheduler.AddDelayed(() =>
+            {
+                splashSample?.Play();
+            }, duration / 2.5);
+            Scheduler.AddDelayed(() =>
+            {
+                splashSample?.Play();
+            }, duration + duration / 2.5);
         }, RNG.Next(8500, 13500));
     }
 
@@ -534,6 +581,8 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Scheduler.Add(() =>
                 {
                     this.FlashColour(Colour4.Green, 500);
+
+                    correctAnswerSample?.Play();
 
                     Box loadingBox = new Box()
                     {
@@ -603,6 +652,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             else
             {
                 gameSessionStore.Life.Value--;
+                incorrectAnswerSample?.Play();
                 Scheduler.Add(() =>
                 {
                     this.FlashColour(Colour4.Red, 500);
