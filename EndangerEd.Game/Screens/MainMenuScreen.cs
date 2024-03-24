@@ -381,7 +381,6 @@ public partial class MainMenuScreen : EndangerEdScreen
     public override void OnSuspending(ScreenTransitionEvent e)
     {
         base.OnSuspending(e);
-        audioPlayer.Pause();
         this.MoveToY(3000f, 1000, Easing.OutQuint)
             .FadeTo(0f, 1000, Easing.OutQuint);
     }
@@ -389,7 +388,6 @@ public partial class MainMenuScreen : EndangerEdScreen
     public override void OnResuming(ScreenTransitionEvent e)
     {
         base.OnResuming(e);
-        audioPlayer.Play();
         this.MoveToY(0f, 1000, Easing.OutQuint)
             .FadeInFromZero(1000, Easing.OutQuint);
     }

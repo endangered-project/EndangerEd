@@ -105,6 +105,8 @@ public partial class LoadingScreen : EndangerEdScreen
     {
         base.LoadComplete();
 
+        audioPlayer.Pause();
+
         Thread thread = new Thread(() =>
         {
             Scheduler.Add(() => sessionStore.IsLoading.Value = true);

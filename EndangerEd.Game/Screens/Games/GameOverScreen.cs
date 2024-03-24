@@ -3,6 +3,8 @@ using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
+using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -25,9 +27,13 @@ public partial class GameOverScreen : EndangerEdScreen
     private Container container;
     private Box loadingBox;
 
+    private Sample incorrectAnswerSample;
+
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(AudioManager audioManager)
     {
+        incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
+
         InternalChildren = new Drawable[]
         {
             container = new Container()
@@ -94,6 +100,7 @@ public partial class GameOverScreen : EndangerEdScreen
     {
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
+        incorrectAnswerSample?.Play();
         container.ScaleTo(1, 1000, Easing.OutElastic);
         loadingBox.ResizeWidthTo(0, 3000);
 
