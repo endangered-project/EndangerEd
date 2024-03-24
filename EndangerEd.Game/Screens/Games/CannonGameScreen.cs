@@ -11,6 +11,8 @@ using EndangerEd.Game.Screens.ScreenStacks;
 using EndangerEd.Game.Stores;
 using Newtonsoft.Json;
 using osu.Framework.Allocation;
+using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -56,9 +58,19 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
 
     private List<Circle> cannonBalls = new List<Circle>();
 
+    private Sample cannonFireSample;
+    private Sample hitTargetSample;
+    private Sample correctAnswerSample;
+    private Sample incorrectAnswerSample;
+
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(AudioManager audioManager)
     {
+        cannonFireSample = audioManager.Samples.Get("Game/Cannon/CannonFire.wav");
+        hitTargetSample = audioManager.Samples.Get("Game/Cannon/TargetImpact.wav");
+        correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
+        incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
+
         InternalChildren = new Drawable[]
         {
             new EndangerEdSpriteText()
@@ -364,6 +376,20 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         });
     }
 
+    private bool hasPlayHitTargetSample;
+
+    /// <summary>
+    /// Play the hit target sample if it hasn't been played yet.
+    /// </summary>
+    private void playHitTargetSample()
+    {
+        if (!hasPlayHitTargetSample)
+        {
+            hitTargetSample?.Play();
+            hasPlayHitTargetSample = true;
+        }
+    }
+
     protected override void Update()
     {
         if (gameSessionStore.IsOverTime() && !IsOverTime)
@@ -380,6 +406,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 boxContainer1.FlashColour(Colour4.White, 500);
                 stopAllBullet();
                 allowFire = false;
+                playHitTargetSample();
                 onChoiceSelected(CurrentQuestion.Choices[0]);
             }
             else if (boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
@@ -387,6 +414,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 boxContainer2.FlashColour(Colour4.White, 500);
                 stopAllBullet();
                 allowFire = false;
+                playHitTargetSample();
                 onChoiceSelected(CurrentQuestion.Choices[1]);
             }
             else if (boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
@@ -394,6 +422,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 boxContainer3.FlashColour(Colour4.White, 500);
                 stopAllBullet();
                 allowFire = false;
+                playHitTargetSample();
                 onChoiceSelected(CurrentQuestion.Choices[2]);
             }
             else if (boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
@@ -401,6 +430,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 boxContainer4.FlashColour(Colour4.White, 500);
                 stopAllBullet();
                 allowFire = false;
+                playHitTargetSample();
                 onChoiceSelected(CurrentQuestion.Choices[3]);
             }
         }
@@ -451,7 +481,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         // Lock y position to 1.3f
         // Calculate x position using angle
         double x = Math.Sin(angle * Math.PI / 180) * 1.3f;
-        Logger.Log($"X: {x}");
+        cannonFireSample?.Play();
         cannonBall.MoveTo(new Vector2((float)x, -1.5f), 1000, Easing.OutQuint);
         return base.OnMouseDown(e);
     }
@@ -503,6 +533,8 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 Scheduler.Add(() =>
                 {
                     this.FlashColour(Colour4.Green, 500);
+
+                    correctAnswerSample?.Play();
 
                     Box loadingBox = new Box()
                     {
@@ -572,6 +604,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             else
             {
                 gameSessionStore.Life.Value--;
+                incorrectAnswerSample?.Play();
                 Scheduler.Add(() =>
                 {
                     this.FlashColour(Colour4.Red, 500);
