@@ -24,5 +24,6 @@ public enum QuestionMode
     Cannon,
     Bucket,
     TakePicture,
-    Conveyor
+    Conveyor,
+    Traffic
 }
