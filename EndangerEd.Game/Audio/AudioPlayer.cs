@@ -118,6 +118,7 @@ public partial class AudioPlayer : CompositeDrawable
     /// </summary>
     /// <param name="trackName">A track name to change</param>
     /// <param name="playAfterChange">Schedule to play after successfully change the track.</param>
+    /// <param name="loop">Whether the track should be looping.</param>
     public void ChangeTrack(string trackName, bool playAfterChange = true, bool loop = true)
     {
         try

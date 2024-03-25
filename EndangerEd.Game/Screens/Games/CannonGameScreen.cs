@@ -55,8 +55,6 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
 
     private Sprite cannon;
 
-    private double angle;
-
     private readonly List<Sprite> cannonBalls = new List<Sprite>();
 
     private Sample cannonFireSample;
