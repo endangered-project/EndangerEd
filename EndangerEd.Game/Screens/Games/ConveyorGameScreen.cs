@@ -469,9 +469,9 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
-            RelativeSizeAxes = Axes.X,
-            Size = new Vector2(1, 800),
-            Position = new Vector2(0, 115),
+            RelativeSizeAxes = Axes.Both,
+            Scale = new Vector2(0.95f, 1),
+            Position = new Vector2(0, 105),
             Texture = textureStore.Get("Game/Conveyer/ConveyerBelt.png")
         });
 
@@ -481,8 +481,8 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
             RelativePositionAxes = Axes.X,
-            Size = new Vector2(100),
-            Position = new Vector2(-0.5f, 100),
+            Scale = new Vector2(0.35f, 0.35f),
+            Position = new Vector2(-0.47f, 100),
             Texture = textureStore.Get("Game/Conveyer/Gear.png")
         };
         Sprite rightGear = new Sprite()
@@ -490,8 +490,8 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
             RelativePositionAxes = Axes.X,
-            Size = new Vector2(100),
-            Position = new Vector2(0.5f, 100),
+            Scale = new Vector2(0.35f, 0.35f),
+            Position = new Vector2(0.47f, 100),
             Texture = textureStore.Get("Game/Conveyer/Gear.png")
         };
 
