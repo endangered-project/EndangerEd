@@ -104,7 +104,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Size = new Vector2(0.6f, 0.5f),
+                        Size = new Vector2(0.6f, 0.7f),
                         Position = new Vector2(0, 10),
                         Colour = Colour4.White,
                         Alpha = 0,
@@ -114,7 +114,9 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Size = new Vector2(150, 150),
+                        // Size = new Vector2(150, 150),
+                        Scale = new Vector2(0.3f, 0.3f),
+                        Position = new Vector2(0, -15),
                         Texture = textureStore.Get("Game/Camera/Camera.png")
                     }
                 }
@@ -327,8 +329,9 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
         {
             Anchor = Anchor.BottomCentre,
             Origin = Anchor.BottomCentre,
-            RelativeSizeAxes = Axes.X,
-            Height = 300,
+            Position = new Vector2(0, 190),
+            RelativeSizeAxes = Axes.Both,
+            Scale = new Vector2(1.1f, 0.7f),
             Alpha = 0.75f,
             Texture = textureStore.Get("Game/Camera/Water.png")
         });
