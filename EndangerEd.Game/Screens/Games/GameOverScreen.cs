@@ -108,6 +108,7 @@ public partial class GameOverScreen : EndangerEdScreen
         {
             mainScreenStack.SwapScreenStack(100);
             mainScreenStack.MainScreenStack.Push(new ResultScreen(gameSessionStore.GameId));
+            gameSessionStore.Reset();
         }, 3000);
     }
 }
