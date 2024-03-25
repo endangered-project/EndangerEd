@@ -70,12 +70,20 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
 
     private Sample correctAnswerSample;
     private Sample incorrectAnswerSample;
+    private Sample carTakeOffSample;
+    private Sample trafficSwitchSample;
+    private Sample wrongCarArriveSample;
+    private Sample rightCarArriveSample;
 
     [BackgroundDependencyLoader]
     private void load(AudioManager audioManager, TextureStore textureStore)
     {
         correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
         incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
+        carTakeOffSample = audioManager.Samples.Get("Game/Traffic/CarTakeoff.wav");
+        trafficSwitchSample = audioManager.Samples.Get("Game/Traffic/TrafficSwitch.wav");
+        wrongCarArriveSample = audioManager.Samples.Get("Game/Traffic/WrongCarArrived.wav");
+        rightCarArriveSample = audioManager.Samples.Get("Game/Traffic/metal-pipe.wav");
 
         InternalChildren = new Drawable[]
         {
@@ -553,6 +561,9 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     {
         if (!allowMovingCar) return;
 
+        trafficSwitchSample?.Play();
+        carTakeOffSample?.Play();
+
         buttonSprite1.FlashColour(Colour4.White, 500).FadeColour(Colour4.LightGreen, 500);
         boxContainer1.MoveTo(new Vector2(0, 0f), 1000, Easing.OutQuint)
                      .Then()
@@ -563,10 +574,12 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             {
                 mainBarrier.FadeColour(Colour4.LightGreen, 500);
                 boxContainer1.MoveTo(new Vector2(1f, 0), 1500, Easing.OutQuint);
+                rightCarArriveSample?.Play();
             }
             else
             {
                 mainBarrier.FlashColour(Colour4.White, 500);
+                wrongCarArriveSample?.Play();
             }
         }, 2000);
         Scheduler.AddDelayed(() =>
@@ -578,6 +591,9 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     private void onReleaseChoice2()
     {
         if (!allowMovingCar) return;
+
+        trafficSwitchSample?.Play();
+        carTakeOffSample?.Play();
 
         buttonSprite2.FlashColour(Colour4.White, 500).FadeColour(Colour4.LightGreen, 500);
         boxContainer2.MoveTo(new Vector2(0.05f, -75f), 500, Easing.OutQuint)
@@ -591,10 +607,12 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             {
                 mainBarrier.FadeColour(Colour4.LightGreen, 500);
                 boxContainer2.MoveTo(new Vector2(1f, 0), 1500, Easing.OutQuint);
+                rightCarArriveSample?.Play();
             }
             else
             {
                 mainBarrier.FlashColour(Colour4.White, 500);
+                wrongCarArriveSample?.Play();
             }
         }, 2000);
         Scheduler.AddDelayed(() =>
@@ -606,6 +624,9 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     private void onReleaseChoice3()
     {
         if (!allowMovingCar) return;
+
+        trafficSwitchSample?.Play();
+        carTakeOffSample?.Play();
 
         buttonSprite3.FlashColour(Colour4.White, 500).FadeColour(Colour4.LightGreen, 500);
         boxContainer3.MoveTo(new Vector2(0.05f, 75f), 500, Easing.OutQuint)
@@ -619,10 +640,12 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             {
                 mainBarrier.FadeColour(Colour4.LightGreen, 500);
                 boxContainer3.MoveTo(new Vector2(1f, 0), 1500, Easing.OutQuint);
+                rightCarArriveSample?.Play();
             }
             else
             {
                 mainBarrier.FlashColour(Colour4.White, 500);
+                wrongCarArriveSample?.Play();
             }
         }, 2000);
         Scheduler.AddDelayed(() =>
@@ -635,6 +658,9 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     {
         if (!allowMovingCar) return;
 
+        trafficSwitchSample?.Play();
+        carTakeOffSample?.Play();
+
         buttonSprite4.FlashColour(Colour4.White, 500).FadeColour(Colour4.LightGreen, 500);
         boxContainer4.MoveTo(new Vector2(0, 0f), 1000, Easing.OutQuint)
                      .Then()
@@ -645,10 +671,12 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             {
                 mainBarrier.FadeColour(Colour4.LightGreen, 500);
                 boxContainer4.MoveTo(new Vector2(1f, 0), 1500, Easing.OutQuint);
+                rightCarArriveSample?.Play();
             }
             else
             {
                 mainBarrier.FlashColour(Colour4.White, 500);
+                wrongCarArriveSample?.Play();
             }
         }, 2000);
         Scheduler.AddDelayed(() =>
