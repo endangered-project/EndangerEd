@@ -469,29 +469,32 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
+            Position = new Vector2(0, 110),
             RelativeSizeAxes = Axes.Both,
-            Scale = new Vector2(0.95f, 1),
-            Position = new Vector2(0, 105),
+            Size = new Vector2(0.9f, 0.9f),
+            FillMode = FillMode.Fill,
             Texture = textureStore.Get("Game/Conveyer/ConveyerBelt.png")
         });
 
         // Conveyor gear
         Sprite leftGear = new Sprite()
         {
-            Anchor = Anchor.Centre,
+            Anchor = Anchor.CentreLeft,
             Origin = Anchor.Centre,
-            RelativePositionAxes = Axes.X,
-            Scale = new Vector2(0.35f, 0.35f),
-            Position = new Vector2(-0.47f, 100),
+            Position = new Vector2(50, 100),
+            RelativeSizeAxes = Axes.Both,
+            Size = new Vector2(0.12f, 0.12f),
+            FillMode = FillMode.Fill,
             Texture = textureStore.Get("Game/Conveyer/Gear.png")
         };
         Sprite rightGear = new Sprite()
         {
-            Anchor = Anchor.Centre,
+            Anchor = Anchor.CentreRight,
             Origin = Anchor.Centre,
-            RelativePositionAxes = Axes.X,
-            Scale = new Vector2(0.35f, 0.35f),
-            Position = new Vector2(0.47f, 100),
+            Position = new Vector2(-50, 100),
+            RelativeSizeAxes = Axes.Both,
+            Size = new Vector2(0.12f, 0.12f),
+            FillMode = FillMode.Fill,
             Texture = textureStore.Get("Game/Conveyer/Gear.png")
         };
 
