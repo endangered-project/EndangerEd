@@ -97,6 +97,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(200, 200),
+                Depth = -100, // It just works :D
                 Children = new Drawable[]
                 {
                     cameraShutter = new Box()
@@ -114,7 +115,6 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        // Size = new Vector2(150, 150),
                         Scale = new Vector2(0.3f, 0.3f),
                         Position = new Vector2(0, -15),
                         Texture = textureStore.Get("Game/Camera/Camera.png")
