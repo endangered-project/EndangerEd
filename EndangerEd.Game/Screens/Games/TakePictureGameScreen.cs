@@ -328,11 +328,12 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
         AddInternal(new Sprite()
         {
             Anchor = Anchor.BottomCentre,
-            Origin = Anchor.BottomCentre,
-            Position = new Vector2(0, 190),
+            Origin = Anchor.Centre,
+            Position = new Vector2(0, -10),
             RelativeSizeAxes = Axes.Both,
-            Scale = new Vector2(1.1f, 0.7f),
-            Alpha = 0.75f,
+            Size = new Vector2(1.1f),
+            FillMode = FillMode.Fit,
+            Alpha = 0.9f,
             Texture = textureStore.Get("Game/Camera/Water.png")
         });
 
