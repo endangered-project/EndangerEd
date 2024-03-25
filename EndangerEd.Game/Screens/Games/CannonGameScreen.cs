@@ -455,14 +455,9 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         if (!allowFire)
             return base.OnMouseMove(e);
 
-        // Rotate the cannon using the mouse position
-        // Compute the angle between the cannon and the mouse position
-        // Angle will output between -1.5 to 0, normalize number to -60 to 60
-        angle = -Math.Atan2(e.MousePosition.Y - cannon.Position.Y, e.MousePosition.X - cannon.Position.X);
-        // Normalize the angle
-        angle = angle * 180 / Math.PI * 1.25 + 60;
-        Logger.Log($"Angle: {angle}");
-        cannon.Rotation = (float)angle;
+        // There is still a weird drifting going on when aiming to the sides but it's negligible.
+        cannon.Rotation = Math.Clamp((float)(Math.Atan2(e.MousePosition.Y - cannon.AnchorPosition.Y, e.MousePosition.X - cannon.AnchorPosition.X) * 180 / Math.PI) + 90, -60, 60);
+
         return base.OnMouseMove(e);
     }
 
