@@ -161,7 +161,6 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
                 Scale = new Vector2(0.3f, 0.3f),
-                Depth = -10,
                 Position = new Vector2(0, 30),
                 Texture = textureStore.Get("Game/Cannon/Cannon.png")
             }
@@ -473,6 +472,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             Position = new Vector2(0, 36),
             Origin = Anchor.Centre,
             Size = new Vector2(30, 30),
+            Depth = 1,
             Texture = bulletTexture
         };
         cannonBalls.Add(cannonBall);
