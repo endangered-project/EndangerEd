@@ -35,6 +35,9 @@ to view their statistics summary and the scoreboard showing their ranking on the
 or quit to the main menu after they finished viewing the information.
 
 ### 📥 Installation
+
+This project required .NET 8.0 to run. You can download it [here](https://dotnet.microsoft.com/download/dotnet).
+
 1. Clone the repository to your machine using the following command:
 ```
 git clone https://github.com/endangered-project/EndangerEd.git
