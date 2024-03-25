@@ -57,14 +57,12 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
 
     private double angle;
 
-    private readonly List<Sprite> cannonBalls = new List<Sprite>();
+    private readonly List<Circle> cannonBalls = new List<Circle>();
 
     private Sample cannonFireSample;
     private Sample hitTargetSample;
     private Sample correctAnswerSample;
     private Sample incorrectAnswerSample;
-
-    private Texture bulletTexture;
 
     [BackgroundDependencyLoader]
     private void load(AudioManager audioManager, TextureStore textureStore)
@@ -73,8 +71,6 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         hitTargetSample = audioManager.Samples.Get("Game/Cannon/TargetImpact.wav");
         correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
         incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
-
-        bulletTexture = textureStore.Get("Game/Cannon/CannonBall.png");
 
         InternalChildren = new Drawable[]
         {
@@ -404,7 +400,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             onChoiceSelected("");
         }
 
-        foreach (Sprite cannonBall in cannonBalls)
+        foreach (Circle cannonBall in cannonBalls)
         {
             // Check cannon collision
             if (boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
@@ -444,7 +440,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
 
     private void stopAllBullet()
     {
-        foreach (Sprite cannonBall in cannonBalls)
+        foreach (Circle cannonBall in cannonBalls)
         {
             cannonBall.ClearTransforms();
         }
@@ -472,14 +468,14 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             return base.OnMouseDown(e);
 
         // Summon the cannon ball
-        Sprite cannonBall = new Sprite()
+        Circle cannonBall = new Circle()
         {
             Anchor = Anchor.BottomCentre,
             Origin = Anchor.BottomCentre,
             RelativePositionAxes = Axes.Both,
             Size = new Vector2(30, 30),
             Position = cannon.Position,
-            Texture = bulletTexture
+            Colour = Colour4.Yellow
         };
         cannonBalls.Add(cannonBall);
         AddInternal(cannonBall);
