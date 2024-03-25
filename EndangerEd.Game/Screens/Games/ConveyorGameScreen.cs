@@ -483,7 +483,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             Origin = Anchor.Centre,
             Position = new Vector2(50, 100),
             RelativeSizeAxes = Axes.Both,
-            Size = new Vector2(0.12f, 0.12f),
+            Size = new Vector2(0.11f),
             FillMode = FillMode.Fill,
             Texture = textureStore.Get("Game/Conveyer/Gear.png")
         };
