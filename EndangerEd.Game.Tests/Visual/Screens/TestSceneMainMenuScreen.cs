@@ -8,6 +8,7 @@ public partial class TestSceneMainMenuScreen : EndangerEdTestScene
     [BackgroundDependencyLoader]
     private void load()
     {
-        MainScreenStack.Push(new MainMenuScreen());
+        MainScreenStack.MainScreenStack.Push(new MainMenuScreen());
+        AddStep("log in", () => SessionStore.IsLoggedIn.Value = true);
     }
 }

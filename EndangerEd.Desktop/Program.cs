@@ -1,6 +1,5 @@
 ﻿using osu.Framework.Platform;
 using osu.Framework;
-using EndangerEd.Game;
 
 namespace EndangerEd.Desktop
 {
@@ -9,7 +8,7 @@ namespace EndangerEd.Desktop
         public static void Main()
         {
             using (GameHost host = Host.GetSuitableDesktopHost(@"EndangerEd"))
-            using (osu.Framework.Game game = new EndangerEdGame())
+            using (osu.Framework.Game game = new EndangerEdGameDesktop())
                 host.Run(game);
         }
     }

@@ -10,11 +10,15 @@ public partial class TestSceneEndangerEdButton : EndangerEdTestScene
     {
         base.LoadComplete();
 
-        Add(new EndangerEdButton("Test")
+        EndangerEdButton button = new EndangerEdButton("Test")
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
             Size = new Vector2(220, 100)
-        });
+        };
+
+        Add(button);
+        AddStep("disable button", () => button.Enabled.Value = false);
+        AddStep("enable button", () => button.Enabled.Value = true);
     }
 }

@@ -13,5 +13,8 @@ public class EndangerEdConfigManager : IniConfigManager<EndangerEdSetting>
     protected override void InitialiseDefaults()
     {
         SetDefault(EndangerEdSetting.ShowFPSCounter, false);
+
+        SetDefault(EndangerEdSetting.AccessToken, string.Empty);
+        SetDefault(EndangerEdSetting.RefreshToken, string.Empty);
     }
 }

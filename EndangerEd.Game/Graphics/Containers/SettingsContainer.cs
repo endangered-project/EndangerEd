@@ -35,6 +35,9 @@ public partial class SettingsContainer : FocusedOverlayContainer
     protected override bool BlockNonPositionalInput => false;
     protected override bool BlockScrollInput => false;
 
+    [Resolved]
+    private GameHost host { get; set; }
+
     [BackgroundDependencyLoader]
     private void load(EndangerEdConfigManager endangerEdConfigManager, FrameworkConfigManager frameworkConfigManager, Storage storage, GameHost host, AudioManager audioManager, TextureStore textureStore)
     {
@@ -174,14 +177,6 @@ public partial class SettingsContainer : FocusedOverlayContainer
                                 },
                                 new SpriteText()
                                 {
-                                    Text = "Show FPS"
-                                },
-                                new BasicCheckbox
-                                {
-                                    Current = endangerEdConfigManager.GetBindable<bool>(EndangerEdSetting.ShowFPSCounter)
-                                },
-                                new SpriteText()
-                                {
                                     Text = "FPS Limit"
                                 },
                                 new BasicDropdown<FrameSync>
@@ -272,15 +267,22 @@ public partial class SettingsContainer : FocusedOverlayContainer
                                 },
                                 new SpriteText()
                                 {
-                                    Text = "Maintenance".ToUpper(),
+                                    Text = "Debug".ToUpper(),
                                     Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 32f, EndangerEdFont.FontWeight.Bold),
                                 },
-                                new BasicButton()
+                                new SpriteText()
+                                {
+                                    Text = "Show Frame Statistics Overlay"
+                                },
+                                new BasicCheckbox
+                                {
+                                    Current = endangerEdConfigManager.GetBindable<bool>(EndangerEdSetting.ShowFPSCounter)
+                                },
+                                new EndangerEdButton("Open log folder")
                                 {
                                     Action = () => storage.PresentExternally(),
-                                    Text = "Open log folder",
                                     Width = 300,
-                                    Height = 30
+                                    Height = 40
                                 }
                             }
                         }
@@ -288,6 +290,15 @@ public partial class SettingsContainer : FocusedOverlayContainer
                 }
             }
         };
+
+        // Sync the audio volume settings with the framework settings.
+        audioManager.Volume.Value = frameworkConfigManager.GetBindable<double>(FrameworkSetting.VolumeUniversal).Value;
+        audioManager.VolumeSample.Value = frameworkConfigManager.GetBindable<double>(FrameworkSetting.VolumeEffect).Value;
+        audioManager.VolumeTrack.Value = frameworkConfigManager.GetBindable<double>(FrameworkSetting.VolumeMusic).Value;
+
+        audioManager.Volume.BindValueChanged(v => frameworkConfigManager.GetBindable<double>(FrameworkSetting.VolumeUniversal).Value = v.NewValue);
+        audioManager.VolumeSample.BindValueChanged(v => frameworkConfigManager.GetBindable<double>(FrameworkSetting.VolumeEffect).Value = v.NewValue);
+        audioManager.VolumeTrack.BindValueChanged(v => frameworkConfigManager.GetBindable<double>(FrameworkSetting.VolumeMusic).Value = v.NewValue);
     }
 
     /// <summary>

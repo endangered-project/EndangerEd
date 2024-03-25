@@ -13,9 +13,10 @@ namespace EndangerEd.Game.Graphics;
 public partial class EndangerEdButton : Button
 {
     private string text;
-    public Colour4 ButtonColour = Colour4.DarkGreen;
+    public Colour4 ButtonColour = Colour4.Green;
     private Box buttonBox;
     private SpriteText buttonText;
+    private Box lockMask;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -48,8 +49,35 @@ public partial class EndangerEdButton : Button
                     }
                 },
             },
-            new ClickHoverSounds()
+            new ClickHoverSounds(Enabled),
+            new Container()
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                RelativeSizeAxes = Axes.Both,
+                Masking = true,
+                CornerRadius = 20,
+                Children = new Drawable[]
+                {
+                    lockMask = new Box()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Colour4.Black,
+                        Alpha = 0
+                    }
+                }
+            }
         };
+
+        Enabled.BindValueChanged(enabled =>
+        {
+            if (!enabled.NewValue)
+                lockMask.FadeTo(0.5f, 200);
+            else
+                lockMask.FadeOut(200);
+        }, true);
     }
 
     public EndangerEdButton(string text)
@@ -59,21 +87,24 @@ public partial class EndangerEdButton : Button
 
     protected override bool OnHover(HoverEvent e)
     {
-        buttonBox.Colour = ButtonColour.Darken(0.25f);
+        if (Enabled.Value)
+            buttonBox.Colour = ButtonColour.Darken(0.25f);
         return base.OnHover(e);
     }
 
     protected override void OnHoverLost(HoverLostEvent e)
     {
-        buttonBox.Colour = ButtonColour;
+        if (Enabled.Value)
+            buttonBox.Colour = ButtonColour;
         base.OnHoverLost(e);
     }
 
     protected override bool OnMouseDown(MouseDownEvent e)
     {
-        if (e.Button == MouseButton.Left)
+        if (e.Button == MouseButton.Left && Enabled.Value)
         {
             buttonBox.Colour = ButtonColour.Darken(0.5f);
+            this.ScaleTo(0.9f, 100, Easing.Out);
             return true;
         }
 
@@ -82,9 +113,10 @@ public partial class EndangerEdButton : Button
 
     protected override void OnMouseUp(MouseUpEvent e)
     {
-        if (e.Button == MouseButton.Left)
+        if (e.Button == MouseButton.Left && Enabled.Value)
         {
             buttonBox.Colour = ButtonColour.Darken(0.25f);
+            this.ScaleTo(1, 1000, Easing.OutElastic);
         }
 
         base.OnMouseUp(e);
@@ -100,9 +132,12 @@ public partial class EndangerEdButton : Button
         this.text = text;
     }
 
-    public void SetColour(Colour4 colour)
+    public void SetColour(Colour4 colour, float duration = 0)
     {
         ButtonColour = colour;
-        buttonBox.Colour = colour;
+        if (duration > 0)
+            buttonBox.FadeColour(colour, duration);
+        else
+            buttonBox.Colour = colour;
     }
 }

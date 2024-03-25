@@ -1,14 +1,17 @@
 ﻿using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Logging;
 
 namespace EndangerEd.Game.Stores;
 
-public class SessionStore
+public partial class SessionStore : CompositeDrawable
 {
     public Bindable<bool> IsLoggedIn { get; } = new Bindable<bool>(false);
 
     public Bindable<bool> IsGameStarted { get; } = new Bindable<bool>(false);
+
+    public BindableBool IsLoading { get; } = new BindableBool(false);
 
     [Resolved]
     private GameSessionStore gameSessionStore { get; set; }
@@ -23,14 +26,6 @@ public class SessionStore
         {
             Logger.Log($"🏬 Game started state changed to {isGameStartedChangedEvent.NewValue}.");
         });
-    }
-
-    /// <summary>
-    /// Login the user.
-    /// </summary>
-    public void Login()
-    {
-        IsLoggedIn.Value = true;
     }
 
     /// <summary>

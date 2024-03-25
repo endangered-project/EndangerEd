@@ -14,7 +14,7 @@ namespace EndangerEd.Game.Audio;
 /// </summary>
 public partial class AudioPlayer : CompositeDrawable
 {
-    public Bindable<Track> Track;
+    public Track Track;
     public Bindable<string> TrackName;
     private ITrackStore trackStore;
     private readonly bool startOnLoaded;
@@ -35,25 +35,27 @@ public partial class AudioPlayer : CompositeDrawable
 
         if (TrackName != null)
         {
-            Track = new Bindable<Track>(trackStore.Get(TrackName.Value));
+            Track = trackStore.Get(TrackName.Value);
             TrackName = new Bindable<string>(TrackName.Value);
 
             if (startOnLoaded)
             {
-                Track.Value.StartAsync().WaitSafely();
+                Track.StartAsync().WaitSafely();
             }
 
             Logger.Log("🎵 Initialize AudioPlayer with track " + TrackName.Value);
         }
         else
         {
-            Track = new Bindable<Track>();
             TrackName = new Bindable<string>();
 
             Logger.Log("🎵 Initialize AudioPlayer with no track");
         }
 
-        Track.Value.Looping = true;
+        if (Track != null)
+        {
+            Track.Looping = true;
+        }
     }
 
     /// <summary>
@@ -61,11 +63,12 @@ public partial class AudioPlayer : CompositeDrawable
     /// </summary>
     public void Play()
     {
-        if (!Track.Value.IsRunning)
-        {
-            Track.Value.StartAsync().WaitSafely();
-            Logger.Log("🎵 Resumed track");
-        }
+        if (Track == null) return;
+
+        if (Track.IsRunning) return;
+
+        Track.StartAsync().WaitSafely();
+        Logger.Log("🎵 Resumed track");
     }
 
     /// <summary>
@@ -73,11 +76,12 @@ public partial class AudioPlayer : CompositeDrawable
     /// </summary>
     public void Pause()
     {
-        if (Track.Value.IsRunning)
-        {
-            Track.Value.StopAsync().WaitSafely();
-            Logger.Log("🎵 Paused track");
-        }
+        if (Track == null) return;
+
+        if (!Track.IsRunning) return;
+
+        Track.StopAsync().WaitSafely();
+        Logger.Log("🎵 Paused track");
     }
 
     /// <summary>
@@ -86,7 +90,9 @@ public partial class AudioPlayer : CompositeDrawable
     /// </summary>
     public void TogglePlay()
     {
-        if (Track.Value.IsRunning)
+        if (Track == null) return;
+
+        if (Track.IsRunning)
         {
             Pause();
         }
@@ -101,8 +107,10 @@ public partial class AudioPlayer : CompositeDrawable
     /// </summary>
     public void Loop()
     {
-        Track.Value.Looping = !Track.Value.Looping;
-        Logger.Log("🎵 Toggled track looping to " + Track.Value.Looping);
+        if (Track == null) return;
+
+        Track.Looping = !Track.Looping;
+        Logger.Log("🎵 Toggled track looping to " + Track.Looping);
     }
 
     /// <summary>
@@ -110,19 +118,33 @@ public partial class AudioPlayer : CompositeDrawable
     /// </summary>
     /// <param name="trackName">A track name to change</param>
     /// <param name="playAfterChange">Schedule to play after successfully change the track.</param>
-    public void ChangeTrack(string trackName, bool playAfterChange = true)
+    public void ChangeTrack(string trackName, bool playAfterChange = true, bool loop = true)
     {
         try
         {
+            // Don't change track if the track is already playing
+            if (TrackName.Value == trackName)
+            {
+                return;
+            }
+
             Scheduler.Add(() =>
             {
-                Track.Value = trackStore.Get(trackName);
+                // Stop the current track
+                Track?.StopAsync().WaitSafely();
+                Track = trackStore.Get(trackName);
+
+                if (loop && Track != null)
+                {
+                    Track.Looping = true;
+                }
+
                 TrackName.Value = trackName;
                 Logger.Log("🎵 Changed track to " + trackName);
 
-                if (playAfterChange)
+                if (playAfterChange && Track != null)
                 {
-                    Track.Value.StartAsync().WaitSafely();
+                    Track.StartAsync().WaitSafely();
                 }
             });
         }
