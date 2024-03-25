@@ -104,6 +104,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 {
                     sessionStore.IsGameStarted.Value = false;
                     gameSessionStore.StopwatchClock.Stop();
+                    allowFire = false;
                     answered.Value = true;
 
                     Thread thread = new Thread(() =>
@@ -153,6 +154,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 Action = () =>
                 {
                     gameSessionStore.StopwatchClock.Stop();
+                    allowFire = false;
                     onChoiceSelected("");
                 }
             },

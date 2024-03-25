@@ -371,6 +371,8 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Height = 50,
                 Action = () =>
                 {
+                    stopBoxContainer();
+                    allowMovingBucket = false;
                     gameSessionStore.StopwatchClock.Stop();
                     onChoiceSelected("");
                 }
