@@ -470,20 +470,19 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         Sprite cannonBall = new Sprite()
         {
             Anchor = Anchor.BottomCentre,
-            Origin = Anchor.BottomCentre,
-            RelativePositionAxes = Axes.Both,
+            Position = new Vector2(0, 36),
+            Origin = Anchor.Centre,
             Size = new Vector2(30, 30),
-            Position = cannon.Position,
             Texture = bulletTexture
         };
         cannonBalls.Add(cannonBall);
         AddInternal(cannonBall);
-        // Calculate target position using pythagorean theorem
-        // Lock y position to 1.3f
-        // Calculate x position using angle
-        double x = Math.Sin(angle * Math.PI / 180) * 1.3f;
+
         cannonFireSample?.Play();
-        cannonBall.MoveTo(new Vector2((float)x, -1.5f), 1000, Easing.OutQuint);
+
+        double cannonAngle = (cannon.Rotation + 26.5) * Math.PI / 180 - 90;
+        cannonBall.MoveTo(new Vector2((float)Math.Cos(cannonAngle), (float)Math.Sin(cannonAngle)) * 1000, 1000);
+
         return base.OnMouseDown(e);
     }
 
