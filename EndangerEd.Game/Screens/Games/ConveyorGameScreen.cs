@@ -301,6 +301,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Text = CurrentQuestion.Choices[0]
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -334,6 +342,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Text = CurrentQuestion.Choices[1]
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -367,6 +383,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Text = CurrentQuestion.Choices[2]
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -400,6 +424,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Text = CurrentQuestion.Choices[3]
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
