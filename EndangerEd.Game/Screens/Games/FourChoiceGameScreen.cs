@@ -116,6 +116,31 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                     gameSessionStore.StopwatchClock.Stop();
                     onChoiceSelected("");
                 }
+            },
+            new FillFlowContainer()
+            {
+                Anchor = Anchor.BottomLeft,
+                Origin = Anchor.BottomLeft,
+                Direction = FillDirection.Horizontal,
+                Margin = new MarginPadding(10),
+                Spacing = new Vector2(10),
+                Height = 10,
+                Alpha = question.QuestionMode == QuestionMode.FourChoice ? 0 : 1,
+                Children = new Drawable[]
+                {
+                    new SpriteIcon()
+                    {
+                        Size = new Vector2(20),
+                        Icon = FontAwesome.Solid.ExclamationTriangle,
+                        Colour = Colour4.Yellow
+                    },
+                    new EndangerEdSpriteText()
+                    {
+                        Text = "Question mode " + question.QuestionMode.ToString().ToUpper() + " is not currently supported, falling back to default mode.",
+                        Font = EndangerEdFont.GetFont(size: 20),
+                        Colour = Colour4.Yellow
+                    }
+                }
             }
         };
 
