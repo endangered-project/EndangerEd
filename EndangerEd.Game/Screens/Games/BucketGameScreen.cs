@@ -92,7 +92,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Size = new Vector2(200, 150),
+                Scale = new Vector2(0.4f, 0.4f),
                 Texture = textureStore.Get("Game/Bucket/Bucket.png"),
                 FillMode = FillMode.Fit
             }
