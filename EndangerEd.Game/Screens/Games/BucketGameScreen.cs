@@ -17,6 +17,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
@@ -55,7 +56,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
     private Container boxContainer3;
     private Container boxContainer4;
 
-    private Box bucket;
+    private Sprite bucket;
 
     private bool allowMovingBucket = true;
 
@@ -64,7 +65,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
     private Sample incorrectAnswerSample;
 
     [BackgroundDependencyLoader]
-    private void load(AudioManager audioManager)
+    private void load(AudioManager audioManager, TextureStore textureStore)
     {
         bucketImpactSample = audioManager.Samples.Get($"Game/Bucket/BucketImpact{RNG.Next(0, 3)}.wav");
         correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
@@ -87,12 +88,13 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Position = new Vector2(0, 50),
                 Font = EndangerEdFont.GetFont(size: 30)
             },
-            bucket = new Box
+            bucket = new Sprite()
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
                 Size = new Vector2(200, 150),
-                Colour = Colour4.Blue
+                Texture = textureStore.Get("Game/Bucket/Bucket.png"),
+                FillMode = FillMode.Fit
             }
         };
 

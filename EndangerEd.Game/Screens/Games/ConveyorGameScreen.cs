@@ -18,6 +18,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
@@ -57,10 +58,10 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
 
     private bool allowMovingBucket = true;
 
-    private bool box1Removed = false;
-    private bool box2Removed = false;
-    private bool box3Removed = false;
-    private bool box4Removed = false;
+    private bool box1Removed;
+    private bool box2Removed;
+    private bool box3Removed;
+    private bool box4Removed;
 
     private const float line_x_position = 0.3f;
 
@@ -72,7 +73,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
     private Track conveyorLoopTrack;
 
     [BackgroundDependencyLoader]
-    private void load(AudioManager audioManager)
+    private void load(AudioManager audioManager, TextureStore textureStore)
     {
         boxSpawnSample = audioManager.Samples.Get("Game/Conveyer/BoxSpawned.wav");
         boxRemoveSample = audioManager.Samples.Get("Game/Conveyer/BoxYeeted.wav");
@@ -103,27 +104,9 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.TopCentre,
-                Text = "from the conveyor before it reach the green line!",
+                Text = "from the conveyor before it reach the barrier!",
                 Position = new Vector2(0, 80),
                 Font = EndangerEdFont.GetFont(size: 30)
-            },
-            new Box()
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                RelativeSizeAxes = Axes.X,
-                Size = new Vector2(1, 10),
-                Position = new Vector2(0, 75),
-                Colour = Colour4.Green
-            },
-            new Box()
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Size = new Vector2(10, 300),
-                RelativePositionAxes = Axes.X,
-                Position = new Vector2(line_x_position, 0),
-                Colour = Colour4.LightGreen
             }
         };
 
@@ -480,6 +463,43 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                 }
             }
         });
+
+        // Conveyor belt
+        AddInternal(new Sprite()
+        {
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            RelativeSizeAxes = Axes.X,
+            Size = new Vector2(1, 800),
+            Position = new Vector2(0, 115),
+            Texture = textureStore.Get("Game/Conveyer/ConveyerBelt.png")
+        });
+
+        // Conveyor gear
+        Sprite leftGear = new Sprite()
+        {
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            RelativePositionAxes = Axes.X,
+            Size = new Vector2(100),
+            Position = new Vector2(-0.5f, 100),
+            Texture = textureStore.Get("Game/Conveyer/Gear.png")
+        };
+        Sprite rightGear = new Sprite()
+        {
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            RelativePositionAxes = Axes.X,
+            Size = new Vector2(100),
+            Position = new Vector2(0.5f, 100),
+            Texture = textureStore.Get("Game/Conveyer/Gear.png")
+        };
+
+        AddInternal(leftGear);
+        AddInternal(rightGear);
+
+        leftGear.Spin(1000, RotationDirection.Clockwise).Loop();
+        rightGear.Spin(1000, RotationDirection.Counterclockwise).Loop();
     }
 
     protected override void Update()

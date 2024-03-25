@@ -18,6 +18,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
@@ -52,24 +53,28 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
     private Container boxContainer3;
     private Container boxContainer4;
 
-    private Box cannonBox;
+    private Sprite cannon;
 
     private double angle;
 
-    private List<Circle> cannonBalls = new List<Circle>();
+    private readonly List<Sprite> cannonBalls = new List<Sprite>();
 
     private Sample cannonFireSample;
     private Sample hitTargetSample;
     private Sample correctAnswerSample;
     private Sample incorrectAnswerSample;
 
+    private Texture bulletTexture;
+
     [BackgroundDependencyLoader]
-    private void load(AudioManager audioManager)
+    private void load(AudioManager audioManager, TextureStore textureStore)
     {
         cannonFireSample = audioManager.Samples.Get("Game/Cannon/CannonFire.wav");
         hitTargetSample = audioManager.Samples.Get("Game/Cannon/TargetImpact.wav");
         correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
         incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
+
+        bulletTexture = textureStore.Get("Game/Cannon/CannonBall.png");
 
         InternalChildren = new Drawable[]
         {
@@ -151,13 +156,14 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                     onChoiceSelected("");
                 }
             },
-            cannonBox = new Box
+            cannon = new Sprite()
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Size = new Vector2(80, 100),
-                Colour = Colour4.Red,
-                Depth = -10
+                Size = new Vector2(80, 150),
+                Depth = -10,
+                Position = new Vector2(0, 50),
+                Texture = textureStore.Get("Game/Cannon/Cannon.png")
             }
         };
 
@@ -398,7 +404,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             onChoiceSelected("");
         }
 
-        foreach (Circle cannonBall in cannonBalls)
+        foreach (Sprite cannonBall in cannonBalls)
         {
             // Check cannon collision
             if (boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
@@ -438,7 +444,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
 
     private void stopAllBullet()
     {
-        foreach (Circle cannonBall in cannonBalls)
+        foreach (Sprite cannonBall in cannonBalls)
         {
             cannonBall.ClearTransforms();
         }
@@ -452,11 +458,11 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         // Rotate the cannon using the mouse position
         // Compute the angle between the cannon and the mouse position
         // Angle will output between -1.5 to 0, normalize number to -60 to 60
-        angle = -Math.Atan2(e.MousePosition.Y - cannonBox.Position.Y, e.MousePosition.X - cannonBox.Position.X);
+        angle = -Math.Atan2(e.MousePosition.Y - cannon.Position.Y, e.MousePosition.X - cannon.Position.X);
         // Normalize the angle
         angle = angle * 180 / Math.PI * 1.25 + 60;
         Logger.Log($"Angle: {angle}");
-        cannonBox.Rotation = (float)angle;
+        cannon.Rotation = (float)angle;
         return base.OnMouseMove(e);
     }
 
@@ -466,14 +472,14 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             return base.OnMouseDown(e);
 
         // Summon the cannon ball
-        Circle cannonBall = new Circle
+        Sprite cannonBall = new Sprite()
         {
             Anchor = Anchor.BottomCentre,
             Origin = Anchor.BottomCentre,
             RelativePositionAxes = Axes.Both,
             Size = new Vector2(30, 30),
-            Colour = Colour4.Yellow,
-            Position = cannonBox.Position
+            Position = cannon.Position,
+            Texture = bulletTexture
         };
         cannonBalls.Add(cannonBall);
         AddInternal(cannonBall);

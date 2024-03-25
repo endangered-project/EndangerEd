@@ -17,6 +17,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
@@ -56,7 +57,8 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
     private Container fishContainer4;
 
     private Container camera;
-    private Box cameraBox;
+    private Sprite cameraBox;
+    private Box cameraShutter;
 
     private bool allowMovingFish = true;
 
@@ -66,7 +68,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
     private Sample incorrectAnswerSample;
 
     [BackgroundDependencyLoader]
-    private void load(AudioManager audioManager)
+    private void load(AudioManager audioManager, TextureStore textureStore)
     {
         cameraSample = audioManager.Samples.Get("Game/Camera/Camera.wav");
         splashSample = audioManager.Samples.Get("Game/Camera/Splash.wav");
@@ -97,13 +99,23 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Size = new Vector2(200, 200),
                 Children = new Drawable[]
                 {
-                    cameraBox = new Box
+                    cameraShutter = new Box()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(0.6f, 0.5f),
+                        Position = new Vector2(0, 10),
+                        Colour = Colour4.White,
+                        Alpha = 0,
+                        Blending = BlendingParameters.Additive
+                    },
+                    cameraBox = new Sprite()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Size = new Vector2(150, 150),
-                        Colour = Colour4.Blue,
-                        Alpha = 0.5f
+                        Texture = textureStore.Get("Game/Camera/Camera.png")
                     }
                 }
             }
@@ -311,14 +323,14 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
         }
 
         // Water
-        AddInternal(new Box()
+        AddInternal(new Sprite()
         {
             Anchor = Anchor.BottomCentre,
             Origin = Anchor.BottomCentre,
             RelativeSizeAxes = Axes.X,
             Height = 300,
-            Colour = Colour4.Cyan,
-            Alpha = 0.75f
+            Alpha = 0.75f,
+            Texture = textureStore.Get("Game/Camera/Water.png")
         });
 
         AddRangeInternal(new Drawable[]
@@ -431,7 +443,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
 
     protected override bool OnMouseDown(MouseDownEvent e)
     {
-        cameraBox.FlashColour(Colour4.White, 500);
+        cameraShutter.FadeTo(0.75f, 100).Then().FadeOut(100);
 
         if (camera.Contains(fishContainer1.ScreenSpaceDrawQuad.Centre))
         {
