@@ -56,7 +56,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
     private Container boxContainer3;
     private Container boxContainer4;
 
-    private bool allowMovingBucket = true;
+    private bool allowMovingBox = true;
 
     private bool box1Removed;
     private bool box2Removed;
@@ -134,6 +134,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -167,6 +175,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -200,6 +216,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -233,6 +257,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -269,6 +301,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Text = CurrentQuestion.Choices[0]
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -302,6 +342,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Text = CurrentQuestion.Choices[1]
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -335,6 +383,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Text = CurrentQuestion.Choices[2]
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -368,6 +424,14 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Text = CurrentQuestion.Choices[3]
+                    },
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.4f, 0.4f),
+                        Depth = 3,
+                        Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
                 Action = () =>
@@ -405,13 +469,11 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     sessionStore.IsGameStarted.Value = false;
                     gameSessionStore.StopwatchClock.Stop();
                     answered.Value = true;
-                    allowMovingBucket = false;
+                    allowMovingBox = false;
                     stopBoxContainer();
 
                     Thread thread = new Thread(() =>
                     {
-                        Scheduler.Add(() => sessionStore.IsLoading.Value = true);
-
                         Scheduler.Add(() => sessionStore.IsLoading.Value = true);
 
                         try
@@ -458,6 +520,8 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                 Height = 50,
                 Action = () =>
                 {
+                    allowMovingBox = false;
+                    stopBoxContainer();
                     gameSessionStore.StopwatchClock.Stop();
                     onChoiceSelected("");
                 }
@@ -469,29 +533,32 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
-            RelativeSizeAxes = Axes.X,
-            Size = new Vector2(1, 800),
-            Position = new Vector2(0, 115),
+            Position = new Vector2(0, 110),
+            RelativeSizeAxes = Axes.Both,
+            Size = new Vector2(0.9f, 0.9f),
+            FillMode = FillMode.Fill,
             Texture = textureStore.Get("Game/Conveyer/ConveyerBelt.png")
         });
 
         // Conveyor gear
         Sprite leftGear = new Sprite()
         {
-            Anchor = Anchor.Centre,
+            Anchor = Anchor.CentreLeft,
             Origin = Anchor.Centre,
-            RelativePositionAxes = Axes.X,
-            Size = new Vector2(100),
-            Position = new Vector2(-0.5f, 100),
+            Position = new Vector2(50, 100),
+            RelativeSizeAxes = Axes.Both,
+            Size = new Vector2(0.11f),
+            FillMode = FillMode.Fill,
             Texture = textureStore.Get("Game/Conveyer/Gear.png")
         };
         Sprite rightGear = new Sprite()
         {
-            Anchor = Anchor.Centre,
+            Anchor = Anchor.CentreRight,
             Origin = Anchor.Centre,
-            RelativePositionAxes = Axes.X,
-            Size = new Vector2(100),
-            Position = new Vector2(0.5f, 100),
+            Position = new Vector2(-50, 100),
+            RelativeSizeAxes = Axes.Both,
+            Size = new Vector2(0.12f, 0.12f),
+            FillMode = FillMode.Fill,
             Texture = textureStore.Get("Game/Conveyer/Gear.png")
         };
 
@@ -561,7 +628,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         // Add schedule to move the boxContainer to the bottom of the screen at the random time.
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingBucket)
+            if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
                 boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), 6000);
@@ -569,7 +636,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         }, 2000);
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingBucket)
+            if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
                 boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), 6000);
@@ -577,7 +644,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         }, 4000);
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingBucket)
+            if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
                 boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), 6000);
@@ -585,7 +652,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         }, 6000);
         Scheduler.AddDelayed(() =>
         {
-            if (allowMovingBucket)
+            if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
                 boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), 6000);

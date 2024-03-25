@@ -104,6 +104,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 {
                     sessionStore.IsGameStarted.Value = false;
                     gameSessionStore.StopwatchClock.Stop();
+                    allowFire = false;
                     answered.Value = true;
 
                     Thread thread = new Thread(() =>
@@ -153,6 +154,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 Action = () =>
                 {
                     gameSessionStore.StopwatchClock.Stop();
+                    allowFire = false;
                     onChoiceSelected("");
                 }
             },
@@ -160,9 +162,8 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Size = new Vector2(80, 150),
-                Depth = -10,
-                Position = new Vector2(0, 50),
+                Scale = new Vector2(0.3f, 0.3f),
+                Position = new Vector2(0, 30),
                 Texture = textureStore.Get("Game/Cannon/Cannon.png")
             }
         };
@@ -455,14 +456,9 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         if (!allowFire)
             return base.OnMouseMove(e);
 
-        // Rotate the cannon using the mouse position
-        // Compute the angle between the cannon and the mouse position
-        // Angle will output between -1.5 to 0, normalize number to -60 to 60
-        angle = -Math.Atan2(e.MousePosition.Y - cannon.Position.Y, e.MousePosition.X - cannon.Position.X);
-        // Normalize the angle
-        angle = angle * 180 / Math.PI * 1.25 + 60;
-        Logger.Log($"Angle: {angle}");
-        cannon.Rotation = (float)angle;
+        // There is still a weird drifting going on when aiming to the sides but it's negligible.
+        cannon.Rotation = Math.Clamp((float)(Math.Atan2(e.MousePosition.Y - cannon.AnchorPosition.Y, e.MousePosition.X - cannon.AnchorPosition.X) * 180 / Math.PI) + 90, -60, 60);
+
         return base.OnMouseMove(e);
     }
 
@@ -475,20 +471,20 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         Sprite cannonBall = new Sprite()
         {
             Anchor = Anchor.BottomCentre,
-            Origin = Anchor.BottomCentre,
-            RelativePositionAxes = Axes.Both,
+            Position = new Vector2(0, 36),
+            Origin = Anchor.Centre,
             Size = new Vector2(30, 30),
-            Position = cannon.Position,
+            Depth = 1,
             Texture = bulletTexture
         };
         cannonBalls.Add(cannonBall);
         AddInternal(cannonBall);
-        // Calculate target position using pythagorean theorem
-        // Lock y position to 1.3f
-        // Calculate x position using angle
-        double x = Math.Sin(angle * Math.PI / 180) * 1.3f;
+
         cannonFireSample?.Play();
-        cannonBall.MoveTo(new Vector2((float)x, -1.5f), 1000, Easing.OutQuint);
+
+        double cannonAngle = (cannon.Rotation + 26.5) * Math.PI / 180 - 90;
+        cannonBall.MoveTo(new Vector2((float)Math.Cos(cannonAngle), (float)Math.Sin(cannonAngle)) * 1000, 1000);
+
         return base.OnMouseDown(e);
     }
 

@@ -91,33 +91,6 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                 Text = "Take a picture of the correct fish!",
                 Position = new Vector2(0, 50),
                 Font = EndangerEdFont.GetFont(size: 30)
-            },
-            camera = new Container()
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Size = new Vector2(200, 200),
-                Children = new Drawable[]
-                {
-                    cameraShutter = new Box()
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both,
-                        Size = new Vector2(0.6f, 0.5f),
-                        Position = new Vector2(0, 10),
-                        Colour = Colour4.White,
-                        Alpha = 0,
-                        Blending = BlendingParameters.Additive
-                    },
-                    cameraBox = new Sprite()
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Size = new Vector2(150, 150),
-                        Texture = textureStore.Get("Game/Camera/Camera.png")
-                    }
-                }
             }
         };
 
@@ -322,14 +295,45 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             });
         }
 
+        AddInternal(camera = new Container()
+        {
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Size = new Vector2(200, 200),
+            Children = new Drawable[]
+            {
+                cameraShutter = new Box()
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                    Size = new Vector2(0.6f, 0.7f),
+                    Position = new Vector2(0, 10),
+                    Colour = Colour4.White,
+                    Alpha = 0,
+                    Blending = BlendingParameters.Additive
+                },
+                cameraBox = new Sprite()
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Scale = new Vector2(0.3f, 0.3f),
+                    Position = new Vector2(0, -15),
+                    Texture = textureStore.Get("Game/Camera/Camera.png")
+                }
+            }
+        });
+
         // Water
         AddInternal(new Sprite()
         {
             Anchor = Anchor.BottomCentre,
-            Origin = Anchor.BottomCentre,
-            RelativeSizeAxes = Axes.X,
-            Height = 300,
-            Alpha = 0.75f,
+            Origin = Anchor.Centre,
+            Position = new Vector2(0, -10),
+            RelativeSizeAxes = Axes.Both,
+            Size = new Vector2(1.1f),
+            FillMode = FillMode.Fit,
+            Alpha = 0.9f,
             Texture = textureStore.Get("Game/Camera/Water.png")
         });
 
