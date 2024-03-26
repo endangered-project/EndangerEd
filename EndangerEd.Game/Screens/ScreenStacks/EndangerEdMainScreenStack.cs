@@ -123,6 +123,22 @@ public partial class EndangerEdMainScreenStack : ScreenStack
         }
     }
 
+    public void ClearMainScreenStack()
+    {
+        while (MainScreenStack.CurrentScreen != null)
+        {
+            MainScreenStack.CurrentScreen?.Exit();
+        }
+    }
+
+    public void ClearGameScreenStack()
+    {
+        while (GameScreenStack.CurrentScreen != null)
+        {
+            GameScreenStack.CurrentScreen?.Exit();
+        }
+    }
+
     public void PushQuestionScreen(Question question)
     {
         switch (question.QuestionMode)
