@@ -8,7 +8,7 @@ public partial class TestSceneTutorialScreen : EndangerEdTestScene
     [BackgroundDependencyLoader]
     private void load()
     {
-        AddStep("clear all screens", MainScreenStack.ClearMainScreenStack);
         AddStep("load screen", () => MainScreenStack.MainScreenStack.Push(new TutorialScreen()));
+        AddStep("clear all screens", MainScreenStack.ClearMainScreenStack);
     }
 }
