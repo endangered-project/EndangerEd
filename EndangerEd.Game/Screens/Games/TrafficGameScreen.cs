@@ -561,6 +561,8 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     {
         if (!allowMovingCar) return;
 
+        gameSessionStore.StopwatchClock.Stop();
+
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
 
@@ -591,6 +593,8 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     private void onReleaseChoice2()
     {
         if (!allowMovingCar) return;
+
+        gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
@@ -624,6 +628,8 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     private void onReleaseChoice3()
     {
         if (!allowMovingCar) return;
+
+        gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
@@ -687,8 +693,9 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
 
     private void onChoiceSelected(string choice)
     {
-        if (answered.Value)
-            return;
+        if (answered.Value) return;
+
+        gameSessionStore.StopwatchClock.Stop();
 
         gameSessionStore.StopwatchClock.Stop();
         answered.Value = true;
