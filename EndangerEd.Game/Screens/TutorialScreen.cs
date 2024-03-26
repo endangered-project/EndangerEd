@@ -195,7 +195,6 @@ public partial class TutorialScreen : EndangerEdScreen
                 Bottom = 20
             },
             Text = """
-                   
                    The game can be segmented into three parts.
 
                    ## Pre-game
@@ -241,8 +240,8 @@ public partial class TutorialScreen : EndangerEdScreen
     {
         audioPlayer.ChangeTrack("menu.mp3");
         menuTitleSpriteText.MoveToX(20, 500, Easing.OutQuart);
-        leftMenuContainer.MoveToX(0, 600, Easing.OutQuart);
-        rightMenuContainer.MoveToX(0, 750, Easing.OutQuart);
+        leftMenuContainer.MoveToX(0, 500, Easing.OutQuart);
+        rightMenuContainer.MoveToX(0, 500, Easing.OutQuart);
         base.OnEntering(e);
     }
 
@@ -250,17 +249,17 @@ public partial class TutorialScreen : EndangerEdScreen
     {
         audioPlayer.ChangeTrack("menu.mp3");
         menuTitleSpriteText.MoveToX(-600, 500, Easing.OutQuart);
-        leftMenuContainer.MoveToX(-600, 600, Easing.OutQuart);
-        rightMenuContainer.MoveToX(600, 750, Easing.OutQuart);
+        leftMenuContainer.MoveToX(-600, 500, Easing.OutQuart);
+        rightMenuContainer.MoveToX(600, 500, Easing.OutQuart);
         return base.OnExiting(e);
     }
 
     public override void OnSuspending(ScreenTransitionEvent e)
     {
-        base.OnSuspending(e);
         menuTitleSpriteText.MoveToX(-600, 500, Easing.OutQuart);
         leftMenuContainer.MoveToX(-600, 600, Easing.OutQuart);
         rightMenuContainer.MoveToX(600, 750, Easing.OutQuart);
+        base.OnSuspending(e);
     }
 
     private enum TutorialMenu
