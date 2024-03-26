@@ -93,17 +93,20 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.X,
-                Size = new Vector2(0.5f, 300),
-                Colour = Colour4.Gray
+                Size = new Vector2(0.7f, 300),
+                Colour = Colour4.Gray,
+                RelativePositionAxes = Axes.X,
+                Position = new Vector2(-0.1f, 0)
             },
             // Road for choice 1
             new Box()
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.BottomCentre,
+                Origin = Anchor.TopCentre,
                 RelativeSizeAxes = Axes.Y,
-                Size = new Vector2(125, 0.5f),
-                Colour = Colour4.Gray
+                Size = new Vector2(125, 0.6f),
+                Colour = Colour4.Gray,
+                Position = new Vector2(160, 0)
             },
             // Road for choice 2
             new Box()
@@ -132,7 +135,8 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Origin = Anchor.TopCentre,
                 RelativeSizeAxes = Axes.Y,
                 Size = new Vector2(125, 0.5f),
-                Colour = Colour4.Gray
+                Colour = Colour4.Gray,
+                Position = new Vector2(0, 100)
             },
             // Choice 1 barrier
             buttonChoice1 = new BasicButton()
@@ -140,7 +144,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 25),
-                Position = new Vector2(0, -150),
+                Position = new Vector2(162.5f, 150),
                 Child = buttonSprite1 = new SpriteIcon()
                 {
                     Anchor = Anchor.Centre,
@@ -225,8 +229,8 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
-                RelativePositionAxes = Axes.Both,
-                Position = new Vector2(0, -0.8f),
+                RelativePositionAxes = Axes.Y,
+                Position = new Vector2(160, 0.8f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -324,8 +328,8 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
-                RelativePositionAxes = Axes.Both,
-                Position = new Vector2(0, -0.8f),
+                RelativePositionAxes = Axes.Y,
+                Position = new Vector2(160, 0.8f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -542,10 +546,10 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
 
         Scheduler.AddDelayed(() =>
         {
-            boxContainer1.MoveTo(new Vector2(0, -0.4f), 1000, Easing.OutQuint);
-            boxContainer2.MoveTo(new Vector2(-0.2f, -75), 2000, Easing.OutQuint);
-            boxContainer3.MoveTo(new Vector2(-0.2f, 75), 3000, Easing.OutQuint);
-            boxContainer4.MoveTo(new Vector2(0, 0.4f), 4000, Easing.OutQuint);
+            boxContainer1.MoveTo(new Vector2(160, 0.4f), 4000, Easing.OutQuint);
+            boxContainer2.MoveTo(new Vector2(-0.2f, -75), 1000, Easing.OutQuint);
+            boxContainer3.MoveTo(new Vector2(-0.2f, 75), 2000, Easing.OutQuint);
+            boxContainer4.MoveTo(new Vector2(0, 0.4f), 3000, Easing.OutQuint);
         }, 1000);
 
         Scheduler.AddDelayed(() =>
@@ -561,21 +565,23 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     {
         if (!allowMovingCar) return;
 
+        allowMovingCar = false;
         gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
 
         buttonSprite1.FlashColour(Colour4.White, 500).FadeColour(Colour4.LightGreen, 500);
-        boxContainer1.MoveTo(new Vector2(0, 0f), 1000, Easing.OutQuint)
+        boxContainer1.MoveTo(new Vector2(160, 0f), 1000, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(0.3f, 0), 1000, Easing.OutQuint);
+                     .MoveTo(new Vector2(250, 0), 1000, Easing.OutQuint);
+
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[0])
             {
                 mainBarrier.FadeColour(Colour4.LightGreen, 500);
-                boxContainer1.MoveTo(new Vector2(1f, 0), 1500, Easing.OutQuint);
+                boxContainer1.MoveTo(new Vector2(2000, 0), 1500, Easing.OutQuint);
                 rightCarArriveSample?.Play();
             }
             else
@@ -594,6 +600,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     {
         if (!allowMovingCar) return;
 
+        allowMovingCar = false;
         gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
@@ -629,6 +636,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     {
         if (!allowMovingCar) return;
 
+        allowMovingCar = false;
         gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
@@ -663,6 +671,9 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     private void onReleaseChoice4()
     {
         if (!allowMovingCar) return;
+
+        allowMovingCar = false;
+        gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();

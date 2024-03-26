@@ -12,7 +12,7 @@ public partial class TestSceneTrafficGameScreen : EndangerEdTestScene
         {
             QuestionText = "What is the question?",
             Choices = ["Choice 1", "Choice 2", "Choice 3", "Choice 4"],
-            Answer = "Choice 4",
+            Answer = "Choice 1",
             ContentType = ContentType.Text,
             QuestionMode = QuestionMode.FourChoice
         });
