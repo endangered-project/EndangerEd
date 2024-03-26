@@ -152,7 +152,8 @@ public partial class MainMenuScreen : EndangerEdScreen
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Width = 100,
-                                Height = 50
+                                Height = 50,
+                                Action = () => screenStack.MainScreenStack.Push(new TutorialScreen())
                             },
                             leaderboardButton = new EndangerEdButton("Leaderboard")
                             {
