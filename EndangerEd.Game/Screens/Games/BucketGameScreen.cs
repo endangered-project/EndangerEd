@@ -93,8 +93,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
                 Scale = new Vector2(0.4f, 0.4f),
-                Texture = textureStore.Get("Game/Bucket/Bucket.png"),
-                FillMode = FillMode.Fit
+                Texture = textureStore.Get("Game/Bucket/Bucket.png")
             }
         };
 
@@ -456,7 +455,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
     {
         // Move the bucket to the mouse position.
         if (allowMovingBucket)
-            bucket.Position = new Vector2(e.ScreenSpaceMousePosition.X - DrawSize.X, bucket.Position.Y);
+            bucket.MoveTo(new Vector2(e.MousePosition.X - bucket.AnchorPosition.X, bucket.Position.Y), 1000, Easing.OutExpo);
         return base.OnMouseMove(e);
     }
 
