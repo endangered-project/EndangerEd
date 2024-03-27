@@ -1,5 +1,7 @@
 ﻿using EndangerEd.Game.Audio;
+using EndangerEd.Game.Components;
 using EndangerEd.Game.Graphics;
+using EndangerEd.Game.Objects;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
@@ -224,15 +226,95 @@ public partial class TutorialScreen : EndangerEdScreen
     private void loadMicrogameMenu()
     {
         tutorialMenu.Value = TutorialMenu.Microgames;
-        mainContentScrollContainer.Child = new MarkdownContainer()
+        mainContentScrollContainer.Children = new Drawable[]
         {
-            Anchor = Anchor.TopLeft,
-            Origin = Anchor.TopLeft,
-            RelativeSizeAxes = Axes.X,
-            AutoSizeAxes = Axes.Y,
-            Text = """
-                   bruh
-                   """
+            new FillFlowContainer()
+            {
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.TopLeft,
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Direction = FillDirection.Vertical,
+                Width = 1f,
+                Margin = new MarginPadding(20),
+                Spacing = new Vector2(10),
+                Children = new Drawable[]
+                {
+                    new FillFlowContainer()
+                    {
+                        Anchor = Anchor.TopLeft,
+                        Origin = Anchor.TopLeft,
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Direction = FillDirection.Horizontal,
+                        Spacing = new Vector2(10),
+                        Width = 1f,
+                        Children = new Drawable[]
+                        {
+                            new MicrogameTutorialContainer()
+                            {
+                                Name = "Bucket",
+                                Description = "Catch the falling objects with the bucket.",
+                                Icon = FontAwesome.Solid.Anchor,
+                                Question = generateSampleQuestion(QuestionMode.Bucket)
+                            },
+                            new MicrogameTutorialContainer()
+                            {
+                                Name = "Traffic",
+                                Description = "Control the traffic lights.",
+                                Icon = FontAwesome.Solid.TrafficLight,
+                                Question = generateSampleQuestion(QuestionMode.Traffic)
+                            },
+                            new MicrogameTutorialContainer()
+                            {
+                                Name = "Take Picture",
+                                Description = "Take a picture of the jumping fish.",
+                                Icon = FontAwesome.Solid.Camera,
+                                Question = generateSampleQuestion(QuestionMode.TakePicture)
+                            }
+                        }
+                    },
+                    new FillFlowContainer()
+                    {
+                        Anchor = Anchor.TopLeft,
+                        Origin = Anchor.TopLeft,
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Direction = FillDirection.Horizontal,
+                        Spacing = new Vector2(10),
+                        Width = 1f,
+                        Children = new Drawable[]
+                        {
+                            new MicrogameTutorialContainer()
+                            {
+                                Name = "Conveyor",
+                                Description = "Remove the defective products from the conveyor belt before they reach the end.",
+                                Icon = FontAwesome.Solid.Transgender,
+                                Question = generateSampleQuestion(QuestionMode.Conveyor)
+                            },
+                            new MicrogameTutorialContainer()
+                            {
+                                Name = "Cannon",
+                                Description = "Fire the cannon to hit the target.",
+                                Icon = FontAwesome.Solid.Bullseye,
+                                Question = generateSampleQuestion(QuestionMode.Cannon)
+                            }
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+    private Question generateSampleQuestion(QuestionMode questionMode)
+    {
+        return new Question()
+        {
+            QuestionText = "2 + 2 = ?",
+            Choices = ["1", "2", "3", "4"],
+            Answer = "4",
+            ContentType = ContentType.Text,
+            QuestionMode = questionMode
         };
     }
 
