@@ -116,31 +116,33 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new OnlineImageSprite(CurrentQuestion.Choices[0])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit
                     },
                     new Sprite()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -158,30 +160,32 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new OnlineImageSprite(CurrentQuestion.Choices[1])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit
                     },
                     new Sprite()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -199,30 +203,32 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new OnlineImageSprite(CurrentQuestion.Choices[2])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit
                     },
                     new Sprite()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -240,30 +246,32 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new OnlineImageSprite(CurrentQuestion.Choices[3])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit
                     },
                     new Sprite()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -284,16 +292,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new SpriteText()
@@ -307,7 +316,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -325,16 +334,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new SpriteText()
@@ -348,7 +358,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -366,16 +376,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new SpriteText()
@@ -389,7 +400,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -407,16 +418,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new SpriteText()
@@ -430,7 +442,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
