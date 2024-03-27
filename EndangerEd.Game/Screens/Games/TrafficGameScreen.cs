@@ -182,9 +182,9 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.TopCentre,
-                Size = new Vector2(50, 50),
+                Size = new Vector2(100, 100),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(0.4f, -0.33f),
+                Position = new Vector2(0.4f, -0.40f),
                 Texture = textureStore.Get("Game/Traffic/GateBarrierPivot.png")
             }
         };
