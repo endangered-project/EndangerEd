@@ -1,4 +1,7 @@
-﻿using EndangerEd.Game.Audio;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using EndangerEd.Game.Audio;
 using EndangerEd.Game.Components;
 using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Objects;
@@ -10,6 +13,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
+using osu.Framework.Utils;
 using osuTK;
 using Box = osu.Framework.Graphics.Shapes.Box;
 
@@ -25,6 +29,8 @@ public partial class TutorialScreen : EndangerEdScreen
 
     private EndangerEdButton introductionButton;
     private EndangerEdButton microgameButton;
+
+    private Random random = new Random();
 
     private readonly Bindable<TutorialMenu> tutorialMenu = new Bindable<TutorialMenu>();
 
@@ -308,11 +314,23 @@ public partial class TutorialScreen : EndangerEdScreen
 
     private Question generateSampleQuestion(QuestionMode questionMode)
     {
+        int firstNumber = RNG.Next(1, 40);
+        int secondNumber = RNG.Next(1, 40);
+        string question = $"{firstNumber} + {secondNumber} = ?";
+        List<string> choices = new List<string>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            choices.Add(RNG.Next(1, 80).ToString());
+        }
+
+        choices.Add((firstNumber + secondNumber).ToString());
+        choices = choices.OrderBy(_ => random.Next()).ToList();
         return new Question()
         {
-            QuestionText = "2 + 2 = ?",
-            Choices = ["1", "2", "3", "4"],
-            Answer = "4",
+            QuestionText = question,
+            Choices = choices.ToArray(),
+            Answer = (firstNumber + secondNumber).ToString(),
             ContentType = ContentType.Text,
             QuestionMode = questionMode
         };
