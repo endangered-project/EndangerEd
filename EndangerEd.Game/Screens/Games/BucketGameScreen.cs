@@ -80,7 +80,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -104,7 +104,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -128,7 +128,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -152,7 +152,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -180,7 +180,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -204,7 +204,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -228,7 +228,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -252,7 +252,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -470,23 +470,23 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(0, 5000));
+                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 3000, Easing.InExpo);
+        }, 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(1500, 6500));
+                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 3000, Easing.InExpo);
+        }, 2500);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(3000, 8000));
+                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 3000, Easing.InExpo);
+        }, 5000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(4500, 9500));
+                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 3000, Easing.InExpo);
+        }, 7500);
     }
 
     private void onChoiceSelected(string choice)
