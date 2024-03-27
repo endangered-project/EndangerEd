@@ -56,15 +56,15 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     private Container boxContainer4;
 
     private Button buttonChoice1;
-    private SpriteIcon buttonSprite1;
+    private Sprite buttonSprite1;
     private Button buttonChoice2;
-    private SpriteIcon buttonSprite2;
+    private Sprite buttonSprite2;
     private Button buttonChoice3;
-    private SpriteIcon buttonSprite3;
+    private Sprite buttonSprite3;
     private Button buttonChoice4;
-    private SpriteIcon buttonSprite4;
+    private Sprite buttonSprite4;
 
-    private Box mainBarrier;
+    private Sprite mainBarrier;
 
     private bool allowMovingCar = true;
 
@@ -74,6 +74,8 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     private Sample trafficSwitchSample;
     private Sample wrongCarArriveSample;
     private Sample rightCarArriveSample;
+
+    private Texture greenLightTexture;
 
     [BackgroundDependencyLoader]
     private void load(AudioManager audioManager, TextureStore textureStore)
@@ -85,58 +87,17 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         wrongCarArriveSample = audioManager.Samples.Get("Game/Traffic/WrongCarArrived.wav");
         rightCarArriveSample = audioManager.Samples.Get("Game/Traffic/metal-pipe.wav");
 
+        greenLightTexture = textureStore.Get("Game/Traffic/TrafficLightGreen.png");
+
         InternalChildren = new Drawable[]
         {
-            // Road
-            new Box()
+            new Sprite()
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.CentreLeft,
-                RelativeSizeAxes = Axes.X,
-                Size = new Vector2(0.7f, 300),
-                Colour = Colour4.Gray,
-                RelativePositionAxes = Axes.X,
-                Position = new Vector2(-0.1f, 0)
-            },
-            // Road for choice 1
-            new Box()
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.TopCentre,
-                RelativeSizeAxes = Axes.Y,
-                Size = new Vector2(125, 0.6f),
-                Colour = Colour4.Gray,
-                Position = new Vector2(160, 0)
-            },
-            // Road for choice 2
-            new Box()
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.CentreRight,
-                RelativeSizeAxes = Axes.X,
-                Size = new Vector2(0.5f, 125),
-                Colour = Colour4.Gray,
-                Position = new Vector2(0, -75f)
-            },
-            // Road for choice 3
-            new Box()
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.CentreRight,
-                RelativeSizeAxes = Axes.X,
-                Size = new Vector2(0.5f, 125),
-                Colour = Colour4.Gray,
-                Position = new Vector2(0, 75f)
-            },
-            // Road for choice 4
-            new Box()
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.TopCentre,
-                RelativeSizeAxes = Axes.Y,
-                Size = new Vector2(125, 0.5f),
-                Colour = Colour4.Gray,
-                Position = new Vector2(0, 100)
+                Origin = Anchor.Centre,
+                Size = new Vector2(1670, 1000),
+                Position = new Vector2(-175, 270),
+                Texture = textureStore.Get("Game/Traffic/Road.png")
             },
             // Choice 1 barrier
             buttonChoice1 = new BasicButton()
@@ -144,14 +105,13 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 25),
-                Position = new Vector2(162.5f, 150),
-                Child = buttonSprite1 = new SpriteIcon()
+                Position = new Vector2(162.5f, 60),
+                Child = buttonSprite1 = new Sprite()
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Icon = FontAwesome.Solid.TrafficLight,
-                    Colour = Colour4.Red,
-                    Size = new Vector2(50)
+                    Texture = textureStore.Get("Game/Traffic/TrafficLightRed.png"),
+                    Size = new Vector2(36.5f, 62f)
                 },
                 Action = onReleaseChoice1,
                 Enabled = { Value = false }
@@ -162,14 +122,13 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(25, 125),
-                Position = new Vector2(-75, -75),
-                Child = buttonSprite2 = new SpriteIcon()
+                Position = new Vector2(-75, -125),
+                Child = buttonSprite2 = new Sprite()
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Icon = FontAwesome.Solid.TrafficLight,
-                    Colour = Colour4.Red,
-                    Size = new Vector2(50)
+                    Texture = textureStore.Get("Game/Traffic/TrafficLightRed.png"),
+                    Size = new Vector2(36.5f, 62f)
                 },
                 Action = onReleaseChoice2,
                 Enabled = { Value = false }
@@ -180,14 +139,13 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(25, 125),
-                Position = new Vector2(-75, 75),
-                Child = buttonSprite3 = new SpriteIcon()
+                Position = new Vector2(-75, 15),
+                Child = buttonSprite3 = new Sprite()
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Icon = FontAwesome.Solid.TrafficLight,
-                    Colour = Colour4.Red,
-                    Size = new Vector2(50)
+                    Texture = textureStore.Get("Game/Traffic/TrafficLightRed.png"),
+                    Size = new Vector2(36.5f, 62f)
                 },
                 Action = onReleaseChoice3,
                 Enabled = { Value = false }
@@ -198,27 +156,36 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 25),
-                Position = new Vector2(0, 150),
-                Child = buttonSprite4 = new SpriteIcon()
+                Position = new Vector2(0, 60),
+                Child = buttonSprite4 = new Sprite()
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Icon = FontAwesome.Solid.TrafficLight,
-                    Colour = Colour4.Red,
-                    Size = new Vector2(50)
+                    Texture = textureStore.Get("Game/Traffic/TrafficLightRed.png"),
+                    Size = new Vector2(36.5f, 62f)
                 },
                 Action = onReleaseChoice4,
                 Enabled = { Value = false }
             },
             // Main barrier
-            mainBarrier = new Box()
+            mainBarrier = new Sprite()
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Size = new Vector2(25, 300),
+                Origin = Anchor.TopCentre,
+                Size = new Vector2(50, 300),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(0.4f, 0),
-                Colour = Colour4.Red
+                Position = new Vector2(0.4f, -0.3f),
+                Texture = textureStore.Get("Game/Traffic/GateBarrier.png")
+            },
+            // Main barrier
+            new Sprite()
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.TopCentre,
+                Size = new Vector2(50, 50),
+                RelativePositionAxes = Axes.Both,
+                Position = new Vector2(0.4f, -0.33f),
+                Texture = textureStore.Get("Game/Traffic/GateBarrierPivot.png")
             }
         };
 
@@ -227,12 +194,22 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             AddInternal(boxContainer1 = new Container()
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
+                Origin = Anchor.TopCentre,
                 Size = new Vector2(125, 125),
                 RelativePositionAxes = Axes.Y,
-                Position = new Vector2(160, 0.8f),
+                Scale = new Vector2(0.675f),
+                Position = new Vector2(157.5f, 0.8f),
                 Children = new Drawable[]
                 {
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(2.5f, 1.5f),
+                        Rotation = 90,
+                        Texture = textureStore.Get("Game/Traffic/Car.png")
+                    },
                     new Box()
                     {
                         Anchor = Anchor.TopCentre,
@@ -254,9 +231,18 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
                 RelativePositionAxes = Axes.X,
-                Position = new Vector2(-0.8f, -75),
+                Position = new Vector2(-0.8f, -130),
+                Scale = new Vector2(0.675f),
                 Children = new Drawable[]
                 {
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(2.5f, 1.5f),
+                        Texture = textureStore.Get("Game/Traffic/Car.png")
+                    },
                     new Box()
                     {
                         Anchor = Anchor.TopCentre,
@@ -278,9 +264,18 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
                 RelativePositionAxes = Axes.X,
-                Position = new Vector2(-0.8f, 75),
+                Position = new Vector2(-0.8f, 17.5f),
+                Scale = new Vector2(0.675f),
                 Children = new Drawable[]
                 {
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(2.5f, 1.5f),
+                        Texture = textureStore.Get("Game/Traffic/Car.png")
+                    },
                     new Box()
                     {
                         Anchor = Anchor.TopCentre,
@@ -301,10 +296,20 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
-                RelativePositionAxes = Axes.Both,
-                Position = new Vector2(0, 0.8f),
+                RelativePositionAxes = Axes.Y,
+                Position = new Vector2(7.5f, 0.8f),
+                Scale = new Vector2(0.675f),
                 Children = new Drawable[]
                 {
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(2.5f, 1.5f),
+                        Rotation = 90,
+                        Texture = textureStore.Get("Game/Traffic/Car.png")
+                    },
                     new Box()
                     {
                         Anchor = Anchor.TopCentre,
@@ -329,9 +334,19 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
                 RelativePositionAxes = Axes.Y,
-                Position = new Vector2(160, 0.8f),
+                Scale = new Vector2(0.675f),
+                Position = new Vector2(157.5f, 0.8f),
                 Children = new Drawable[]
                 {
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(2.5f, 1.5f),
+                        Rotation = 90,
+                        Texture = textureStore.Get("Game/Traffic/Car.png")
+                    },
                     new Box()
                     {
                         Anchor = Anchor.TopCentre,
@@ -353,9 +368,18 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
                 RelativePositionAxes = Axes.X,
-                Position = new Vector2(-0.8f, -75),
+                Position = new Vector2(-0.8f, -130),
+                Scale = new Vector2(0.675f),
                 Children = new Drawable[]
                 {
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(2.5f, 1.5f),
+                        Texture = textureStore.Get("Game/Traffic/Car.png")
+                    },
                     new Box()
                     {
                         Anchor = Anchor.TopCentre,
@@ -377,9 +401,18 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
                 RelativePositionAxes = Axes.X,
-                Position = new Vector2(-0.8f, 75),
+                Position = new Vector2(-0.8f, 17.5f),
+                Scale = new Vector2(0.675f),
                 Children = new Drawable[]
                 {
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(2.5f, 1.5f),
+                        Texture = textureStore.Get("Game/Traffic/Car.png")
+                    },
                     new Box()
                     {
                         Anchor = Anchor.TopCentre,
@@ -400,10 +433,20 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
-                RelativePositionAxes = Axes.Both,
-                Position = new Vector2(0, 0.8f),
+                RelativePositionAxes = Axes.Y,
+                Position = new Vector2(7.5f, 0.8f),
+                Scale = new Vector2(0.675f),
                 Children = new Drawable[]
                 {
+                    new Sprite()
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(2.5f, 1.5f),
+                        Rotation = 90,
+                        Texture = textureStore.Get("Game/Traffic/Car.png")
+                    },
                     new Box()
                     {
                         Anchor = Anchor.TopCentre,
@@ -546,10 +589,10 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
 
         Scheduler.AddDelayed(() =>
         {
-            boxContainer1.MoveTo(new Vector2(160, 0.4f), 4000, Easing.OutQuint);
-            boxContainer2.MoveTo(new Vector2(-0.2f, -75), 1000, Easing.OutQuint);
-            boxContainer3.MoveTo(new Vector2(-0.2f, 75), 2000, Easing.OutQuint);
-            boxContainer4.MoveTo(new Vector2(0, 0.4f), 3000, Easing.OutQuint);
+            boxContainer2.MoveTo(new Vector2(-0.25f, -130), 1000, Easing.OutQuint);
+            boxContainer3.MoveTo(new Vector2(-0.25f, 17.5f), 2000, Easing.OutQuint);
+            boxContainer4.MoveTo(new Vector2(7.5f, 0.365f), 3000, Easing.OutQuint);
+            boxContainer1.MoveTo(new Vector2(157.5f, 0.365f), 4000, Easing.OutQuint);
         }, 1000);
 
         Scheduler.AddDelayed(() =>
@@ -571,16 +614,19 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
 
-        buttonSprite1.FlashColour(Colour4.White, 500).FadeColour(Colour4.LightGreen, 500);
+        buttonSprite1.FlashColour(Colour4.White, 500, Easing.OutQuint);
+        buttonSprite1.Texture = greenLightTexture;
         boxContainer1.MoveTo(new Vector2(160, 0f), 1000, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(250, 0), 1000, Easing.OutQuint);
+                     .RotateTo(90, 250, Easing.OutQuint)
+                     .Then()
+                     .MoveTo(new Vector2(160, 0), 1000, Easing.OutQuint);
 
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[0])
             {
-                mainBarrier.FadeColour(Colour4.LightGreen, 500);
+                mainBarrier.RotateTo(-90, 250, Easing.InOutBounce);
                 boxContainer1.MoveTo(new Vector2(2000, 0), 1500, Easing.OutQuint);
                 rightCarArriveSample?.Play();
             }
@@ -606,18 +652,17 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
 
-        buttonSprite2.FlashColour(Colour4.White, 500).FadeColour(Colour4.LightGreen, 500);
-        boxContainer2.MoveTo(new Vector2(0.05f, -75f), 500, Easing.OutQuint)
+        buttonSprite2.FlashColour(Colour4.White, 500, Easing.OutQuint);
+        buttonSprite2.Texture = greenLightTexture;
+        boxContainer2.MoveTo(new Vector2(0.05f, -130), 500, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(0.05f, 0), 500, Easing.OutQuint)
-                     .Then()
-                     .MoveTo(new Vector2(0.3f, 0), 500, Easing.OutQuint);
+                     .MoveTo(new Vector2(0.2f, -130), 500, Easing.OutQuint);
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[1])
             {
-                mainBarrier.FadeColour(Colour4.LightGreen, 500);
-                boxContainer2.MoveTo(new Vector2(1f, 0), 1500, Easing.OutQuint);
+                mainBarrier.RotateTo(-90, 250, Easing.InOutBounce);
+                boxContainer2.MoveTo(new Vector2(1, -130), 1500, Easing.OutQuint);
                 rightCarArriveSample?.Play();
             }
             else
@@ -642,18 +687,17 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
 
-        buttonSprite3.FlashColour(Colour4.White, 500).FadeColour(Colour4.LightGreen, 500);
-        boxContainer3.MoveTo(new Vector2(0.05f, 75f), 500, Easing.OutQuint)
+        buttonSprite3.FlashColour(Colour4.White, 500, Easing.OutQuint);
+        buttonSprite3.Texture = greenLightTexture;
+        boxContainer3.MoveTo(new Vector2(0.05f, 17.5f), 500, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(0.05f, 0), 500, Easing.OutQuint)
-                     .Then()
-                     .MoveTo(new Vector2(0.3f, 0), 500, Easing.OutQuint);
+                     .MoveTo(new Vector2(0.2f, 17.5f), 500, Easing.OutQuint);
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[2])
             {
-                mainBarrier.FadeColour(Colour4.LightGreen, 500);
-                boxContainer3.MoveTo(new Vector2(1f, 0), 1500, Easing.OutQuint);
+                mainBarrier.RotateTo(-90, 250, Easing.InOutBounce);
+                boxContainer3.MoveTo(new Vector2(1f, 17.5f), 1500, Easing.OutQuint);
                 rightCarArriveSample?.Play();
             }
             else
@@ -678,16 +722,19 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
 
-        buttonSprite4.FlashColour(Colour4.White, 500).FadeColour(Colour4.LightGreen, 500);
-        boxContainer4.MoveTo(new Vector2(0, 0f), 1000, Easing.OutQuint)
+        buttonSprite4.FlashColour(Colour4.White, 500, Easing.OutQuint);
+        buttonSprite4.Texture = greenLightTexture;
+        boxContainer4.MoveTo(new Vector2(7.5f, 0f), 1000, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(0.3f, 0), 1000, Easing.OutQuint);
+                     .RotateTo(90, 250, Easing.OutQuint)
+                     .Then()
+                     .MoveTo(new Vector2(160, 0), 1000, Easing.OutQuint);
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[3])
             {
-                mainBarrier.FadeColour(Colour4.LightGreen, 500);
-                boxContainer4.MoveTo(new Vector2(1f, 0), 1500, Easing.OutQuint);
+                mainBarrier.RotateTo(-90, 250, Easing.InOutBounce);
+                boxContainer4.MoveTo(new Vector2(2000, 0), 1500, Easing.OutQuint);
                 rightCarArriveSample?.Play();
             }
             else
