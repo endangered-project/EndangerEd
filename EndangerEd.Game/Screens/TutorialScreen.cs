@@ -203,28 +203,28 @@ public partial class TutorialScreen : EndangerEdScreen
                 Bottom = 20
             },
             Text = """
-                   The game can be segmented into three parts.
+                   # Welcome to EndangerEd!
+                   EndangerEd is about using knowledge to endure through a continuous and escalating dexterity test.
+                   Since its questions are assembled from the knowledge base, we encourage you to first read through it before jumping in. 
+                   There are several mechanics worth noting when tackling this game.
 
-                   ## Pre-game
-                   When booting up the client, before the player can start playing the game, they will be greeted with the menu.
-                   The menu lets the player do the following:
-                   - Start playing the video game.
-                   - View the scoreboard.
-                   - Adjust the client's settings.
-                   - Authorization and authentication (login, signup, logout).
-                   - Access the knowledge base.
-                   ## Gameplay
-                   The gameplay involves completing microgames one after another until the game is over. For the condition to be met, the player's
-                   lives must be depleted or the game is ended prematurely by the player via pressing the end button. The player is given three lives in total,
-                   which acts as a three-strikes system. A life is removed when the player fails a microgame or skip a microgame.
-                   The former happens when they choose the wrong answer or the time runs out, while the latter happens when they press the skip button.
-                   On the other hand, a player is able to gain points by completing microgames. To keep the gameplay engaging, the game to increases
-                   the difficulty the more microgames are completed. It does this by decreasing the time limit for completing each microgame and introducing
-                   harder microgames to the game rotation.
-                   ## Post-game
-                   After the game is over, if the player is logged in, the scores will be sent to the server registration to the scoreboard. The player is able
-                   to view their statistics summary and the scoreboard showing their ranking on the post-game interface. They can then choose to either retry
-                   or quit to the main menu after they finished viewing the information.
+                   ## Lives
+                   You are given 3 lives. A life is deducted when:
+                   - You failed to complete a microgame
+                   - You skip a microgame
+                   - You ran out of time for a microgame
+
+                   Lives cannot be regained, use them wisely!
+                   
+                   ## Score
+                   Each question is worth 50 points. Your score is sent to the leaderboard only if you fully completed a game.
+
+                   ## Time
+                   Time starts big but shrinks everytime a microgame concludes. The minimum time the game can go down to is 10 seconds.
+
+                   ## Question Weighing
+                   Feel like getting too good at a topic? Don't worry, the game will mix up the pace by including questions outside your
+                   comfort zone to keep you on your toes.
                    """
         };
     }
@@ -261,20 +261,20 @@ public partial class TutorialScreen : EndangerEdScreen
                             {
                                 Name = "Bucket",
                                 Description = "Catch the falling objects with the bucket.",
-                                Icon = FontAwesome.Solid.Anchor,
+                                Icon = FontAwesome.Solid.Inbox,
                                 Question = generateSampleQuestion(QuestionMode.Bucket)
                             },
                             new MicrogameTutorialContainer()
                             {
                                 Name = "Traffic",
-                                Description = "Control the traffic lights.",
+                                Description = "Let the correct car through the traffic.",
                                 Icon = FontAwesome.Solid.TrafficLight,
                                 Question = generateSampleQuestion(QuestionMode.Traffic)
                             },
                             new MicrogameTutorialContainer()
                             {
-                                Name = "Take Picture",
-                                Description = "Take a picture of the jumping fish.",
+                                Name = "Photograph",
+                                Description = "Take a picture of the correct target.",
                                 Icon = FontAwesome.Solid.Camera,
                                 Question = generateSampleQuestion(QuestionMode.TakePicture)
                             }
@@ -294,8 +294,8 @@ public partial class TutorialScreen : EndangerEdScreen
                             new MicrogameTutorialContainer()
                             {
                                 Name = "Conveyor",
-                                Description = "Remove the defective products from the conveyor belt before they reach the end.",
-                                Icon = FontAwesome.Solid.Transgender,
+                                Description = "Remove defective products before they reach the scanner.",
+                                Icon = FontAwesome.Solid.Cog,
                                 Question = generateSampleQuestion(QuestionMode.Conveyor)
                             },
                             new MicrogameTutorialContainer()
