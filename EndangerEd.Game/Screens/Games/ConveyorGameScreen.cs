@@ -533,7 +533,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
-            Position = new Vector2(0, 110),
+            Position = new Vector2(-5, 110),
             RelativeSizeAxes = Axes.Both,
             Size = new Vector2(0.9f, 0.9f),
             FillMode = FillMode.Fill,
@@ -566,7 +566,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         AddInternal(rightGear);
 
         leftGear.Spin(1000, RotationDirection.Clockwise).Loop();
-        rightGear.Spin(1000, RotationDirection.Counterclockwise).Loop();
+        rightGear.Spin(1000, RotationDirection.Clockwise).Loop();
     }
 
     protected override void Update()
