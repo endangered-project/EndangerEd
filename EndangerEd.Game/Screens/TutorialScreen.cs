@@ -30,7 +30,7 @@ public partial class TutorialScreen : EndangerEdScreen
     private EndangerEdButton introductionButton;
     private EndangerEdButton microgameButton;
 
-    private Random random = new Random();
+    private readonly Random random = new Random();
 
     private readonly Bindable<TutorialMenu> tutorialMenu = new Bindable<TutorialMenu>();
 
