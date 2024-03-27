@@ -151,7 +151,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box1Removed) return;
 
                     boxContainer1.ClearTransforms();
-                    boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box1Removed = true;
                 }
@@ -194,7 +194,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box2Removed) return;
 
                     boxContainer2.ClearTransforms();
-                    boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box2Removed = true;
                 }
@@ -237,7 +237,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box3Removed) return;
 
                     boxContainer3.ClearTransforms();
-                    boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box3Removed = true;
                 }
@@ -280,7 +280,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box4Removed) return;
 
                     boxContainer4.ClearTransforms();
-                    boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box4Removed = true;
                 }
@@ -325,7 +325,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box1Removed) return;
 
                     boxContainer1.ClearTransforms();
-                    boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box1Removed = true;
                 }
@@ -367,7 +367,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box2Removed) return;
 
                     boxContainer2.ClearTransforms();
-                    boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box2Removed = true;
                 }
@@ -409,7 +409,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box3Removed) return;
 
                     boxContainer3.ClearTransforms();
-                    boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box3Removed = true;
                 }
@@ -451,7 +451,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box4Removed) return;
 
                     boxContainer4.ClearTransforms();
-                    boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box4Removed = true;
                 }
