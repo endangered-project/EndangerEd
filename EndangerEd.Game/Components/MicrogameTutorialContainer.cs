@@ -44,7 +44,7 @@ public partial class MicrogameTutorialContainer : Container
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 RelativeSizeAxes = Axes.Both,
-                Colour = Color4Extensions.FromHex("5F5F66")
+                Colour = Color4Extensions.FromHex("6f6f75")
             },
             new FillFlowContainer()
             {
