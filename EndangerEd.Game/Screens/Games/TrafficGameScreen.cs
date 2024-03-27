@@ -95,8 +95,8 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(1670, 1000),
-                Position = new Vector2(-175, 270),
+                Size = new Vector2(2100, 1000),
+                Position = new Vector2(36, 270),
                 Texture = textureStore.Get("Game/Traffic/Road.png")
             },
             // Choice 1 barrier
