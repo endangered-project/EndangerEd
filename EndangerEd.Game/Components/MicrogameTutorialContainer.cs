@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Objects;
 using EndangerEd.Game.Screens.ScreenStacks;
@@ -8,6 +11,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Utils;
 using osuTK;
 
 namespace EndangerEd.Game.Components;
@@ -18,6 +22,9 @@ public partial class MicrogameTutorialContainer : Container
     public new string Name;
     public string Description;
     public Question Question;
+    public QuestionMode QuestionMode;
+
+    private readonly Random random = new Random();
 
     [Resolved]
     private SessionStore sessionStore { get; set; }
@@ -99,6 +106,7 @@ public partial class MicrogameTutorialContainer : Container
                             gameSessionStore.Reset();
                             Scheduler.Add(() =>
                             {
+                                Question = generateSampleQuestion(QuestionMode);
                                 mainScreenStack.PushQuestionScreen(Question);
                                 mainScreenStack.SwapScreenStack();
                             });
@@ -106,6 +114,30 @@ public partial class MicrogameTutorialContainer : Container
                     }
                 }
             }
+        };
+    }
+
+    private Question generateSampleQuestion(QuestionMode questionMode)
+    {
+        int firstNumber = RNG.Next(1, 40);
+        int secondNumber = RNG.Next(1, 40);
+        string question = $"{firstNumber} + {secondNumber} = ?";
+        List<string> choices = new List<string>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            choices.Add(RNG.Next(1, 80).ToString());
+        }
+
+        choices.Add((firstNumber + secondNumber).ToString());
+        choices = choices.OrderBy(_ => random.Next()).ToList();
+        return new Question()
+        {
+            QuestionText = question,
+            Choices = choices.ToArray(),
+            Answer = (firstNumber + secondNumber).ToString(),
+            ContentType = ContentType.Text,
+            QuestionMode = questionMode
         };
     }
 }

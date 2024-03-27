@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using EndangerEd.Game.Audio;
+﻿using EndangerEd.Game.Audio;
 using EndangerEd.Game.Components;
 using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Objects;
@@ -13,7 +10,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
-using osu.Framework.Utils;
 using osuTK;
 using Box = osu.Framework.Graphics.Shapes.Box;
 
@@ -29,8 +25,6 @@ public partial class TutorialScreen : EndangerEdScreen
 
     private EndangerEdButton introductionButton;
     private EndangerEdButton microgameButton;
-
-    private readonly Random random = new Random();
 
     private readonly Bindable<TutorialMenu> tutorialMenu = new Bindable<TutorialMenu>();
 
@@ -262,21 +256,21 @@ public partial class TutorialScreen : EndangerEdScreen
                                 Name = "Bucket",
                                 Description = "Catch the falling objects with the bucket.",
                                 Icon = FontAwesome.Solid.Anchor,
-                                Question = generateSampleQuestion(QuestionMode.Bucket)
+                                QuestionMode = QuestionMode.Bucket
                             },
                             new MicrogameTutorialContainer()
                             {
                                 Name = "Traffic",
                                 Description = "Control the traffic lights.",
                                 Icon = FontAwesome.Solid.TrafficLight,
-                                Question = generateSampleQuestion(QuestionMode.Traffic)
+                                QuestionMode = QuestionMode.Traffic
                             },
                             new MicrogameTutorialContainer()
                             {
                                 Name = "Take Picture",
                                 Description = "Take a picture of the jumping fish.",
                                 Icon = FontAwesome.Solid.Camera,
-                                Question = generateSampleQuestion(QuestionMode.TakePicture)
+                                QuestionMode = QuestionMode.TakePicture
                             }
                         }
                     },
@@ -296,43 +290,19 @@ public partial class TutorialScreen : EndangerEdScreen
                                 Name = "Conveyor",
                                 Description = "Remove the defective products from the conveyor belt before they reach the end.",
                                 Icon = FontAwesome.Solid.Transgender,
-                                Question = generateSampleQuestion(QuestionMode.Conveyor)
+                                QuestionMode = QuestionMode.Conveyor
                             },
                             new MicrogameTutorialContainer()
                             {
                                 Name = "Cannon",
                                 Description = "Fire the cannon to hit the target.",
                                 Icon = FontAwesome.Solid.Bullseye,
-                                Question = generateSampleQuestion(QuestionMode.Cannon)
+                                QuestionMode = QuestionMode.Cannon
                             }
                         }
                     }
                 }
             }
-        };
-    }
-
-    private Question generateSampleQuestion(QuestionMode questionMode)
-    {
-        int firstNumber = RNG.Next(1, 40);
-        int secondNumber = RNG.Next(1, 40);
-        string question = $"{firstNumber} + {secondNumber} = ?";
-        List<string> choices = new List<string>();
-
-        for (int i = 0; i < 3; i++)
-        {
-            choices.Add(RNG.Next(1, 80).ToString());
-        }
-
-        choices.Add((firstNumber + secondNumber).ToString());
-        choices = choices.OrderBy(_ => random.Next()).ToList();
-        return new Question()
-        {
-            QuestionText = question,
-            Choices = choices.ToArray(),
-            Answer = (firstNumber + secondNumber).ToString(),
-            ContentType = ContentType.Text,
-            QuestionMode = questionMode
         };
     }
 
