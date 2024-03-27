@@ -71,32 +71,6 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
         incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
 
-        InternalChildren = new Drawable[]
-        {
-            new EndangerEdSpriteText()
-            {
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.TopCentre,
-                Text = CurrentQuestion.QuestionText,
-                Font = EndangerEdFont.GetFont(size: 40, weight: EndangerEdFont.FontWeight.Bold)
-            },
-            new EndangerEdSpriteText()
-            {
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.TopCentre,
-                Text = "Move the bucket to catch the answer!",
-                Position = new Vector2(0, 50),
-                Font = EndangerEdFont.GetFont(size: 30)
-            },
-            bucket = new Sprite()
-            {
-                Anchor = Anchor.BottomCentre,
-                Origin = Anchor.BottomCentre,
-                Scale = new Vector2(0.4f, 0.4f),
-                Texture = textureStore.Get("Game/Bucket/Bucket.png")
-            }
-        };
-
         if (CurrentQuestion.ContentType == ContentType.Image)
         {
             AddInternal(boxContainer1 = new Container()
@@ -297,6 +271,29 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 }
             });
         }
+        
+        AddInternal(new EndangerEdSpriteText()
+        {
+            Anchor = Anchor.TopCentre,
+            Origin = Anchor.TopCentre,
+            Text = CurrentQuestion.QuestionText,
+            Font = EndangerEdFont.GetFont(size: 40, weight: EndangerEdFont.FontWeight.Bold)
+        });
+        AddInternal(new EndangerEdSpriteText()
+        {
+            Anchor = Anchor.TopCentre,
+            Origin = Anchor.TopCentre,
+            Text = "Move the bucket to catch the answer!",
+            Position = new Vector2(0, 50),
+            Font = EndangerEdFont.GetFont(size: 30)
+        });
+        AddInternal(bucket = new Sprite()
+        {
+            Anchor = Anchor.BottomCentre,
+            Origin = Anchor.BottomCentre,
+            Scale = new Vector2(0.4f, 0.4f),
+            Texture = textureStore.Get("Game/Bucket/Bucket.png")
+        });
 
         answered.BindValueChanged(answered =>
         {
