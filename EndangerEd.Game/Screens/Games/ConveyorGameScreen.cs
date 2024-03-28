@@ -645,7 +645,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                 boxSpawnSample?.Play();
                 boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), 6000);
             }
-        }, 2000);
+        }, 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBox)
@@ -653,7 +653,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                 boxSpawnSample?.Play();
                 boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), 6000);
             }
-        }, 4000);
+        }, 2000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBox)
@@ -661,7 +661,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                 boxSpawnSample?.Play();
                 boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), 6000);
             }
-        }, 6000);
+        }, 3000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBox)
@@ -669,7 +669,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                 boxSpawnSample?.Play();
                 boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), 6000);
             }
-        }, 8000);
+        }, 4000);
     }
 
     private void onChoiceSelected(string choice)
