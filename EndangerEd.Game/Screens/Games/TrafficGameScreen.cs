@@ -207,7 +207,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
                         Size = new Vector2(2.5f, 1.5f),
-                        Rotation = 90,
+                        Rotation = -90,
                         Texture = textureStore.Get("Game/Traffic/Car.png")
                     },
                     new Box()
@@ -307,7 +307,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
                         Size = new Vector2(2.5f, 1.5f),
-                        Rotation = 90,
+                        Rotation = -90,
                         Texture = textureStore.Get("Game/Traffic/Car.png")
                     },
                     new Box()
@@ -344,7 +344,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
                         Size = new Vector2(2.5f, 1.5f),
-                        Rotation = 90,
+                        Rotation = -90,
                         Texture = textureStore.Get("Game/Traffic/Car.png")
                     },
                     new Box()
@@ -444,7 +444,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
                         Size = new Vector2(2.5f, 1.5f),
-                        Rotation = 90,
+                        Rotation = -90,
                         Texture = textureStore.Get("Game/Traffic/Car.png")
                     },
                     new Box()
