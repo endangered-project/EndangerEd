@@ -398,6 +398,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         if (bucket.Contains(boxContainer1.ScreenSpaceDrawQuad.Centre))
         {
             boxContainer1.FlashColour(Colour4.White, 500);
+            bucket.MoveToOffset(new Vector2(0, 20), 100).Then().MoveToOffset(new Vector2(0, -20), 100);
             allowMovingBucket = false;
             playBucketImpactSample();
             stopBoxContainer();
@@ -407,6 +408,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         if (bucket.Contains(boxContainer2.ScreenSpaceDrawQuad.Centre))
         {
             boxContainer2.FlashColour(Colour4.White, 500);
+            bucket.MoveToOffset(new Vector2(0, 20), 100).Then().MoveToOffset(new Vector2(0, -20), 100);
             allowMovingBucket = false;
             playBucketImpactSample();
             stopBoxContainer();
@@ -416,6 +418,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         if (bucket.Contains(boxContainer3.ScreenSpaceDrawQuad.Centre))
         {
             boxContainer3.FlashColour(Colour4.White, 500);
+            bucket.MoveToOffset(new Vector2(0, 20), 100).Then().MoveToOffset(new Vector2(0, -20), 100);
             allowMovingBucket = false;
             playBucketImpactSample();
             stopBoxContainer();
@@ -425,6 +428,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         if (bucket.Contains(boxContainer4.ScreenSpaceDrawQuad.Centre))
         {
             boxContainer4.FlashColour(Colour4.White, 500);
+            bucket.MoveToOffset(new Vector2(0, 20), 100).Then().MoveToOffset(new Vector2(0, -20), 100);
             allowMovingBucket = false;
             playBucketImpactSample();
             stopBoxContainer();
