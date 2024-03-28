@@ -256,7 +256,7 @@ public partial class TutorialScreen : EndangerEdScreen
                                 Name = "Bucket",
                                 Description = "Catch the falling objects with the bucket.",
 
-                                Icon = FontAwesome.Solid.Anchor,
+                                Icon = FontAwesome.Solid.ChevronDown,
                                 QuestionMode = QuestionMode.Bucket
                             },
                             new MicrogameTutorialContainer()
@@ -290,7 +290,7 @@ public partial class TutorialScreen : EndangerEdScreen
                             {
                                 Name = "Conveyor",
                                 Description = "Remove the defective products from the conveyor belt before they reach the end.",
-                                Icon = FontAwesome.Solid.Transgender,
+                                Icon = FontAwesome.Solid.Cog,
                                 QuestionMode = QuestionMode.Conveyor
                             },
                             new MicrogameTutorialContainer()
