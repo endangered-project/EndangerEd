@@ -177,8 +177,7 @@ public partial class TutorialScreen : EndangerEdScreen
 
     protected override void LoadComplete()
     {
-        // TODO: Change this to the correct audio track
-        audioPlayer.ChangeTrack("snowmix.mp3");
+        audioPlayer.ChangeTrack("tutorial.wav");
         base.LoadComplete();
     }
 
