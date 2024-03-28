@@ -643,7 +643,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), 6000);
+                boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), 9000);
             }
         }, 1000);
         Scheduler.AddDelayed(() =>
@@ -651,7 +651,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), 6000);
+                boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), 9000);
             }
         }, 2000);
         Scheduler.AddDelayed(() =>
@@ -659,7 +659,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), 6000);
+                boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), 9000);
             }
         }, 3000);
         Scheduler.AddDelayed(() =>
@@ -667,7 +667,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), 6000);
+                boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), 9000);
             }
         }, 4000);
     }
