@@ -85,7 +85,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         carTakeOffSample = audioManager.Samples.Get("Game/Traffic/CarTakeoff.wav");
         trafficSwitchSample = audioManager.Samples.Get("Game/Traffic/TrafficSwitch.wav");
         wrongCarArriveSample = audioManager.Samples.Get("Game/Traffic/WrongCarArrived.wav");
-        rightCarArriveSample = audioManager.Samples.Get("Game/Traffic/metal-pipe.wav");
+        rightCarArriveSample = audioManager.Samples.Get("Game/Traffic/RightCarArrived.wav");
 
         greenLightTexture = textureStore.Get("Game/Traffic/TrafficLightGreen.png");
 
