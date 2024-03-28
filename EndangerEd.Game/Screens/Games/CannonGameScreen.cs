@@ -160,7 +160,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Scale = new Vector2(0.3f, 0.3f),
+                Scale = new Vector2(0.35f, 0.35f),
                 Position = new Vector2(0, 30),
                 Texture = textureStore.Get("Game/Cannon/Cannon.png")
             }
