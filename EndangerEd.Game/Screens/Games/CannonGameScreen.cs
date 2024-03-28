@@ -478,6 +478,8 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         cannonBalls.Add(cannonBall);
         AddInternal(cannonBall);
 
+        cannon.ScaleTo(0.3f, 50, Easing.OutElastic).Then().ScaleTo(0.35f, 1000, Easing.OutElastic);
+            
         cannonFireSample?.Play();
 
         double cannonAngle = (cannon.Rotation + 26.5) * Math.PI / 180 - 90;
