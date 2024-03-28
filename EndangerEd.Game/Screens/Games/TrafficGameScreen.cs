@@ -194,7 +194,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             AddInternal(boxContainer1 = new Container()
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.TopCentre,
+                Origin = Anchor.Centre,
                 Size = new Vector2(125, 125),
                 RelativePositionAxes = Axes.Y,
                 Scale = new Vector2(0.675f),
