@@ -1,4 +1,5 @@
-﻿using EndangerEd.Game.Graphics;
+﻿using EndangerEd.Game.Audio;
+using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Objects;
 using EndangerEd.Game.Screens.Games;
 using EndangerEd.Game.Stores;
@@ -17,6 +18,9 @@ public partial class EndangerEdMainScreenStack : ScreenStack
 {
     [Resolved]
     private SessionStore sessionStore { get; set; }
+
+    [Resolved]
+    private AudioPlayer audioPlayer { get; set; }
 
     public EndangerEdGameSessionScreenStack GameScreenStack;
 
@@ -114,7 +118,12 @@ public partial class EndangerEdMainScreenStack : ScreenStack
         if (GameScreenStack.Alpha != 0f)
         {
             GameScreenStack.Hide();
-            Scheduler.AddDelayed(() => MainScreenStack.Show(), delayBetweenSwap);
+            Scheduler.AddDelayed(() =>
+            {
+                MainScreenStack.Show();
+                if (MainScreenStack.CurrentScreen is TutorialScreen) 
+                    audioPlayer.ChangeTrack("tutorial.wav");
+            }, delayBetweenSwap);
         }
         else
         {
