@@ -177,7 +177,7 @@ public partial class TutorialScreen : EndangerEdScreen
 
     protected override void LoadComplete()
     {
-        audioPlayer.ChangeTrack("tutorial.wav");
+        audioPlayer.ChangeTrack("tutorial.mp3");
         base.LoadComplete();
     }
 

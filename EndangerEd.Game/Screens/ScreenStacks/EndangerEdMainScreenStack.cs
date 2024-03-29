@@ -122,7 +122,7 @@ public partial class EndangerEdMainScreenStack : ScreenStack
             {
                 MainScreenStack.Show();
                 if (MainScreenStack.CurrentScreen is TutorialScreen) 
-                    audioPlayer.ChangeTrack("tutorial.wav");
+                    audioPlayer.ChangeTrack("tutorial.mp3");
             }, delayBetweenSwap);
         }
         else
