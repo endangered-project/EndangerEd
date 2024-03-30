@@ -504,7 +504,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                                 Scheduler.AddDelayed(() =>
                                 {
                                     mainScreenStack.SwapScreenStack(100);
-                                }, 3000);
+                                }, 500);
                             }
                         }
                         catch (HttpRequestException e)

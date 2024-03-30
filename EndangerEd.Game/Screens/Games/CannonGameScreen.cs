@@ -125,7 +125,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                                 Scheduler.AddDelayed(() =>
                                 {
                                     mainScreenStack.SwapScreenStack(100);
-                                }, 3000);
+                                }, 500);
                             }
                         }
                         catch (HttpRequestException e)

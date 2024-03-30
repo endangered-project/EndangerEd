@@ -377,7 +377,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
                                 Scheduler.AddDelayed(() =>
                                 {
                                     mainScreenStack.SwapScreenStack(100);
-                                }, 3000);
+                                }, 500);
                             }
                         }
                         catch (HttpRequestException e)

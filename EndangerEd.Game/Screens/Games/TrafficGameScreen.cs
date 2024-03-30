@@ -510,7 +510,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                                 Scheduler.AddDelayed(() =>
                                 {
                                     mainScreenStack.SwapScreenStack(100);
-                                }, 3000);
+                                }, 500);
                             }
                         }
                         catch (HttpRequestException e)

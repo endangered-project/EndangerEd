@@ -87,7 +87,7 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                                 Scheduler.AddDelayed(() =>
                                 {
                                     mainScreenStack.SwapScreenStack(100);
-                                }, 3000);
+                                }, 500);
                             }
                         }
                         catch (HttpRequestException e)
