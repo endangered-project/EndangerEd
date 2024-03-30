@@ -623,7 +623,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         Scheduler.AddDelayed(() =>
         {
             requestPassSample?.Play();
-        }, 2000);
+        }, 1500);
 
         Scheduler.AddDelayed(() =>
         {
@@ -662,7 +662,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         Scheduler.AddDelayed(() =>
         {
             requestPassSample?.Play();
-        }, 2000);
+        }, 1500);
         
         Scheduler.AddDelayed(() =>
         {
@@ -701,7 +701,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         Scheduler.AddDelayed(() =>
         {
             requestPassSample?.Play();
-        }, 2000);
+        }, 1500);
         
         Scheduler.AddDelayed(() =>
         {
@@ -742,7 +742,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         Scheduler.AddDelayed(() =>
         {
             requestPassSample?.Play();
-        }, 2000);
+        }, 1500);
         
         Scheduler.AddDelayed(() =>
         {
