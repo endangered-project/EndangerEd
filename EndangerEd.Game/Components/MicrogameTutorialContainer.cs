@@ -104,6 +104,10 @@ public partial class MicrogameTutorialContainer : Container
                         Action = () =>
                         {
                             gameSessionStore.Reset();
+
+                            // Since this is a tutorial, mark this as demo game so it won't be recorded.
+                            gameSessionStore.GameId = 0;
+
                             Scheduler.Add(() =>
                             {
                                 Question = generateSampleQuestion(QuestionMode);

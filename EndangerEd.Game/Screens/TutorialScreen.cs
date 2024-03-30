@@ -256,7 +256,6 @@ public partial class TutorialScreen : EndangerEdScreen
                             {
                                 Name = "Bucket",
                                 Description = "Catch the falling objects with the bucket.",
-
                                 Icon = FontAwesome.Solid.ChevronDown,
                                 QuestionMode = QuestionMode.Bucket
                             },

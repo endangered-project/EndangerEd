@@ -137,7 +137,7 @@ public partial class ResultScreen : EndangerEdScreen
                 Margin = new MarginPadding()
                 {
                     Top = 140,
-                    Right = 100,
+                    Right = 150,
                 },
                 Spacing = new Vector2(10),
                 Alpha = 0,
