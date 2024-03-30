@@ -609,7 +609,6 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         if (!allowMovingCar) return;
 
         allowMovingCar = false;
-        gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
@@ -647,7 +646,6 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         if (!allowMovingCar) return;
 
         allowMovingCar = false;
-        gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
@@ -682,7 +680,6 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         if (!allowMovingCar) return;
 
         allowMovingCar = false;
-        gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
@@ -717,7 +714,6 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         if (!allowMovingCar) return;
 
         allowMovingCar = false;
-        gameSessionStore.StopwatchClock.Stop();
 
         trafficSwitchSample?.Play();
         carTakeOffSample?.Play();
