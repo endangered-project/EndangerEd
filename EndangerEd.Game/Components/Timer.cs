@@ -62,11 +62,11 @@ public partial class Timer : CompositeDrawable
     protected override void Update()
     {
         base.Update();
+        
         // Calculate countdown
         string countdown = "";
-        // Time per game is in milliseconds
-        const int total_time = GameSessionStore.TIME_PER_GAME / 1000;
-        int timeLeft = total_time - (int)gameSessionStore.StopwatchClock.Elapsed.TotalSeconds;
+        
+        int timeLeft = gameSessionStore.GetTimeLeft();
 
         // If time left is less than 0, set it to 0
         if (timeLeft < 0)

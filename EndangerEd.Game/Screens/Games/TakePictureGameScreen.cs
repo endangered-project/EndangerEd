@@ -487,11 +487,9 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
     {
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
-        Scheduler.Add(() =>
-        {
-            gameSessionStore.StopwatchClock.Reset();
-            gameSessionStore.StopwatchClock.Start();
-        });
+ 
+        gameSessionStore.StopwatchClock.Reset();
+        gameSessionStore.StopwatchClock.Start();
         
         int duration = 3000 - gameSessionStore.Score.Value / 50 * 180;
         

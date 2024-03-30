@@ -496,11 +496,9 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
     {
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
-        Scheduler.Add(() =>
-        {
-            gameSessionStore.StopwatchClock.Reset();
-            gameSessionStore.StopwatchClock.Start();
-        });
+        
+        gameSessionStore.StopwatchClock.Reset();
+        gameSessionStore.StopwatchClock.Start();
     }
 
     private void onChoiceSelected(string choice)

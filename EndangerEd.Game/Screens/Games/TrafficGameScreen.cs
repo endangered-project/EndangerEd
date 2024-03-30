@@ -581,11 +581,9 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     {
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
-        Scheduler.Add(() =>
-        {
-            gameSessionStore.StopwatchClock.Reset();
-            gameSessionStore.StopwatchClock.Start();
-        });
+        
+        gameSessionStore.StopwatchClock.Reset();
+        gameSessionStore.StopwatchClock.Start();
 
         Scheduler.AddDelayed(() =>
         {

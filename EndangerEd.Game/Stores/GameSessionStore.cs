@@ -1,4 +1,5 @@
-﻿using EndangerEd.Game.API;
+﻿using System;
+using EndangerEd.Game.API;
 using EndangerEd.Game.Screens.ScreenStacks;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -25,7 +26,7 @@ public partial class GameSessionStore : CompositeDrawable
     /// <summary>
     /// Time per microgame in milliseconds.
     /// </summary>
-    public const int TIME_PER_GAME = 60000;
+    public const int TIME_PER_GAME = 30000;
 
     public BindableInt Life = new BindableInt(MAX_LIFE);
 
@@ -53,7 +54,8 @@ public partial class GameSessionStore : CompositeDrawable
 
     public int GetTimeLeft()
     {
-        return (int)((TIME_PER_GAME - StopwatchClock.ElapsedMilliseconds) / 1000);
+        double timeScaledToPoints = Math.Clamp(TIME_PER_GAME - this.Score.Value / 50 * 2 * 1000, 10000, 30000);
+        return (int)(timeScaledToPoints - StopwatchClock.ElapsedMilliseconds) / 1000;
     }
 
     /// <summary>
