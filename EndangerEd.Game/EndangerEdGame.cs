@@ -41,13 +41,13 @@ namespace EndangerEd.Game
             });
             dependencies.CacheAs(sessionStore = new SessionStore());
             dependencies.CacheAs(gameSessionStore = new GameSessionStore());
+            dependencies.CacheAs(audioPlayer = new AudioPlayer("menu.mp3", true));
             dependencies.CacheAs(this);
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
-
             AddRange(new Drawable[]
             {
                 new Container
@@ -67,8 +67,7 @@ namespace EndangerEd.Game
                     }
                 }
             });
-
-            loadComponentSingleFile(audioPlayer = new AudioPlayer("menu.mp3", true), overlayContent.Add, true);
+            overlayContent.Add(audioPlayer);
             loadComponentSingleFile(settingsScreenStack = new SettingsScreenStack(), Add, true);
             screenStack.MainScreenStack.Push(new MainMenuScreen());
         }

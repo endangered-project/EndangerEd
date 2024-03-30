@@ -1,4 +1,5 @@
-﻿using EndangerEd.Game.Graphics;
+﻿using EndangerEd.Game.Audio;
+using EndangerEd.Game.Graphics;
 using EndangerEd.Game.Objects;
 using EndangerEd.Game.Screens.Games;
 using EndangerEd.Game.Stores;
@@ -17,6 +18,9 @@ public partial class EndangerEdMainScreenStack : ScreenStack
 {
     [Resolved]
     private SessionStore sessionStore { get; set; }
+
+    [Resolved]
+    private AudioPlayer audioPlayer { get; set; }
 
     public EndangerEdGameSessionScreenStack GameScreenStack;
 
@@ -114,12 +118,33 @@ public partial class EndangerEdMainScreenStack : ScreenStack
         if (GameScreenStack.Alpha != 0f)
         {
             GameScreenStack.Hide();
-            Scheduler.AddDelayed(() => MainScreenStack.Show(), delayBetweenSwap);
+            Scheduler.AddDelayed(() =>
+            {
+                MainScreenStack.Show();
+                if (MainScreenStack.CurrentScreen is TutorialScreen) 
+                    audioPlayer.ChangeTrack("tutorial.mp3");
+            }, delayBetweenSwap);
         }
         else
         {
             GameScreenStack.Show();
             Scheduler.AddDelayed(() => MainScreenStack.Hide(), delayBetweenSwap);
+        }
+    }
+
+    public void ClearMainScreenStack()
+    {
+        while (MainScreenStack.CurrentScreen != null)
+        {
+            MainScreenStack.CurrentScreen?.Exit();
+        }
+    }
+
+    public void ClearGameScreenStack()
+    {
+        while (GameScreenStack.CurrentScreen != null)
+        {
+            GameScreenStack.CurrentScreen?.Exit();
         }
     }
 
@@ -145,6 +170,10 @@ public partial class EndangerEdMainScreenStack : ScreenStack
 
             case QuestionMode.Conveyor:
                 GameScreenStack.MainScreenStack.Push(new ConveyorGameScreen(question));
+                break;
+
+            case QuestionMode.Traffic:
+                GameScreenStack.MainScreenStack.Push(new TrafficGameScreen(question));
                 break;
 
             default:

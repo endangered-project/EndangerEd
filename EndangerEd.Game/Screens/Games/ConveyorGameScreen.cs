@@ -116,31 +116,33 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new OnlineImageSprite(CurrentQuestion.Choices[0])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit
                     },
                     new Sprite()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -149,7 +151,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box1Removed) return;
 
                     boxContainer1.ClearTransforms();
-                    boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box1Removed = true;
                 }
@@ -158,30 +160,32 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new OnlineImageSprite(CurrentQuestion.Choices[1])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit
                     },
                     new Sprite()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -190,7 +194,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box2Removed) return;
 
                     boxContainer2.ClearTransforms();
-                    boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box2Removed = true;
                 }
@@ -199,30 +203,32 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new OnlineImageSprite(CurrentQuestion.Choices[2])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit
                     },
                     new Sprite()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -231,7 +237,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box3Removed) return;
 
                     boxContainer3.ClearTransforms();
-                    boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box3Removed = true;
                 }
@@ -240,30 +246,32 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new OnlineImageSprite(CurrentQuestion.Choices[3])
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit
                     },
                     new Sprite()
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -272,7 +280,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box4Removed) return;
 
                     boxContainer4.ClearTransforms();
-                    boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box4Removed = true;
                 }
@@ -284,16 +292,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new SpriteText()
@@ -307,7 +316,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -316,7 +325,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box1Removed) return;
 
                     boxContainer1.ClearTransforms();
-                    boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box1Removed = true;
                 }
@@ -325,16 +334,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new SpriteText()
@@ -348,7 +358,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -357,7 +367,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box2Removed) return;
 
                     boxContainer2.ClearTransforms();
-                    boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box2Removed = true;
                 }
@@ -366,16 +376,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new SpriteText()
@@ -389,7 +400,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -398,7 +409,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box3Removed) return;
 
                     boxContainer3.ClearTransforms();
-                    boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box3Removed = true;
                 }
@@ -407,16 +418,17 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(150, 150),
+                Size = new Vector2(300, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(-0.6f, 0),
+                Position = new Vector2(-0.7f, 0),
                 Children = new Drawable[]
                 {
                     new Box()
                     {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fit,
                         Colour = Colour4.Red
                     },
                     new SpriteText()
@@ -430,7 +442,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         Scale = new Vector2(0.4f, 0.4f),
-                        Depth = 3,
+                        Depth = 1,
                         Texture = textureStore.Get("Game/Conveyer/Crate.png")
                     }
                 },
@@ -439,7 +451,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                     if (box4Removed) return;
 
                     boxContainer4.ClearTransforms();
-                    boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 500, Easing.InOutSine);
+                    boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 500, Easing.InBack);
                     boxRemoveSample?.Play();
                     box4Removed = true;
                 }
@@ -478,7 +490,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
 
                         try
                         {
-                            if (gameSessionStore.IsDefaultGame())
+                            if (!gameSessionStore.IsDefaultGame())
                             {
                                 apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
                                 Scheduler.AddDelayed(() =>
@@ -492,7 +504,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                                 Scheduler.AddDelayed(() =>
                                 {
                                     mainScreenStack.SwapScreenStack(100);
-                                }, 3000);
+                                }, 500);
                             }
                         }
                         catch (HttpRequestException e)
@@ -533,7 +545,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
-            Position = new Vector2(0, 110),
+            Position = new Vector2(-5, 110),
             RelativeSizeAxes = Axes.Both,
             Size = new Vector2(0.9f, 0.9f),
             FillMode = FillMode.Fill,
@@ -566,7 +578,7 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         AddInternal(rightGear);
 
         leftGear.Spin(1000, RotationDirection.Clockwise).Loop();
-        rightGear.Spin(1000, RotationDirection.Counterclockwise).Loop();
+        rightGear.Spin(1000, RotationDirection.Clockwise).Loop();
     }
 
     protected override void Update()
@@ -619,11 +631,11 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
         conveyorLoopTrack?.Start();
-        Scheduler.Add(() =>
-        {
-            gameSessionStore.StopwatchClock.Reset();
-            gameSessionStore.StopwatchClock.Start();
-        });
+        
+        gameSessionStore.StopwatchClock.Reset();
+        gameSessionStore.StopwatchClock.Start();
+
+        double duration = gameSessionStore.GetTimeLeft() * 1000 / 4;
 
         // Add schedule to move the boxContainer to the bottom of the screen at the random time.
         Scheduler.AddDelayed(() =>
@@ -631,33 +643,33 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), 6000);
+                boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), duration, Easing.InQuad);
             }
-        }, 2000);
+        }, 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), 6000);
+                boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), duration, Easing.InQuad);
             }
-        }, 4000);
+        }, duration + 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), 6000);
+                boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), duration, Easing.InQuad);
             }
-        }, 6000);
+        }, duration * 2 + 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), 6000);
+                boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), duration, Easing.InQuad);
             }
-        }, 8000);
+        }, duration * 3 + 1000);
     }
 
     private void onChoiceSelected(string choice)
@@ -680,7 +692,8 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
                 {
                     var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
                     {
-                        { "answer", choice }
+                        { "answer", choice },
+                        { "duration", gameSessionStore.StopwatchClock.ElapsedMilliseconds }
                     });
                     result.TryGetValue("score", out var scoreValue);
                     gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;

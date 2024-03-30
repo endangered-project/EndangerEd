@@ -152,7 +152,8 @@ public partial class MainMenuScreen : EndangerEdScreen
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Width = 100,
-                                Height = 50
+                                Height = 50,
+                                Action = () => screenStack.MainScreenStack.Push(new TutorialScreen())
                             },
                             leaderboardButton = new EndangerEdButton("Leaderboard")
                             {
@@ -374,6 +375,7 @@ public partial class MainMenuScreen : EndangerEdScreen
     public override void OnEntering(ScreenTransitionEvent e)
     {
         base.OnEntering(e);
+        audioPlayer.ChangeTrack("menu.mp3");
         this.MoveToY(0f, 1000, Easing.OutQuint)
             .FadeInFromZero(1000, Easing.OutQuint);
     }
@@ -381,6 +383,7 @@ public partial class MainMenuScreen : EndangerEdScreen
     public override void OnSuspending(ScreenTransitionEvent e)
     {
         base.OnSuspending(e);
+        audioPlayer.ChangeTrack("menu.mp3");
         this.MoveToY(3000f, 1000, Easing.OutQuint)
             .FadeTo(0f, 1000, Easing.OutQuint);
     }

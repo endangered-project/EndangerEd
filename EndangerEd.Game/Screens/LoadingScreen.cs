@@ -109,7 +109,11 @@ public partial class LoadingScreen : EndangerEdScreen
 
         Thread thread = new Thread(() =>
         {
-            Scheduler.Add(() => sessionStore.IsLoading.Value = true);
+            Scheduler.Add(() =>
+            {
+                mainScreenStack.ClearGameScreenStack();
+                sessionStore.IsLoading.Value = true;
+            });
 
             try
             {

@@ -71,33 +71,6 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
         incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
 
-        InternalChildren = new Drawable[]
-        {
-            new EndangerEdSpriteText()
-            {
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.TopCentre,
-                Text = CurrentQuestion.QuestionText,
-                Font = EndangerEdFont.GetFont(size: 40, weight: EndangerEdFont.FontWeight.Bold)
-            },
-            new EndangerEdSpriteText()
-            {
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.TopCentre,
-                Text = "Move the bucket to catch the answer!",
-                Position = new Vector2(0, 50),
-                Font = EndangerEdFont.GetFont(size: 30)
-            },
-            bucket = new Sprite()
-            {
-                Anchor = Anchor.BottomCentre,
-                Origin = Anchor.BottomCentre,
-                Scale = new Vector2(0.4f, 0.4f),
-                Texture = textureStore.Get("Game/Bucket/Bucket.png"),
-                FillMode = FillMode.Fit
-            }
-        };
-
         if (CurrentQuestion.ContentType == ContentType.Image)
         {
             AddInternal(boxContainer1 = new Container()
@@ -106,8 +79,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -131,7 +103,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -155,7 +127,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -179,7 +151,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -207,7 +179,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -231,7 +203,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -255,7 +227,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -279,7 +251,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.6f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -298,6 +270,29 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 }
             });
         }
+
+        AddInternal(new EndangerEdSpriteText()
+        {
+            Anchor = Anchor.TopCentre,
+            Origin = Anchor.TopCentre,
+            Text = CurrentQuestion.QuestionText,
+            Font = EndangerEdFont.GetFont(size: 40, weight: EndangerEdFont.FontWeight.Bold)
+        });
+        AddInternal(new EndangerEdSpriteText()
+        {
+            Anchor = Anchor.TopCentre,
+            Origin = Anchor.TopCentre,
+            Text = "Move the bucket to catch the answer!",
+            Position = new Vector2(0, 50),
+            Font = EndangerEdFont.GetFont(size: 30)
+        });
+        AddInternal(bucket = new Sprite()
+        {
+            Anchor = Anchor.BottomCentre,
+            Origin = Anchor.BottomCentre,
+            Scale = new Vector2(0.4f, 0.4f),
+            Texture = textureStore.Get("Game/Bucket/Bucket.png")
+        });
 
         answered.BindValueChanged(answered =>
         {
@@ -331,7 +326,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
 
                         try
                         {
-                            if (gameSessionStore.IsDefaultGame())
+                            if (!gameSessionStore.IsDefaultGame())
                             {
                                 apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
                                 Scheduler.AddDelayed(() =>
@@ -345,7 +340,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                                 Scheduler.AddDelayed(() =>
                                 {
                                     mainScreenStack.SwapScreenStack(100);
-                                }, 3000);
+                                }, 500);
                             }
                         }
                         catch (HttpRequestException e)
@@ -402,6 +397,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         if (bucket.Contains(boxContainer1.ScreenSpaceDrawQuad.Centre))
         {
             boxContainer1.FlashColour(Colour4.White, 500);
+            bucket.MoveToOffset(new Vector2(0, 20), 100).Then().MoveToOffset(new Vector2(0, -20), 100);
             allowMovingBucket = false;
             playBucketImpactSample();
             stopBoxContainer();
@@ -411,6 +407,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         if (bucket.Contains(boxContainer2.ScreenSpaceDrawQuad.Centre))
         {
             boxContainer2.FlashColour(Colour4.White, 500);
+            bucket.MoveToOffset(new Vector2(0, 20), 100).Then().MoveToOffset(new Vector2(0, -20), 100);
             allowMovingBucket = false;
             playBucketImpactSample();
             stopBoxContainer();
@@ -420,6 +417,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         if (bucket.Contains(boxContainer3.ScreenSpaceDrawQuad.Centre))
         {
             boxContainer3.FlashColour(Colour4.White, 500);
+            bucket.MoveToOffset(new Vector2(0, 20), 100).Then().MoveToOffset(new Vector2(0, -20), 100);
             allowMovingBucket = false;
             playBucketImpactSample();
             stopBoxContainer();
@@ -429,18 +427,11 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         if (bucket.Contains(boxContainer4.ScreenSpaceDrawQuad.Centre))
         {
             boxContainer4.FlashColour(Colour4.White, 500);
+            bucket.MoveToOffset(new Vector2(0, 20), 100).Then().MoveToOffset(new Vector2(0, -20), 100);
             allowMovingBucket = false;
             playBucketImpactSample();
             stopBoxContainer();
             onChoiceSelected(CurrentQuestion.Choices[3]);
-        }
-
-        // If all bucket is not in the screen, then the game is over.
-        if (boxContainer1.Position.Y > 1.2f && boxContainer2.Position.Y > 1.2f && boxContainer3.Position.Y > 1.2f && boxContainer4.Position.Y > 1.2f)
-        {
-            allowMovingBucket = false;
-            stopBoxContainer();
-            onChoiceSelected("");
         }
     }
 
@@ -456,7 +447,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
     {
         // Move the bucket to the mouse position.
         if (allowMovingBucket)
-            bucket.Position = new Vector2(e.ScreenSpaceMousePosition.X - DrawSize.X, bucket.Position.Y);
+            bucket.MoveTo(new Vector2(e.MousePosition.X - bucket.AnchorPosition.X, bucket.Position.Y), 1000, Easing.OutExpo);
         return base.OnMouseMove(e);
     }
 
@@ -464,33 +455,32 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
     {
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
-        Scheduler.Add(() =>
-        {
-            gameSessionStore.StopwatchClock.Reset();
-            gameSessionStore.StopwatchClock.Start();
-        });
 
-        // Add schedule to move the boxContainer to the bottom of the screen at the random time.
+        gameSessionStore.StopwatchClock.Reset();
+        gameSessionStore.StopwatchClock.Start();
+
+        double duration = gameSessionStore.GetTimeLeft() * 1000 / 4;
+
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(0, 5000));
+                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), duration, Easing.OutQuad);
+        }, 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(1500, 6500));
+                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), duration, Easing.OutQuad);
+        }, duration + 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(3000, 8000));
+                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), duration, Easing.OutQuad);
+        }, duration * 2 + 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 5000, Easing.InOutSine);
-        }, RNG.Next(4500, 9500));
+                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), duration, Easing.OutQuad);
+        }, duration * 3 + 1000);
     }
 
     private void onChoiceSelected(string choice)
@@ -513,7 +503,8 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 {
                     var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
                     {
-                        { "answer", choice }
+                        { "answer", choice },
+                        { "duration", gameSessionStore.StopwatchClock.ElapsedMilliseconds }
                     });
                     result.TryGetValue("score", out var scoreValue);
                     gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;
@@ -521,7 +512,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             }
             catch (HttpRequestException e)
             {
-                Logger.Log($"Request to game/answer failed with error: {e.Message}");
+                Logger.Log($"Request to game/answer failed with error: {e.Message}", LoggingTarget.Network);
             }
 
             if (choice == CurrentQuestion.Answer)

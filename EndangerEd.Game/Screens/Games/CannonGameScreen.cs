@@ -55,8 +55,6 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
 
     private Sprite cannon;
 
-    private double angle;
-
     private readonly List<Sprite> cannonBalls = new List<Sprite>();
 
     private Sample cannonFireSample;
@@ -113,7 +111,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
 
                         try
                         {
-                            if (gameSessionStore.IsDefaultGame())
+                            if (!gameSessionStore.IsDefaultGame())
                             {
                                 apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
                                 Scheduler.AddDelayed(() =>
@@ -127,7 +125,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                                 Scheduler.AddDelayed(() =>
                                 {
                                     mainScreenStack.SwapScreenStack(100);
-                                }, 3000);
+                                }, 500);
                             }
                         }
                         catch (HttpRequestException e)
@@ -162,7 +160,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
-                Scale = new Vector2(0.3f, 0.3f),
+                Scale = new Vector2(0.35f, 0.35f),
                 Position = new Vector2(0, 30),
                 Texture = textureStore.Get("Game/Cannon/Cannon.png")
             }
@@ -411,6 +409,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             if (boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer1.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
             {
                 boxContainer1.FlashColour(Colour4.White, 500);
+                boxContainer1.ResizeTo(new Vector2(boxContainer1.Size.X, 0), 500, Easing.OutBounce);
                 stopAllBullet();
                 allowFire = false;
                 playHitTargetSample();
@@ -419,6 +418,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             else if (boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer2.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
             {
                 boxContainer2.FlashColour(Colour4.White, 500);
+                boxContainer2.ResizeTo(new Vector2(boxContainer2.Size.X, 0), 500, Easing.OutBounce);
                 stopAllBullet();
                 allowFire = false;
                 playHitTargetSample();
@@ -427,6 +427,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             else if (boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer3.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
             {
                 boxContainer3.FlashColour(Colour4.White, 500);
+                boxContainer3.ResizeTo(new Vector2(boxContainer3.Size.X, 0), 500, Easing.OutBounce);
                 stopAllBullet();
                 allowFire = false;
                 playHitTargetSample();
@@ -435,6 +436,7 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
             else if (boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopLeft) || boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.TopRight) || boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomLeft) || boxContainer4.ScreenSpaceDrawQuad.Contains(cannonBall.ScreenSpaceDrawQuad.BottomRight))
             {
                 boxContainer4.FlashColour(Colour4.White, 500);
+                boxContainer4.ResizeTo(new Vector2(boxContainer4.Size.X, 0), 500, Easing.OutBounce);
                 stopAllBullet();
                 allowFire = false;
                 playHitTargetSample();
@@ -480,6 +482,8 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
         cannonBalls.Add(cannonBall);
         AddInternal(cannonBall);
 
+        cannon.ScaleTo(0.3f, 50, Easing.OutElastic).Then().ScaleTo(0.35f, 1000, Easing.OutElastic);
+            
         cannonFireSample?.Play();
 
         double cannonAngle = (cannon.Rotation + 26.5) * Math.PI / 180 - 90;
@@ -492,11 +496,9 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
     {
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
-        Scheduler.Add(() =>
-        {
-            gameSessionStore.StopwatchClock.Reset();
-            gameSessionStore.StopwatchClock.Start();
-        });
+        
+        gameSessionStore.StopwatchClock.Reset();
+        gameSessionStore.StopwatchClock.Start();
     }
 
     private void onChoiceSelected(string choice)
@@ -519,7 +521,8 @@ public partial class CannonGameScreen(Question question) : MicroGameScreen(quest
                 {
                     var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
                     {
-                        { "answer", choice }
+                        { "answer", choice },
+                        { "duration", gameSessionStore.StopwatchClock.ElapsedMilliseconds }
                     });
                     result.TryGetValue("score", out var scoreValue);
                     gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;

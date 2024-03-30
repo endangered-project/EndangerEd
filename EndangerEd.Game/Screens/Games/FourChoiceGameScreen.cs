@@ -73,7 +73,7 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
 
                         try
                         {
-                            if (gameSessionStore.IsDefaultGame())
+                            if (!gameSessionStore.IsDefaultGame())
                             {
                                 apiRequestManager.PostJson("game/end", new Dictionary<string, object>());
                                 Scheduler.AddDelayed(() =>
@@ -87,7 +87,7 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                                 Scheduler.AddDelayed(() =>
                                 {
                                     mainScreenStack.SwapScreenStack(100);
-                                }, 3000);
+                                }, 500);
                             }
                         }
                         catch (HttpRequestException e)
@@ -115,6 +115,31 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 {
                     gameSessionStore.StopwatchClock.Stop();
                     onChoiceSelected("");
+                }
+            },
+            new FillFlowContainer()
+            {
+                Anchor = Anchor.BottomLeft,
+                Origin = Anchor.BottomLeft,
+                Direction = FillDirection.Horizontal,
+                Margin = new MarginPadding(10),
+                Spacing = new Vector2(10),
+                Height = 10,
+                Alpha = question.QuestionMode == QuestionMode.FourChoice ? 0 : 1,
+                Children = new Drawable[]
+                {
+                    new SpriteIcon()
+                    {
+                        Size = new Vector2(20),
+                        Icon = FontAwesome.Solid.ExclamationTriangle,
+                        Colour = Colour4.Yellow
+                    },
+                    new EndangerEdSpriteText()
+                    {
+                        Text = "Question mode " + question.QuestionMode.ToString().ToUpper() + " is not currently supported, falling back to default mode.",
+                        Font = EndangerEdFont.GetFont(size: 20),
+                        Colour = Colour4.Yellow
+                    }
                 }
             }
         };
@@ -241,7 +266,8 @@ public partial class FourChoiceGameScreen(Question question) : MicroGameScreen(q
                 {
                     var result = apiRequestManager.PostJson("game/answer", new Dictionary<string, object>
                     {
-                        { "answer", choice }
+                        { "answer", choice },
+                        { "duration", gameSessionStore.StopwatchClock.ElapsedMilliseconds }
                     });
                     result.TryGetValue("score", out var scoreValue);
                     gameSessionStore.Score.Value += scoreValue != null ? int.Parse(scoreValue.ToString()) : 0;

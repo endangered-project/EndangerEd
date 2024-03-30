@@ -13,6 +13,7 @@ public class APIUtility
             "Bucket" => QuestionMode.Bucket,
             "Take Picture" => QuestionMode.TakePicture,
             "Conveyor" => QuestionMode.Conveyor,
+            "Traffic" => QuestionMode.Traffic,
             _ => QuestionMode.FourChoice
         };
     }
