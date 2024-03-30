@@ -210,10 +210,12 @@ public partial class TutorialScreen : EndangerEdScreen
                    Lives cannot be regained, use them wisely!
                    
                    ## Score
-                   Each question is worth 50 points. Your score is sent to the leaderboard only if you fully completed a game.
+                   Each question is worth 50 points. Your score is sent to the leaderboard only if you fully completed a game. 
+                   Some microgames' difficulty scale to this!
 
                    ## Time
                    Time starts big but shrinks everytime a microgame concludes. The minimum time the game can go down to is 10 seconds.
+                   Like score, some microgames also scales their difficulty to time!
 
                    ## Question Weighing
                    Feel like getting too good at a topic? Don't worry, the game will mix up the pace by including questions outside your
