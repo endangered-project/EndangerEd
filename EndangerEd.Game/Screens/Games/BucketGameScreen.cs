@@ -464,33 +464,33 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
     {
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
+        
         Scheduler.Add(() =>
         {
             gameSessionStore.StopwatchClock.Reset();
             gameSessionStore.StopwatchClock.Start();
         });
-
-        // Add schedule to move the boxContainer to the bottom of the screen at the random time.
+        
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
                 boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 3000, Easing.InExpo);
-        }, 1000);
+        }, 0);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
                 boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 3000, Easing.InExpo);
-        }, 2500);
+        }, 3000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
                 boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 3000, Easing.InExpo);
-        }, 5000);
+        }, 6000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
                 boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 3000, Easing.InExpo);
-        }, 7500);
+        }, 12000);
     }
 
     private void onChoiceSelected(string choice)
