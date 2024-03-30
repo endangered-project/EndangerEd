@@ -44,6 +44,18 @@ git clone https://github.com/endangered-project/EndangerEd.git
 ```
 2. Use Visual Studio or an equivalent IDE to open the solution.
 
+### Deploying
+
+We use [Velopack](https://github.com/velopack/velopack) (former Clowd.Sqirrel) to deploy the game client.
+
+Windows
+
+```powershell
+dotnet tool update -g vpk
+dotnet publish -c Release --self-contained -r win-x64 -o .\publish
+vpk pack -u EndangerEd -v 1.0.0 -p .\publish -e "EndangerEd.exe"
+```
+
 ### 📊 Progression
 See [GitHub Project](https://github.com/orgs/endangered-project/projects/1/) ([or the old board](https://github.com/users/HelloYeew/projects/8/views/2)).
 
