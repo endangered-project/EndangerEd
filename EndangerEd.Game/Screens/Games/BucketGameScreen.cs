@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -434,14 +435,6 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             stopBoxContainer();
             onChoiceSelected(CurrentQuestion.Choices[3]);
         }
-
-        // If all bucket is not in the screen, then the game is over.
-        if (boxContainer1.Position.Y > 1.2f && boxContainer2.Position.Y > 1.2f && boxContainer3.Position.Y > 1.2f && boxContainer4.Position.Y > 1.2f)
-        {
-            allowMovingBucket = false;
-            stopBoxContainer();
-            onChoiceSelected("");
-        }
     }
 
     private void stopBoxContainer()
@@ -470,27 +463,29 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             gameSessionStore.StopwatchClock.Reset();
             gameSessionStore.StopwatchClock.Start();
         });
+
+        double baseDuration = gameSessionStore.GetTimeLeft() * 1000 / 4;
         
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), 3000, Easing.InExpo);
+                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), baseDuration, Easing.OutQuad);
         }, 0);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), 3000, Easing.InExpo);
-        }, 3000);
+                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), baseDuration, Easing.OutQuad);
+        }, baseDuration);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), 3000, Easing.InExpo);
-        }, 6000);
+                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), baseDuration, Easing.OutQuad);
+        }, baseDuration * 2);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), 3000, Easing.InExpo);
-        }, 12000);
+                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), baseDuration, Easing.OutQuad);
+        }, baseDuration * 3);
     }
 
     private void onChoiceSelected(string choice)
