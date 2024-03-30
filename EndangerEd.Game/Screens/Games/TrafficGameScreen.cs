@@ -656,12 +656,12 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         boxContainer2.MoveTo(new Vector2(0.05f, -130), 1000, Easing.OutQuint)
                      .Then()
                      .MoveTo(new Vector2(0.3f, -130), 1000, Easing.OutQuint);
-        
+
         Scheduler.AddDelayed(() =>
         {
             requestPassSample?.Play();
         }, 1500);
-        
+
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[1])
@@ -695,12 +695,12 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         boxContainer3.MoveTo(new Vector2(0.05f, 17.5f), 1000, Easing.OutQuint)
                      .Then()
                      .MoveTo(new Vector2(0.3f, 17.5f), 1000, Easing.OutQuint);
-        
+
         Scheduler.AddDelayed(() =>
         {
             requestPassSample?.Play();
         }, 1500);
-        
+
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[2])
@@ -736,12 +736,12 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                      .RotateTo(90, 250, Easing.OutQuint)
                      .Then()
                      .MoveTo(new Vector2(440, 0), 1000, Easing.OutQuint);
-        
+
         Scheduler.AddDelayed(() =>
         {
             requestPassSample?.Play();
         }, 1500);
-        
+
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[3])
@@ -756,11 +756,11 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 wrongCarArriveSample?.Play();
             }
         }, 3000);
-        
+
         Scheduler.AddDelayed(() =>
         {
             if (IsOverTime) return;
-            
+
             onChoiceSelected(CurrentQuestion.Choices[3]);
         }, 4000);
     }
