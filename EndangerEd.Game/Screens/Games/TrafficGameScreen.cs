@@ -593,7 +593,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             boxContainer3.MoveTo(new Vector2(-0.18f, 17.5f), 2000, Easing.OutQuint);
             boxContainer4.MoveTo(new Vector2(7.5f, 0.365f), 3000, Easing.OutQuint);
             boxContainer1.MoveTo(new Vector2(157.5f, 0.365f), 4000, Easing.OutQuint);
-        }, 1000);
+        }, 500);
 
         Scheduler.AddDelayed(() =>
         {
@@ -601,7 +601,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
             buttonChoice2.Enabled.Value = true;
             buttonChoice3.Enabled.Value = true;
             buttonChoice4.Enabled.Value = true;
-        }, 3000);
+        }, 1000);
     }
 
     private void onReleaseChoice1()
