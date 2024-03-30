@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -80,8 +79,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -105,7 +103,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -129,7 +127,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -153,7 +151,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -181,7 +179,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
                 // Limit the position of PNG to make the box still in the screen.
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -205,7 +203,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -229,7 +227,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -253,7 +251,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 Origin = Anchor.TopLeft,
                 Size = new Vector2(150, 150),
                 RelativePositionAxes = Axes.Both,
-                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.36f),
+                Position = new Vector2(RNG.Next(10, 90) * 0.01f, -0.5f),
                 Children = new Drawable[]
                 {
                     new Box()
@@ -272,7 +270,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
                 }
             });
         }
-        
+
         AddInternal(new EndangerEdSpriteText()
         {
             Anchor = Anchor.TopCentre,
@@ -457,12 +455,12 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
     {
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
-        
+
         gameSessionStore.StopwatchClock.Reset();
         gameSessionStore.StopwatchClock.Start();
 
         double duration = gameSessionStore.GetTimeLeft() * 1000 / 4;
-        
+
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
@@ -513,7 +511,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             }
             catch (HttpRequestException e)
             {
-                Logger.Log($"Request to game/answer failed with error: {e.Message}");
+                Logger.Log($"Request to game/answer failed with error: {e.Message}", LoggingTarget.Network);
             }
 
             if (choice == CurrentQuestion.Answer)
