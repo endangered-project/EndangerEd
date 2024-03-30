@@ -502,11 +502,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             Scheduler.AddDelayed(() =>
             {
                 splashSample?.Play();
-            }, duration / 2.5);
-            Scheduler.AddDelayed(() =>
-            {
-                splashSample?.Play();
-            }, duration + duration / 2.5);
+            }, 0);
         }, RNG.Next(1000, 6000));
 
         Scheduler.AddDelayed(() =>
@@ -519,11 +515,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             Scheduler.AddDelayed(() =>
             {
                 splashSample?.Play();
-            }, duration / 2.5);
-            Scheduler.AddDelayed(() =>
-            {
-                splashSample?.Play();
-            }, duration + duration / 2.5);
+            }, 0);
         }, RNG.Next(3500, 8500));
 
         Scheduler.AddDelayed(() =>
@@ -536,11 +528,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             Scheduler.AddDelayed(() =>
             {
                 splashSample?.Play();
-            }, duration / 2.5);
-            Scheduler.AddDelayed(() =>
-            {
-                splashSample?.Play();
-            }, duration + duration / 2.5);
+            }, 0);
         }, RNG.Next(6000, 11000));
 
         Scheduler.AddDelayed(() =>
@@ -553,11 +541,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             Scheduler.AddDelayed(() =>
             {
                 splashSample?.Play();
-            }, duration / 2.5);
-            Scheduler.AddDelayed(() =>
-            {
-                splashSample?.Play();
-            }, duration + duration / 2.5);
+            }, 0);
         }, RNG.Next(8500, 13500));
     }
 
