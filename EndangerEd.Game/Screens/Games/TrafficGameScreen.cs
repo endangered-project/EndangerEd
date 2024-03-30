@@ -589,8 +589,8 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
 
         Scheduler.AddDelayed(() =>
         {
-            boxContainer2.MoveTo(new Vector2(-0.25f, -130), 1000, Easing.OutQuint);
-            boxContainer3.MoveTo(new Vector2(-0.25f, 17.5f), 2000, Easing.OutQuint);
+            boxContainer2.MoveTo(new Vector2(-0.18f, -130), 1000, Easing.OutQuint);
+            boxContainer3.MoveTo(new Vector2(-0.18f, 17.5f), 2000, Easing.OutQuint);
             boxContainer4.MoveTo(new Vector2(7.5f, 0.365f), 3000, Easing.OutQuint);
             boxContainer1.MoveTo(new Vector2(157.5f, 0.365f), 4000, Easing.OutQuint);
         }, 1000);
