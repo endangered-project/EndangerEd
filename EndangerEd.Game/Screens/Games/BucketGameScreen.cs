@@ -464,28 +464,28 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
             gameSessionStore.StopwatchClock.Start();
         });
 
-        double baseDuration = gameSessionStore.GetTimeLeft() * 1000 / 4;
+        double duration = gameSessionStore.GetTimeLeft() * 1000 / 4;
         
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), baseDuration, Easing.OutQuad);
+                boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), duration, Easing.OutQuad);
         }, 0);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), baseDuration, Easing.OutQuad);
-        }, baseDuration);
+                boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), duration, Easing.OutQuad);
+        }, duration);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), baseDuration, Easing.OutQuad);
-        }, baseDuration * 2);
+                boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), duration, Easing.OutQuad);
+        }, duration * 2);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
-                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), baseDuration, Easing.OutQuad);
-        }, baseDuration * 3);
+                boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), duration, Easing.OutQuad);
+        }, duration * 3);
     }
 
     private void onChoiceSelected(string choice)
