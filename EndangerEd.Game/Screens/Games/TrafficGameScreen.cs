@@ -70,7 +70,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
 
     private Sample correctAnswerSample;
     private Sample incorrectAnswerSample;
-    private Sample carTakeOffSample;
+    private Sample requestPassSample;
     private Sample trafficSwitchSample;
     private Sample wrongCarArriveSample;
     private Sample rightCarArriveSample;
@@ -82,7 +82,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
     {
         correctAnswerSample = audioManager.Samples.Get("UI/CorrectNotify.wav");
         incorrectAnswerSample = audioManager.Samples.Get("UI/WrongNotify.wav");
-        carTakeOffSample = audioManager.Samples.Get("Game/Traffic/CarTakeoff.wav");
+        requestPassSample = audioManager.Samples.Get("Game/Traffic/CarBeep.wav");
         trafficSwitchSample = audioManager.Samples.Get("Game/Traffic/TrafficSwitch.wav");
         wrongCarArriveSample = audioManager.Samples.Get("Game/Traffic/WrongCarArrived.wav");
         rightCarArriveSample = audioManager.Samples.Get("Game/Traffic/RightCarArrived.wav");
@@ -611,7 +611,6 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         allowMovingCar = false;
 
         trafficSwitchSample?.Play();
-        carTakeOffSample?.Play();
 
         buttonSprite1.FlashColour(Colour4.White, 500, Easing.OutQuint);
         buttonSprite1.Texture = greenLightTexture;
@@ -620,6 +619,11 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                      .RotateTo(90, 250, Easing.OutQuint)
                      .Then()
                      .MoveTo(new Vector2(440, 0), 1000, Easing.OutQuint);
+
+        Scheduler.AddDelayed(() =>
+        {
+            requestPassSample?.Play();
+        }, 2000);
 
         Scheduler.AddDelayed(() =>
         {
@@ -634,11 +638,11 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 mainBarrier.FlashColour(Colour4.White, 500);
                 wrongCarArriveSample?.Play();
             }
-        }, 2000);
+        }, 3000);
         Scheduler.AddDelayed(() =>
         {
             onChoiceSelected(CurrentQuestion.Choices[0]);
-        }, 3000);
+        }, 4000);
     }
 
     private void onReleaseChoice2()
@@ -648,13 +652,18 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         allowMovingCar = false;
 
         trafficSwitchSample?.Play();
-        carTakeOffSample?.Play();
 
         buttonSprite2.FlashColour(Colour4.White, 500, Easing.OutQuint);
         buttonSprite2.Texture = greenLightTexture;
-        boxContainer2.MoveTo(new Vector2(0.05f, -130), 500, Easing.OutQuint)
+        boxContainer2.MoveTo(new Vector2(0.05f, -130), 1000, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(0.3f, -130), 500, Easing.OutQuint);
+                     .MoveTo(new Vector2(0.3f, -130), 1000, Easing.OutQuint);
+        
+        Scheduler.AddDelayed(() =>
+        {
+            requestPassSample?.Play();
+        }, 2000);
+        
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[1])
@@ -668,11 +677,11 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 mainBarrier.FlashColour(Colour4.White, 500);
                 wrongCarArriveSample?.Play();
             }
-        }, 2000);
+        }, 3000);
         Scheduler.AddDelayed(() =>
         {
             onChoiceSelected(CurrentQuestion.Choices[1]);
-        }, 3000);
+        }, 4000);
     }
 
     private void onReleaseChoice3()
@@ -682,13 +691,18 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         allowMovingCar = false;
 
         trafficSwitchSample?.Play();
-        carTakeOffSample?.Play();
 
         buttonSprite3.FlashColour(Colour4.White, 500, Easing.OutQuint);
         buttonSprite3.Texture = greenLightTexture;
-        boxContainer3.MoveTo(new Vector2(0.05f, 17.5f), 500, Easing.OutQuint)
+        boxContainer3.MoveTo(new Vector2(0.05f, 17.5f), 1000, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(0.3f, 17.5f), 500, Easing.OutQuint);
+                     .MoveTo(new Vector2(0.3f, 17.5f), 1000, Easing.OutQuint);
+        
+        Scheduler.AddDelayed(() =>
+        {
+            requestPassSample?.Play();
+        }, 2000);
+        
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[2])
@@ -702,11 +716,11 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 mainBarrier.FlashColour(Colour4.White, 500);
                 wrongCarArriveSample?.Play();
             }
-        }, 2000);
+        }, 3000);
         Scheduler.AddDelayed(() =>
         {
             onChoiceSelected(CurrentQuestion.Choices[2]);
-        }, 3000);
+        }, 4000);
     }
 
     private void onReleaseChoice4()
@@ -716,7 +730,6 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         allowMovingCar = false;
 
         trafficSwitchSample?.Play();
-        carTakeOffSample?.Play();
 
         buttonSprite4.FlashColour(Colour4.White, 500, Easing.OutQuint);
         buttonSprite4.Texture = greenLightTexture;
@@ -725,6 +738,12 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                      .RotateTo(90, 250, Easing.OutQuint)
                      .Then()
                      .MoveTo(new Vector2(440, 0), 1000, Easing.OutQuint);
+        
+        Scheduler.AddDelayed(() =>
+        {
+            requestPassSample?.Play();
+        }, 2000);
+        
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[3])
@@ -738,11 +757,14 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 mainBarrier.FlashColour(Colour4.White, 500);
                 wrongCarArriveSample?.Play();
             }
-        }, 2000);
+        }, 3000);
+        
         Scheduler.AddDelayed(() =>
         {
+            if (IsOverTime) return;
+            
             onChoiceSelected(CurrentQuestion.Choices[3]);
-        }, 3000);
+        }, 4000);
     }
 
     private void onChoiceSelected(string choice)
