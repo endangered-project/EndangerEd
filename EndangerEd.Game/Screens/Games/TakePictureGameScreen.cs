@@ -493,7 +493,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             gameSessionStore.StopwatchClock.Start();
         });
         
-        int duration = 3000 - gameSessionStore.Score.Value / 50 * 150;
+        int duration = 3000 - gameSessionStore.Score.Value / 50 * 180;
         
         double nextJump = Clock.CurrentTime + duration * 4;
 
@@ -524,7 +524,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             fishContainer1.MoveTo(new Vector2(randomX, jumpHeight), duration / 2, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration / 2, Easing.InCirc);
 
             splashSample?.Play();
-        }, 0);
+        }, 1000);
 
         Scheduler.AddDelayed(() =>
         {
@@ -537,7 +537,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             fishContainer2.MoveTo(new Vector2(randomX, jumpHeight), duration / 2, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration / 2, Easing.InCirc);
 
             splashSample?.Play();
-        }, duration);
+        }, duration + 1000);
         Scheduler.AddDelayed(() =>
         {
             if (!allowMovingFish) return;
@@ -549,7 +549,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             fishContainer3.MoveTo(new Vector2(randomX, jumpHeight), duration / 2, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration / 2, Easing.InCirc);
 
             splashSample?.Play();
-        }, duration * 2);
+        }, duration * 2 + 1000);
 
         Scheduler.AddDelayed(() =>
         {
@@ -562,7 +562,7 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             fishContainer4.MoveTo(new Vector2(randomX, jumpHeight), duration / 2, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration / 2, Easing.InCirc);
 
             splashSample?.Play();
-        }, duration * 3);
+        }, duration * 3 + 1000);
     }
 
     private void onChoiceSelected(string choice)
