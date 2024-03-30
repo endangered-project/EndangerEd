@@ -637,13 +637,15 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             gameSessionStore.StopwatchClock.Start();
         });
 
+        double duration = gameSessionStore.GetTimeLeft() * 1000 / 4;
+        
         // Add schedule to move the boxContainer to the bottom of the screen at the random time.
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), 9000);
+                boxContainer1.MoveTo(new Vector2(1.3f, boxContainer1.Position.Y), duration);
             }
         }, 1000);
         Scheduler.AddDelayed(() =>
@@ -651,25 +653,25 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), 9000);
+                boxContainer2.MoveTo(new Vector2(1.3f, boxContainer2.Position.Y), duration);
             }
-        }, 2000);
+        }, duration + 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), 9000);
+                boxContainer3.MoveTo(new Vector2(1.3f, boxContainer3.Position.Y), duration);
             }
-        }, 3000);
+        }, duration * 2 + 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBox)
             {
                 boxSpawnSample?.Play();
-                boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), 9000);
+                boxContainer4.MoveTo(new Vector2(1.3f, boxContainer4.Position.Y), duration);
             }
-        }, 4000);
+        }, duration * 3 + 1000);
     }
 
     private void onChoiceSelected(string choice)
