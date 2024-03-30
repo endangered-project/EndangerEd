@@ -105,7 +105,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 25),
-                Position = new Vector2(162.5f, 60),
+                Position = new Vector2(159f, 60),
                 Child = buttonSprite1 = new Sprite()
                 {
                     Anchor = Anchor.Centre,
@@ -122,7 +122,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(25, 125),
-                Position = new Vector2(-75, -125),
+                Position = new Vector2(-84, -135),
                 Child = buttonSprite2 = new Sprite()
                 {
                     Anchor = Anchor.Centre,
@@ -139,7 +139,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(25, 125),
-                Position = new Vector2(-75, 15),
+                Position = new Vector2(-84, 16),
                 Child = buttonSprite3 = new Sprite()
                 {
                     Anchor = Anchor.Centre,
@@ -156,7 +156,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(125, 25),
-                Position = new Vector2(0, 60),
+                Position = new Vector2(8, 60),
                 Child = buttonSprite4 = new Sprite()
                 {
                     Anchor = Anchor.Centre,
