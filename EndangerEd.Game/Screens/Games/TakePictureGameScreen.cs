@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -491,58 +492,77 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
             gameSessionStore.StopwatchClock.Reset();
             gameSessionStore.StopwatchClock.Start();
         });
+        
+        int duration = 3000 - gameSessionStore.Score.Value / 50 * 150;
+        
+        double nextJump = Clock.CurrentTime + duration * 4;
+
+        spawnFishes(duration);
+        duration = Math.Clamp(duration - 300, 1000, 3000);
 
         Scheduler.AddDelayed(() =>
         {
+            if (Clock.CurrentTime < nextJump) return;
+            
+            duration = Math.Clamp(duration - 300, 1000, 3000);
+            spawnFishes(duration);
+            
+            nextJump = Clock.CurrentTime + duration * 4;
+        }, 0, true);
+    }
+
+    private void spawnFishes(int duration)
+    { 
+        Scheduler.AddDelayed(() =>
+        {
+            if (!allowMovingFish) return;
+
             float randomX = RNG.Next(-40, 40) * 0.01f;
             float jumpHeight = RNG.Next(-90, -50) * 0.01f;
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
-            int duration = RNG.Next(1000, 2500);
-            fishContainer1.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
-            Scheduler.AddDelayed(() =>
-            {
-                splashSample?.Play();
-            }, 0);
-        }, RNG.Next(1000, 6000));
+
+            fishContainer1.MoveTo(new Vector2(randomX, jumpHeight), duration / 2, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration / 2, Easing.InCirc);
+
+            splashSample?.Play();
+        }, 0);
 
         Scheduler.AddDelayed(() =>
         {
+            if (!allowMovingFish) return;
+
             float randomX = RNG.Next(-40, 40) * 0.01f;
             float jumpHeight = RNG.Next(-90, -50) * 0.01f;
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
-            int duration = RNG.Next(1000, 2500);
-            fishContainer2.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
-            Scheduler.AddDelayed(() =>
-            {
-                splashSample?.Play();
-            }, 0);
-        }, RNG.Next(3500, 8500));
+
+            fishContainer2.MoveTo(new Vector2(randomX, jumpHeight), duration / 2, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration / 2, Easing.InCirc);
+
+            splashSample?.Play();
+        }, duration);
+        Scheduler.AddDelayed(() =>
+        {
+            if (!allowMovingFish) return;
+
+            float randomX = RNG.Next(-40, 40) * 0.01f;
+            float jumpHeight = RNG.Next(-90, -50) * 0.01f;
+            float jumpWidth = RNG.Next(0, 30) * 0.01f;
+
+            fishContainer3.MoveTo(new Vector2(randomX, jumpHeight), duration / 2, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration / 2, Easing.InCirc);
+
+            splashSample?.Play();
+        }, duration * 2);
 
         Scheduler.AddDelayed(() =>
         {
-            float randomX = RNG.Next(-40, 40) * 0.01f;
-            float jumpHeight = RNG.Next(-90, -50) * 0.01f;
-            float jumpWidth = RNG.Next(0, 30) * 0.01f;
-            int duration = RNG.Next(1000, 2500);
-            fishContainer3.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
-            Scheduler.AddDelayed(() =>
-            {
-                splashSample?.Play();
-            }, 0);
-        }, RNG.Next(6000, 11000));
+            if (!allowMovingFish) return;
 
-        Scheduler.AddDelayed(() =>
-        {
             float randomX = RNG.Next(-40, 40) * 0.01f;
             float jumpHeight = RNG.Next(-90, -50) * 0.01f;
             float jumpWidth = RNG.Next(0, 30) * 0.01f;
-            int duration = RNG.Next(1000, 2500);
-            fishContainer4.MoveTo(new Vector2(randomX, jumpHeight), duration, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration, Easing.InCirc);
-            Scheduler.AddDelayed(() =>
-            {
-                splashSample?.Play();
-            }, 0);
-        }, RNG.Next(8500, 13500));
+
+            fishContainer4.MoveTo(new Vector2(randomX, jumpHeight), duration / 2, Easing.OutCirc).Then().MoveTo(new Vector2(randomX + jumpWidth, 0.3f), duration / 2, Easing.InCirc);
+
+            splashSample?.Play();
+        }, duration * 3);
     }
 
     private void onChoiceSelected(string choice)
