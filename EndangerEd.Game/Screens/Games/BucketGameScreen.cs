@@ -470,22 +470,22 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         {
             if (allowMovingBucket)
                 boxContainer1.MoveTo(new Vector2(boxContainer1.Position.X, 1.3f), duration, Easing.OutQuad);
-        }, 0);
+        }, 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
                 boxContainer2.MoveTo(new Vector2(boxContainer2.Position.X, 1.3f), duration, Easing.OutQuad);
-        }, duration);
+        }, duration + 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
                 boxContainer3.MoveTo(new Vector2(boxContainer3.Position.X, 1.3f), duration, Easing.OutQuad);
-        }, duration * 2);
+        }, duration * 2 + 1000);
         Scheduler.AddDelayed(() =>
         {
             if (allowMovingBucket)
                 boxContainer4.MoveTo(new Vector2(boxContainer4.Position.X, 1.3f), duration, Easing.OutQuad);
-        }, duration * 3);
+        }, duration * 3 + 1000);
     }
 
     private void onChoiceSelected(string choice)
