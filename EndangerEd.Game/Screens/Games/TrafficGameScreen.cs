@@ -619,7 +619,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                      .Then()
                      .RotateTo(90, 250, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(160, 0), 1000, Easing.OutQuint);
+                     .MoveTo(new Vector2(440, 0), 1000, Easing.OutQuint);
 
         Scheduler.AddDelayed(() =>
         {
@@ -654,7 +654,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         buttonSprite2.Texture = greenLightTexture;
         boxContainer2.MoveTo(new Vector2(0.05f, -130), 500, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(0.2f, -130), 500, Easing.OutQuint);
+                     .MoveTo(new Vector2(0.3f, -130), 500, Easing.OutQuint);
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[1])
@@ -688,7 +688,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
         buttonSprite3.Texture = greenLightTexture;
         boxContainer3.MoveTo(new Vector2(0.05f, 17.5f), 500, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(0.2f, 17.5f), 500, Easing.OutQuint);
+                     .MoveTo(new Vector2(0.3f, 17.5f), 500, Easing.OutQuint);
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[2])
@@ -724,7 +724,7 @@ public partial class TrafficGameScreen(Question question) : MicroGameScreen(ques
                      .Then()
                      .RotateTo(90, 250, Easing.OutQuint)
                      .Then()
-                     .MoveTo(new Vector2(160, 0), 1000, Easing.OutQuint);
+                     .MoveTo(new Vector2(440, 0), 1000, Easing.OutQuint);
         Scheduler.AddDelayed(() =>
         {
             if (question.Answer == question.Choices[3])
