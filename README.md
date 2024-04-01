@@ -51,6 +51,7 @@ We use [Velopack](https://github.com/velopack/velopack) (former Clowd.Sqirrel) t
 Windows
 
 ```powershell
+cd EndangerEd.Desktop
 dotnet tool update -g vpk
 dotnet publish -c Release --self-contained -r win-x64 -o .\publish
 vpk pack -u EndangerEd -v 1.0.0 -p .\publish -e "EndangerEd.exe"
@@ -59,6 +60,7 @@ vpk pack -u EndangerEd -v 1.0.0 -p .\publish -e "EndangerEd.exe"
 MacOS
 
 ```bash
+cd EndangerEd.Desktop
 dotnet tool update -g vpk
 dotnet publish -c Release --self-contained -r osx-x64 -o ./publish  # or osx-arm64
 vpk pack -u EndangerEd -v 1.0.0 -p ./publish -e "EndangerEd"
