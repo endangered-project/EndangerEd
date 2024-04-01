@@ -1,5 +1,6 @@
 ﻿using osu.Framework.Platform;
 using osu.Framework;
+using Velopack;
 
 namespace EndangerEd.Desktop
 {
@@ -7,6 +8,7 @@ namespace EndangerEd.Desktop
     {
         public static void Main()
         {
+            VelopackApp.Build().Run();
             using (GameHost host = Host.GetSuitableDesktopHost(@"EndangerEd"))
             using (osu.Framework.Game game = new EndangerEdGameDesktop())
                 host.Run(game);

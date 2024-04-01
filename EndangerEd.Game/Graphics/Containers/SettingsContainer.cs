@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using EndangerEd.Game.Stores;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Configuration;
+using osu.Framework.Development;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -25,6 +27,7 @@ public partial class SettingsContainer : FocusedOverlayContainer
     private FillFlowContainer timeContainer;
     private SpriteText currentTimeText;
     private SpriteText runningTimeText;
+    private TextFlowContainer deviceInformationTextFlow;
 
     private readonly DateTime startGameTime = DateTime.Now;
 
@@ -283,6 +286,41 @@ public partial class SettingsContainer : FocusedOverlayContainer
                                     Action = () => storage.PresentExternally(),
                                     Width = 300,
                                     Height = 40
+                                },
+                                new SpriteText()
+                                {
+                                    Text = "About".ToUpper(),
+                                    Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 32f, EndangerEdFont.FontWeight.Bold),
+                                },
+                                new SpriteText()
+                                {
+                                    Text = "EndangerEd",
+                                    Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.Comfortaa, 48f, EndangerEdFont.FontWeight.Bold)
+                                },
+                                new SpriteText()
+                                {
+                                    Text = DebugUtils.IsDebugBuild ? "Debug Build" : "Release V." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
+                                },
+                                new SpriteText()
+                                {
+                                    Text = "Framework Information",
+                                    Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 24f, EndangerEdFont.FontWeight.Bold),
+                                },
+                                new SpriteText()
+                                {
+                                    Text = $"osu!framework {typeof(GameHost).Assembly.GetName().Version}"
+                                },
+                                new SpriteText()
+                                {
+                                    Text = "Device Information",
+                                    Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 24f, EndangerEdFont.FontWeight.Bold)
+                                },
+                                deviceInformationTextFlow = new TextFlowContainer(s => s.Font = EndangerEdFont.GetFont(size: 16f))
+                                {
+                                    Text = $"OS: {RuntimeInformation.OSDescription} ({RuntimeInformation.OSArchitecture})\n" +
+                                           $"Framework: {RuntimeInformation.FrameworkDescription}\n" +
+                                           $"Process: {RuntimeInformation.ProcessArchitecture}\n",
+                                    AutoSizeAxes = Axes.Both
                                 }
                             }
                         }
@@ -327,6 +365,11 @@ public partial class SettingsContainer : FocusedOverlayContainer
 
         currentTimeText.Text = DateTime.Now.ToString("hh:mm:ss tt").ToUpper();
         runningTimeText.Text = $"You have played for {DateTime.Now - startGameTime:hh\\:mm\\:ss} !";
+
+        deviceInformationTextFlow.Text = $"OS: {RuntimeInformation.OSDescription} ({RuntimeInformation.OSArchitecture})\n" +
+                                         $"Framework: {RuntimeInformation.FrameworkDescription}\n" +
+                                         $"Process: {RuntimeInformation.ProcessArchitecture}\n" +
+                                         $"GC Usage Statistics: {GC.CollectionCount(0)} / {GC.CollectionCount(1)} / {GC.CollectionCount(2)}\n";
     }
 
     protected override void PopIn()
