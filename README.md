@@ -56,6 +56,14 @@ dotnet publish -c Release --self-contained -r win-x64 -o .\publish
 vpk pack -u EndangerEd -v 1.0.0 -p .\publish -e "EndangerEd.exe"
 ```
 
+MacOS
+
+```bash
+dotnet tool update -g vpk
+dotnet publish -c Release --self-contained -r osx-x64 -o ./publish  # or osx-arm64
+vpk pack -u EndangerEd -v 1.0.0 -p ./publish -e "EndangerEd"
+```
+
 ### 📊 Progression
 See [GitHub Project](https://github.com/orgs/endangered-project/projects/1/) ([or the old board](https://github.com/users/HelloYeew/projects/8/views/2)).
 
