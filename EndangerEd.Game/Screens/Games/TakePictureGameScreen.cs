@@ -487,12 +487,12 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
     {
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
- 
+
         gameSessionStore.StopwatchClock.Reset();
         gameSessionStore.StopwatchClock.Start();
-        
+
         int duration = 3000 - gameSessionStore.Score.Value / 50 * 180;
-        
+
         double nextJump = Clock.CurrentTime + duration * 4;
 
         spawnFishes(duration);
@@ -501,16 +501,19 @@ public partial class TakePictureGameScreen(Question question) : MicroGameScreen(
         Scheduler.AddDelayed(() =>
         {
             if (Clock.CurrentTime < nextJump) return;
-            
+
             duration = Math.Clamp(duration - 300, 1000, 3000);
             spawnFishes(duration);
-            
+
             nextJump = Clock.CurrentTime + duration * 4;
         }, 0, true);
     }
 
     private void spawnFishes(int duration)
-    { 
+    {
+        if (duration <= 0)
+            duration = Math.Abs(duration);
+
         Scheduler.AddDelayed(() =>
         {
             if (!allowMovingFish) return;
