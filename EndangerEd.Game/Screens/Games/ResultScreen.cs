@@ -422,7 +422,7 @@ public partial class ResultScreen : EndangerEdScreen
                     }
                     else if (int.Parse(apiRankAfter.ToString()) - int.Parse(apiRankBefore.ToString()) < 0)
                     {
-                        rankChange.Colour = Colour4.Green;
+                        rankChange.Colour = Colour4.LightGreen;
                     }
 
                     if (leaderboard.TryGetValue("username1", out var player1))
