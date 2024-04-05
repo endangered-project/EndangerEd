@@ -631,11 +631,11 @@ public partial class ConveyorGameScreen(Question question) : MicroGameScreen(que
         base.LoadComplete();
         audioPlayer.ChangeTrack("ingame.mp3");
         conveyorLoopTrack?.Start();
-        
+
         gameSessionStore.StopwatchClock.Reset();
         gameSessionStore.StopwatchClock.Start();
 
-        double duration = gameSessionStore.GetTimeLeft() * 1000 / 4;
+        double duration = gameSessionStore.GetTimePerGameScaled() / 4 - 500;
 
         // Add schedule to move the boxContainer to the bottom of the screen at the random time.
         Scheduler.AddDelayed(() =>

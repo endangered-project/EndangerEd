@@ -459,7 +459,7 @@ public partial class BucketGameScreen(Question question) : MicroGameScreen(quest
         gameSessionStore.StopwatchClock.Reset();
         gameSessionStore.StopwatchClock.Start();
 
-        double duration = gameSessionStore.GetTimeLeft() * 1000 / 4;
+        double duration = gameSessionStore.GetTimePerGameScaled() / 4;
 
         Scheduler.AddDelayed(() =>
         {

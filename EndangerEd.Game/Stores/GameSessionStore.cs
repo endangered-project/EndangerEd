@@ -49,13 +49,17 @@ public partial class GameSessionStore : CompositeDrawable
 
     public bool IsOverTime()
     {
-        return StopwatchClock.ElapsedMilliseconds >= TIME_PER_GAME;
+        return StopwatchClock.ElapsedMilliseconds >= GetTimePerGameScaled();
     }
 
     public int GetTimeLeft()
     {
-        double timeScaledToPoints = Math.Clamp(TIME_PER_GAME - this.Score.Value / 50 * 2 * 1000, 10000, 30000);
-        return (int)(timeScaledToPoints - StopwatchClock.ElapsedMilliseconds) / 1000;
+        return (int)(GetTimePerGameScaled() - StopwatchClock.ElapsedMilliseconds) / 1000;
+    }
+
+    public double GetTimePerGameScaled()
+    {
+        return Math.Clamp(TIME_PER_GAME - this.Score.Value / 50 * 2 * 1000, 10000, 30000);
     }
 
     /// <summary>
