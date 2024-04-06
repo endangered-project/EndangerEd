@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Screens;
 using osuTK;
 using Box = osu.Framework.Graphics.Shapes.Box;
@@ -24,6 +25,8 @@ public partial class TutorialScreen : EndangerEdScreen
     private BasicScrollContainer mainContentScrollContainer;
 
     private EndangerEdButton introductionButton;
+    private Texture introductionLogoTexture;
+    private Sprite introductionLogo;
     private EndangerEdButton microgameButton;
 
     private readonly Bindable<TutorialMenu> tutorialMenu = new Bindable<TutorialMenu>();
@@ -32,8 +35,10 @@ public partial class TutorialScreen : EndangerEdScreen
     private AudioPlayer audioPlayer { get; set; }
 
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(TextureStore textureStore)
     {
+        introductionLogoTexture = textureStore.Get("logo-main.png");
+
         InternalChildren = new Drawable[]
         {
             menuTitleSpriteText = new EndangerEdSpriteText()
@@ -184,21 +189,23 @@ public partial class TutorialScreen : EndangerEdScreen
     private void loadTutorialMenu()
     {
         tutorialMenu.Value = TutorialMenu.Introduction;
-        mainContentScrollContainer.Child = new MarkdownContainer()
+        mainContentScrollContainer.Children = new Drawable[]
         {
-            Anchor = Anchor.TopLeft,
-            Origin = Anchor.TopLeft,
-            RelativeSizeAxes = Axes.X,
-            AutoSizeAxes = Axes.Y,
-            Margin = new MarginPadding()
+            new MarkdownContainer()
             {
-                Top = 20,
-                Bottom = 20
-            },
-            Text = """
-                   # Welcome to EndangerEd!
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.TopLeft,
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Margin = new MarginPadding()
+                {
+                    Top = 20,
+                    Bottom = 20
+                },
+                Text = """
+                   # Welcome to
                    EndangerEd is about using knowledge to endure through a continuous and escalating dexterity test.
-                   Since its questions are assembled from the knowledge base, we encourage you to first read through it before jumping in. 
+                   Since its questions are assembled from the knowledge base, we encourage you to first read through it before jumping in.
                    There are several mechanics worth noting when tackling this game.
 
                    ## Lives
@@ -208,9 +215,9 @@ public partial class TutorialScreen : EndangerEdScreen
                    - You ran out of time for a microgame
 
                    Lives cannot be regained, use them wisely!
-                   
+
                    ## Score
-                   Each question is worth 50 points. Your score is sent to the leaderboard only if you fully completed a game. 
+                   Each question is worth 50 points. Your score is sent to the leaderboard only if you fully completed a game.
                    Some microgames' difficulty scale to this!
 
                    ## Time
@@ -221,6 +228,16 @@ public partial class TutorialScreen : EndangerEdScreen
                    Feel like getting too good at a topic? Don't worry, the game will mix up the pace by including questions outside your
                    comfort zone to keep you on your toes.
                    """
+            },
+            introductionLogo = new Sprite()
+            {
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.TopLeft,
+                RelativePositionAxes = Axes.Both,
+                Position = new Vector2(0.235f, 0.004f),
+                Scale = new Vector2(0.2f, 0.2f),
+                Texture = introductionLogoTexture
+            }
         };
     }
 
