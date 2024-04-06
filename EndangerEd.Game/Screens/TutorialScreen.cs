@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Screens;
 using osuTK;
 using Box = osu.Framework.Graphics.Shapes.Box;
@@ -24,6 +25,8 @@ public partial class TutorialScreen : EndangerEdScreen
     private BasicScrollContainer mainContentScrollContainer;
 
     private EndangerEdButton introductionButton;
+    private Texture introductionLogoTexture;
+    private Sprite introductionLogo;
     private EndangerEdButton microgameButton;
 
     private readonly Bindable<TutorialMenu> tutorialMenu = new Bindable<TutorialMenu>();
@@ -32,8 +35,10 @@ public partial class TutorialScreen : EndangerEdScreen
     private AudioPlayer audioPlayer { get; set; }
 
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(TextureStore textureStore)
     {
+        introductionLogoTexture = textureStore.Get("logo-main.png");
+
         InternalChildren = new Drawable[]
         {
             menuTitleSpriteText = new EndangerEdSpriteText()
@@ -184,43 +189,87 @@ public partial class TutorialScreen : EndangerEdScreen
     private void loadTutorialMenu()
     {
         tutorialMenu.Value = TutorialMenu.Introduction;
-        mainContentScrollContainer.Child = new MarkdownContainer()
+        mainContentScrollContainer.Child = new FillFlowContainer()
         {
             Anchor = Anchor.TopLeft,
             Origin = Anchor.TopLeft,
             RelativeSizeAxes = Axes.X,
             AutoSizeAxes = Axes.Y,
-            Margin = new MarginPadding()
+            Direction = FillDirection.Vertical,
+            Spacing = new Vector2(10),
+            Children = new Drawable[]
             {
-                Top = 20,
-                Bottom = 20
-            },
-            Text = """
-                   # Welcome to EndangerEd!
-                   EndangerEd is about using knowledge to endure through a continuous and escalating dexterity test.
-                   Since its questions are assembled from the knowledge base, we encourage you to first read through it before jumping in. 
-                   There are several mechanics worth noting when tackling this game.
+                new FillFlowContainer()
+                {
+                    Anchor = Anchor.TopLeft,
+                    Origin = Anchor.TopLeft,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Direction = FillDirection.Horizontal,
+                    Spacing = new Vector2(10),
+                    Margin = new MarginPadding()
+                    {
+                        Top = 20,
+                        Left = 20
+                    },
+                    Children = new Drawable[]
+                    {
+                        new SpriteText()
+                        {
+                            Anchor = Anchor.TopLeft,
+                            Origin = Anchor.TopLeft,
+                            Text = "Welcome to",
+                            Font = EndangerEdFont.GetFont(size: 72f),
+                            Colour = Colour4.White
+                        },
+                        new Sprite()
+                        {
+                            Anchor = Anchor.TopLeft,
+                            Origin = Anchor.TopLeft,
+                            Position = new Vector2(0.235f, 0.004f),
+                            Scale = new Vector2(0.2f, 0.2f),
+                            Texture = introductionLogoTexture
+                        }
+                    }
+                },
+                new MarkdownContainer()
+                {
+                    Anchor = Anchor.TopLeft,
+                    Origin = Anchor.TopLeft,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Margin = new MarginPadding()
+                    {
+                        Top = 20,
+                        Bottom = 20
+                    },
+                    Text = """
+                           EndangerEd is about using knowledge to endure through a continuous and escalating dexterity test.
+                           Since its questions are assembled from the knowledge base, we encourage you to first read through it before jumping in.
+                           There are several mechanics worth noting when tackling this game.
 
-                   ## Lives
-                   You are given 3 lives. A life is deducted when:
-                   - You failed to complete a microgame
-                   - You skip a microgame
-                   - You ran out of time for a microgame
+                           ## Lives
+                           You are given 3 lives. A life is deducted when:
+                           - You failed to complete a microgame
+                           - You skip a microgame
+                           - You ran out of time for a microgame
 
-                   Lives cannot be regained, use them wisely!
-                   
-                   ## Score
-                   Each question is worth 50 points. Your score is sent to the leaderboard only if you fully completed a game. 
-                   Some microgames' difficulty scale to this!
+                           Lives cannot be regained, use them wisely!
 
-                   ## Time
-                   Time starts big but shrinks everytime a microgame concludes. The minimum time the game can go down to is 10 seconds.
-                   Like score, some microgames also scales their difficulty to time!
+                           ## Score
+                           Each question is worth 50 points. Your score is sent to the leaderboard only if you fully completed a game.
+                           Some microgames' difficulty scale to this!
 
-                   ## Question Weighing
-                   Feel like getting too good at a topic? Don't worry, the game will mix up the pace by including questions outside your
-                   comfort zone to keep you on your toes.
-                   """
+                           ## Time
+                           Time starts big but shrinks everytime a microgame concludes. The minimum time the game can go down to is 10 seconds.
+                           Like score, some microgames also scales their difficulty to time!
+
+                           ## Question Weighing
+                           Feel like getting too good at a topic? Don't worry, the game will mix up the pace by including questions outside your
+                           comfort zone to keep you on your toes.
+                           """
+                }
+            }
         };
     }
 

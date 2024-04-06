@@ -257,7 +257,7 @@ public partial class ResultScreen : EndangerEdScreen
                     },
                     new TextFlowContainer()
                     {
-                        Text = "See the full result with answer and your play history in EndangerEd website",
+                        Text = "See the full result with answers and your play history on the EndangerEd website!",
                         Width = 360,
                         Height = 60,
                         Scale = new Vector2(1.2f),

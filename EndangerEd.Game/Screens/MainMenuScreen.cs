@@ -89,13 +89,14 @@ public partial class MainMenuScreen : EndangerEdScreen
                 RelativeSizeAxes = Axes.Both,
                 Children = new Drawable[]
                 {
-                    new SpriteText
+                    new Sprite
                     {
-                        Anchor = Anchor.Centre,
+                        Anchor = Anchor.TopCentre,
                         Origin = Anchor.Centre,
-                        Text = "EndangerEd",
-                        Font = EndangerEdFont.GetFont(typeface: EndangerEdFont.Typeface.Comfortaa, size: 100, weight: EndangerEdFont.FontWeight.Bold),
-                        Y = -250f
+                        RelativePositionAxes = Axes.Both,
+                        Position = new Vector2(0, 0.18f),
+                        Scale = new Vector2(0.35f, 0.35f),
+                        Texture = textureStore.Get("logo-main.png")
                     },
                     knowledgeBaseContainer = new BasicButton
                     {
