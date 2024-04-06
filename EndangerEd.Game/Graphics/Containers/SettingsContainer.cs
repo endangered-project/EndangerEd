@@ -125,7 +125,6 @@ public partial class SettingsContainer : FocusedOverlayContainer
                     }
                 }
             },
-            // TODO: Change to icon button
             new EndangerEdButton("Back")
             {
                 Anchor = Anchor.BottomLeft,
@@ -292,10 +291,10 @@ public partial class SettingsContainer : FocusedOverlayContainer
                                     Text = "About".ToUpper(),
                                     Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.JosefinSans, 32f, EndangerEdFont.FontWeight.Bold),
                                 },
-                                new SpriteText()
+                                new Sprite
                                 {
-                                    Text = "EndangerEd",
-                                    Font = EndangerEdFont.GetFont(EndangerEdFont.Typeface.Comfortaa, 48f, EndangerEdFont.FontWeight.Bold)
+                                    Size = new Vector2(250, 75),
+                                    Texture = textureStore.Get("logo-main.png")
                                 },
                                 new SpriteText()
                                 {
